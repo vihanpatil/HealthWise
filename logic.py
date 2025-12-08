@@ -23,7 +23,7 @@ user_rag_file = None
 global nvidia_embed_model 
 nvidia_embed_model = NVIDIAEmbedding(
         model="nvidia/nv-embedqa-e5-v5",
-        api_key=os.getenv("NVIDIA_API_KEY")
+        api_key=os.getenv("NGC_API_KEY"),
     )
 
 client = OpenAI(
