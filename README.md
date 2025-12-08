@@ -6,7 +6,6 @@ RootWise is a project that explores how AI can make food systems more accessible
 ### 1. Evironmental Variables
 ```
 export NGC_API_KEY="your-ngc-api-key"
-export NVIDIA_API_KEY="your-nvidia-api-key"
 export OPENAI_API_KEY="your-openai-api-key"
 ```
 
@@ -21,7 +20,6 @@ docker run --platform=linux/amd64 \
   -v $(pwd):/app \
   -p 7860:7860 \
   -e NGC_API_KEY=$NGC_API_KEY \
-  -e NVIDIA_API_KEY=$NVIDIA_API_KEY \
   -e OPENAI_API_KEY=$OPENAI_API_KEY \
   lfaris1234/rootwise-nim-app:latest
 ```
@@ -45,7 +43,6 @@ kubectl delete secret api-env-secrets --namespace=aiea-auditors || true
 
 kubectl create secret generic api-env-secrets \
   --from-literal=NGC_API_KEY=$NGC_API_KEY \
-  --from-literal=NVIDIA_API_KEY=$NVIDIA_API_KEY \
   --from-literal=OPENAI_API_KEY=$OPENAI_API_KEY \
   --namespace=aiea-auditors
 ```

@@ -23,7 +23,7 @@ user_rag_file = None
 global nvidia_embed_model 
 nvidia_embed_model = NVIDIAEmbedding(
         model="nvidia/nv-embedqa-e5-v5",
-        api_key=os.getenv("NVIDIA_API_KEY")
+        api_key=os.getenv("NGC_API_KEY"),
     )
 
 client = OpenAI(
@@ -339,16 +339,31 @@ def call_nvidia_chat(messages, model="meta/llama3-70b-instruct"):
 
 
 def stream_response(message, history):
-    global query_engine
+    """
+    Gradio 4.27.0-compatible streaming handler.
 
+    Inputs:
+      - message: str (user's new message)
+      - history: list of (user, assistant) tuples from gr.Chatbot
+
+    Output (streamed via yield):
+      - updated history as list of (user, assistant) tuples
+    """
+    import os
+    global query_engine, user_rag_file
+
+    # Gradio may pass None the first time
+    if history is None:
+        history = []
+
+    # If RAG not ready, just respond with a simple message
     if query_engine is None:
-        yield history + [
-            {"role": "user", "content": message},
-            {"role": "assistant", "content": "Please load documents first."}
-        ]
+        updated_history = history + [(message, "Please load documents first.")]
+        yield updated_history
         return
 
     try:
+        # ---- Load user RAG file ----
         rag_path = f"./system_data/{user_rag_file}.txt"
         if os.path.exists(rag_path):
             with open(rag_path, "r") as f:
@@ -356,41 +371,37 @@ def stream_response(message, history):
         else:
             rag_contents = ""
 
-        rag_excerpt = ' '.join(rag_contents.split()[:120])
+        # Limit excerpt length
+        rag_excerpt = " ".join(rag_contents.split()[:120])
 
-        ingredient_path = f"./system_data/given_ingredients.txt"
-        if os.path.exists(ingredient_path):
-            with open(ingredient_path, "r") as f:
-                ingredients = f.read().strip()
-        else:
-            ingredients = ""
+        # ---- Ingredients / season / allergies ----
+        def read_if_exists(path):
+            return open(path).read().strip() if os.path.exists(path) else ""
 
-        season_path = f"./system_data/given_season.txt"
-        if os.path.exists(season_path):
-            with open(season_path, "r") as f:
-                season = f.read().strip()
-        else:
-            season = ""
+        ingredients = read_if_exists("./system_data/given_ingredients.txt")
+        season = read_if_exists("./system_data/given_season.txt")
+        allergies = read_if_exists("./system_data/given_restrictions.txt")
 
-        allergy_path = f"./system_data/given_restrictions.txt"
-        if os.path.exists(allergy_path):
-            with open(allergy_path, "r") as f:
-                allergies = f.read().strip()
-        else:
-            allergies = ""
-
+        # ---- System prompt ----
         prompt = (
-            "You are RootWise — a calm, charasmatic, respectful, and deeply knowledgeable assistant grounded in sustainability, food wisdom, and functional medicine. "
-            "You are here to support the user by drawing directly from a curated knowledge base of trusted, local, and crowd-sourced sources. Your guidance should feel intentional, gentle, and rooted in care.\n\n"
+            "You are RootWise — a calm, charasmatic, respectful, and deeply knowledgeable assistant "
+            "grounded in sustainability, food wisdom, and functional medicine. "
+            "You are here to support the user by drawing directly from a curated knowledge base of "
+            "trusted, local, and crowd-sourced sources. Your guidance should feel intentional, gentle, "
+            "and rooted in care.\n\n"
 
-            "**IMPORTANT:** If the user sends a greeting (e.g., 'hi', 'hello', 'hey'), respond briefly and neutrally — for example, 'Hello there.' Do not offer suggestions, ask questions, or initiate further conversation yet.\n\n"
-            "- Remember what the user has already asked for and don't share redundant information (DO NOT KEEP SAYING HELLO) \n"
+            "**IMPORTANT:** If the user sends a greeting (e.g., 'hi', 'hello', 'hey'), respond briefly "
+            "and neutrally — for example, 'Hello there.' Do not offer suggestions, ask questions, or "
+            "initiate further conversation yet.\n\n"
+            "- Remember what the user has already asked for and don't share redundant information "
+            "(DO NOT KEEP SAYING HELLO) \n\n"
 
-            "Your primary source of truth is the retrieval-based knowledge system located in ./system_data. THIS IS CRUCIAL — only offer suggestions based on retrieved context from that data.\n\n"
+            "Your primary source of truth is the retrieval-based knowledge system located in ./system_data. "
+            "THIS IS CRUCIAL — only offer suggestions based on retrieved context from that data.\n\n"
 
             "Begin every meaningful response by drawing from this excerpt:\n"
             f"{rag_excerpt}\n\n"
-            
+
             "In addition, always consider these user-specific inputs:\n"
             f"- Current season: {season}\n"
             f"- User allergies: {allergies}\n"
@@ -403,11 +414,13 @@ def stream_response(message, history):
             "- Community and ecological well-being\n\n"
 
             "Response rules:\n"
-            "- Everything is a fun opportunity to repurpose, regenerate, and honor the full life of what we’ve been given every peel and stem.\n"
+            "- Everything is a fun opportunity to repurpose, regenerate, and honor the full life of what "
+            "we’ve been given every peel and stem.\n"
             "- Never suggest food the user is allergic to.\n"
             "- Prioritize ingredients they already have.\n"
             "- Share no more than 2–3 ideas at once, formatted clearly.\n"
-            "- Ask no more than one gentle, curiosity-driven question per response — only if the user has provided enough context.\n\n"
+            "- Ask no more than one gentle, curiosity-driven question per response — only if the user has "
+            "provided enough context.\n\n"
 
             "Your priorities:\n"
             "- Encourage the user to engage with sustainability and remind them it is fun and easy.\n"
@@ -418,40 +431,48 @@ def stream_response(message, history):
             "- Make it feel like a transparent collaboration — not a generic chatbot interaction.\n"
         )
 
-        # Include the latest user/assistant message for context
+        # ---- Build recent context from tuple-based history ----
         truncated_history = ""
         if history:
-            last_messages = history[-2:]  # Only last exchange
-            for m in last_messages:
-                truncated_history += f"{m['role'].capitalize()}: {m['content'][:300]}\n"  
+            # last 2 exchanges = last 2 tuples
+            last_pairs = history[-2:]
+            for user_msg, assistant_msg in last_pairs:
+                truncated_history += f"User: {str(user_msg)[:300]}\n"
+                truncated_history += f"Assistant: {str(assistant_msg)[:300]}\n"
 
+        # ---- RAG retrieval ----
         rag_retrieval = query_engine.query(message)
 
-        # Construct final prompt
+        # ---- Final user prompt ----
         full_prompt = (
             prompt
-            + f"Here is relevant information from the system_data documents:\n{rag_retrieval}\n\n"
-            + "\nRecent context:\n"
+            + "Here is relevant information from the system_data documents:\n"
+            + str(rag_retrieval)
+            + "\n\nRecent context:\n"
             + truncated_history
             + f"User: {message[:300]}\n"
-            + "Now continue the conversation in character. Do not say hello again if the conversation is ongoing"
+            + "Now continue the conversation in character. Do not say hello again if the conversation is ongoing."
         )
-        
+
+        # ---- Call your model (NVIDIA / OpenAI inside call_nvidia_chat) ----
         response = call_nvidia_chat([
             {"role": "system", "content": prompt},
             {"role": "user", "content": full_prompt}
         ])
 
-        yield history + [
-            {"role": "user", "content": message},
-            {"role": "assistant", "content": str(response)}
-        ]
+        # Normalise to string in case you get an object back
+        assistant_text = str(response)
+
+        # ---- Return updated history in the format gr.Chatbot expects ----
+        updated_history = history + [(message, assistant_text)]
+        yield updated_history
 
     except Exception as e:
-        yield history + [
-            {"role": "user", "content": message},
-            {"role": "assistant", "content": f"Error processing query: {str(e)}"}
+        updated_history = history + [
+            (message, f"Error processing query: {str(e)}")
         ]
+        yield updated_history
+
 
 #
 # This function only checks if the files in the system are the right type

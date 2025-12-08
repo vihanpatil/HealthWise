@@ -45,7 +45,6 @@ h1, h2, h3, .gr-markdown h2 {
 
 .message.user {
     background-color: #E6F0D7 !important;
-               
 }
 """) as demo:
 
@@ -74,7 +73,7 @@ h1, h2, h3, .gr-markdown h2 {
             entry_submit.click(append_to_user_rag, inputs=[user_entry], outputs=[user_entry])
 
         with gr.Column(elem_classes="section"):
-            # State variables
+            # State variables (currently not wired to inputs, but kept for future use)
             season_state = gr.State("")
             restrictions_state = gr.State("")
 
@@ -104,39 +103,53 @@ h1, h2, h3, .gr-markdown h2 {
             detect_button.click(
                 fn=handle_and_show,
                 inputs=[veg_image],
-                outputs=[detected_output, add_button, confirmation_msg]
+                outputs=[detected_output, add_button, confirmation_msg],
             )
 
             # Add-to-database logic and UI reset
             def add_and_reset(season, ingredients, restrictions):
+                if not ingredients:
+                    # Nothing to add, just hide button and keep confirmation hidden
+                    hide_add_button = gr.update(visible=False)
+                    hide_confirmation = gr.update(visible=False)
+                    return hide_confirmation, hide_add_button
+
                 if "," in ingredients:
-                    ingredients = ingredients.split(",")
-                    for veg in ingredients:
+                    items = ingredients.split(",")
+                    for veg in items:
                         clean_veg = veg.strip(" [']\n")
-                        add_to_rag(season, clean_veg, restrictions)
+                        if clean_veg:
+                            add_to_rag(season, clean_veg, restrictions)
                 else:
                     clean_veg = ingredients.strip(" [']\n")
+                    if clean_veg:
+                        add_to_rag(season, clean_veg, restrictions)
 
+                show_confirmation = gr.update(
+                    value="Input added to RAG database!",
+                    visible=True,
+                )
                 hide_add_button = gr.update(visible=False)
-                return "Input added to RAG database!", hide_add_button
+                return show_confirmation, hide_add_button
 
             add_button.click(
                 fn=add_and_reset,
                 inputs=[season_state, detected_output, restrictions_state],
-                outputs=[gr.Textbox(label="Status"), add_button]
+                outputs=[confirmation_msg, add_button],
             )
-
-
 
     with gr.Column(elem_classes="section"):
         gr.Markdown("## Chat")
         gr.Markdown("Ask for a zero-waste lunch, a gut-friendly dinner idea, or ways to preserve the okra from your neighbor. RootWise chats are powered by data on functional medicine and whatever else you want it to remember.")
-        chatbot = gr.Chatbot(type='messages')
+        # Classic Chatbot compatible with gradio 4.27.0
+        chatbot = gr.Chatbot()
         msg = gr.Textbox(
             label="Ask a Question",
             placeholder="e.g. What can I make with squash peels and miso?"
         )
         clear = gr.Button("🧹 Clear Chat")
+
+        # stream_response should accept (message, history) and return / yield updated history
         msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot], queue=True)
         msg.submit(lambda: "", outputs=[msg])
         clear.click(lambda: None, None, chatbot, queue=False)
@@ -160,21 +173,33 @@ h1, h2, h3, .gr-markdown h2 {
                 placeholder="e.g. lentils, daikon, lemon zest"
             )
             add_ingredients_button = gr.Button("➕ Add Ingredients")
-            add_ingredients_button.click(lambda s: add_to_rag("", s, ""), inputs=[ingredients_input], outputs=[ingredients_input])
+            add_ingredients_button.click(
+                lambda s: add_to_rag("", s, ""),
+                inputs=[ingredients_input],
+                outputs=[ingredients_input],
+            )
 
             season_input = gr.Textbox(
                 label="Season",
                 placeholder="e.g. early summer, monsoon, winter"
             )
             add_season_button = gr.Button("📅 Add Season")
-            add_season_button.click(lambda s: add_to_rag(s, "", ""), inputs=[season_input], outputs=[season_input])
+            add_season_button.click(
+                lambda s: add_to_rag(s, "", ""),
+                inputs=[season_input],
+                outputs=[season_input],
+            )
 
             restrictions_input = gr.Textbox(
                 label="Dietary Restrictions (comma-separated)",
                 placeholder="e.g. gluten-free, low FODMAP, nut allergy"
             )
             add_restrictions_button = gr.Button("🚫 Add Restrictions")
-            add_restrictions_button.click(lambda r: add_to_rag("", "", r), inputs=[restrictions_input], outputs=[restrictions_input])
+            add_restrictions_button.click(
+                lambda r: add_to_rag("", "", r),
+                inputs=[restrictions_input],
+                outputs=[restrictions_input],
+            )
 
         with gr.Column(elem_classes="section"):
             gr.Markdown("### 📂 System File Viewer")

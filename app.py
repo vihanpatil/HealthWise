@@ -6,5 +6,9 @@ if __name__ == "__main__":
   print(f"RAG init result: {result}")
 
   demo.queue()
-  demo.launch(server_name="0.0.0.0", server_port=7862)
-  print("herelo")
+  demo.launch(
+    server_name="127.0.0.1",   # avoid the localhost proxy check
+    server_port=7862,
+    show_api=False              # <- prevents the schema path that crashes
+  )
+print("WE'RE LIVE")
