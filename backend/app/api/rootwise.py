@@ -46,7 +46,6 @@ async def veg_detect(image: UploadFile = File(...)):
 
 @router.post("/veg/add")
 def veg_add(payload: dict):
-    # your old add_and_reset logic, but API-friendly
     season = payload.get("season", "")
     restrictions = payload.get("restrictions", "")
     ingredients = payload.get("ingredients", "")
@@ -81,7 +80,7 @@ def rag_add(payload: dict):
 
 @router.post("/docs/load")
 async def docs_load(files: list[UploadFile] = File(...)):
-    # Save uploads to temp, call your existing load_documents(paths)
+    # Save uploads to temp, call load_documents(paths)
     import tempfile, os
     paths = []
     try:
@@ -103,7 +102,7 @@ def system_files():
 
 @router.get("/system/file")
 def system_file(name: str = Query(...)):
-    # your read_selected_file returns (text, preview_image?)
+    # read_selected_file returns (text, preview_image?)
     text, preview = read_selected_file(name)
     # preview is likely path/None; return both
     return {"ok": True, "text": text, "preview": preview}

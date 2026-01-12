@@ -8,7 +8,7 @@ load_dotenv(BASE_DIR / ".env")
 
 from app.api.rootwise import router as rootwise_router
 # from app.api.zonewise import router as zonewise_router
-from app.logic.rootwise import initialize_rag
+from app.logic.rootwise import initialize_rootwise_rag
 
 app = FastAPI(title="RootWise API")
 
@@ -22,7 +22,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup():
-    result = initialize_rag("./system_data")
+    result = initialize_rootwise_rag()
     print(f"RAG init result: {result}")
 
 app.include_router(rootwise_router, prefix="/api/rootwise", tags=["rootwise"])

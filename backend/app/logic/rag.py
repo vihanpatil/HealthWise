@@ -1,7 +1,7 @@
 # backend/app/logic/rag.py
 import os
 import threading
-from typing import Optional, List, Tuple
+from typing import Optional, List, Dict, Any
 
 import faiss
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
@@ -16,6 +16,19 @@ _index = None
 _embed_model = None
 _rag_store = "./system_data"
 _lock = threading.Lock()
+_dirty = False
+_embed_dim = None
+
+def mark_dirty():
+    global _dirty
+    _dirty = True
+
+def maybe_rebuild():
+    global _dirty
+    with _lock:
+        if _dirty:
+            build_index(_rag_store)
+            _dirty = False
 
 SUPPORTED_EXTS = (".txt", ".pdf")
 
@@ -32,10 +45,11 @@ def get_embed_model() -> NVIDIAEmbedding:
 
 
 def get_embed_dim() -> int:
-    # Compute once reliably so FAISS dim is correct
-    model = get_embed_model()
-    v = model.get_text_embedding("dimension check")
-    return len(v)
+    global _embed_dim
+    if _embed_dim is None:
+        v = get_embed_model().get_text_embedding("dimension check")
+        _embed_dim = len(v)
+    return _embed_dim
 
 
 def ensure_store_exists(store_path: Optional[str] = None) -> str:
@@ -115,6 +129,7 @@ def query(text: str) -> str:
     """
     Runs retrieval against the current query engine and returns text.
     """
+    maybe_rebuild()
     if not _query_engine:
         raise RuntimeError("RAG not initialized. Call build_index() first.")
     result = _query_engine.query(text)
@@ -123,30 +138,54 @@ def query(text: str) -> str:
 
 # ---------- Updating / Adding ----------
 def add_text_file(filename: str, content: str) -> str:
-    """
-    Write/update a .txt file in system_data and rebuild index.
-    """
     ensure_store_exists()
     if not filename.endswith(".txt"):
         filename += ".txt"
-
     path = os.path.join(_rag_store, filename)
     with open(path, "w") as f:
         f.write(content)
 
-    return build_index(_rag_store)
+    mark_dirty()
+    return "OK: updated (index refresh pending)."
 
 
 def append_text_file(filename: str, line: str) -> str:
-    """
-    Append a line to a .txt file in system_data and rebuild index.
-    """
     ensure_store_exists()
     if not filename.endswith(".txt"):
         filename += ".txt"
-
     path = os.path.join(_rag_store, filename)
     with open(path, "a") as f:
         f.write(line.rstrip() + "\n")
 
-    return build_index(_rag_store)
+    mark_dirty()
+    return "OK: appended (index refresh pending)."
+
+
+def retrieve(text: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    """
+    Return top_k retrieved chunks with metadata for grounding/citations.
+    """
+    maybe_rebuild()
+    if not _index:
+        raise RuntimeError("RAG not initialized. Call build_index() first.")
+
+    retriever = _index.as_retriever(similarity_top_k=top_k)
+    results = retriever.retrieve(text)
+
+    out = []
+    for r in results:
+        node = r.node
+        meta = node.metadata or {}
+        out.append({
+            "score": getattr(r, "score", None),
+            "text": node.get_text(),
+            "file": meta.get("file_name") or meta.get("filename") or meta.get("source") or meta.get("file_path"),
+            "page": meta.get("page_label") or meta.get("page") or meta.get("page_number"),
+        })
+    return out
+
+
+def has_good_hits(hits: List[dict], min_hits: int = 2) -> bool:
+    # simple heuristic: at least N chunks with non-trivial text
+    good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
+    return len(good) >= min_hits
