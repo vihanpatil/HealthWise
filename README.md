@@ -9,6 +9,15 @@ NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
 ```
 
+### 2. Creating Virtual Environment
+First, ensure python version is 3.9.6
+```
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install -U pip setuptools wheel
+pip install -r requirements.txt
+```
+
 ## Files
 
 Ensure the following files are included in your repo before building the Docker image:
