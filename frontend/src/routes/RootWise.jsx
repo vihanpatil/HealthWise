@@ -4,7 +4,6 @@ import Chat from "../components/rootwise/Chat";
 import { rootwiseApi } from "../api/rootwise";
 import RagInputs from "../components/rootwise/RagInputs";
 
-
 export default function RootWise() {
   const [name, setName] = useState("");
   const [nameStatus, setNameStatus] = useState("");
@@ -23,16 +22,27 @@ export default function RootWise() {
 
   const [activeTab, setActiveTab] = useState("chat"); // "chat" | "tools"
 
+  // NEW: file viewer scope
+  const [fileScope, setFileScope] = useState("system"); // "system" | "user"
+
   const hasName = useMemo(() => name.trim().length > 0, [name]);
 
-  async function refreshFiles() {
-    const res = await rootwiseApi.listFiles();
+  async function refreshFiles(scope = fileScope) {
+    const res = await rootwiseApi.listFiles(scope);
     setFiles(res.files || []);
   }
 
   useEffect(() => {
     refreshFiles().catch(() => {});
   }, []);
+
+  // NEW: refresh list when switching scope
+  useEffect(() => {
+    setSelected("");
+    setPreviewText("");
+    setPreviewImg("");
+    refreshFiles(fileScope).catch(() => {});
+  }, [fileScope]);
 
   return (
     <div style={styles.page}>
@@ -74,7 +84,7 @@ export default function RootWise() {
               style={styles.primaryBtn}
               onClick={async () => {
                 try {
-                  const res = await rootwiseApi.setName(name);
+                  await rootwiseApi.setName(name);
                   setNameStatus(`✅ Welcome, ${name.trim()}! Your notebook is ready.`);
                   await refreshFiles();
                 } catch (e) {
@@ -104,7 +114,7 @@ export default function RootWise() {
             style={{ ...styles.primaryBtn, width: "100%", marginTop: 8 }}
             onClick={async () => {
               try {
-                const res = await rootwiseApi.appendNotepad(note);
+                await rootwiseApi.appendNotepad(note);
                 setNoteStatus("✅ Saved to your notebook.");
                 setNote("");
                 await refreshFiles();
@@ -183,20 +193,41 @@ export default function RootWise() {
             </div>
           ) : (
             <>
-              {/* 🔹 Add to RAG (ingredients / season / allergies) */}
               <RagInputs onAdded={refreshFiles} />
 
-              {/* 🔹 System File Viewer */}
+              {/* 🔹 File Viewer */}
               <div style={styles.card}>
                 <div style={styles.cardHeader}>
-                  <div style={styles.cardHeaderTitle}>System File Viewer</div>
+                  <div style={styles.cardHeaderTitle}>File Viewer</div>
                   <div style={styles.cardHeaderHint}>
-                    Inspect what’s inside your system_data
+                    Switch between system knowledge files and user-entered files.
                   </div>
                 </div>
 
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-                  <button style={styles.secondaryBtn} onClick={refreshFiles}>
+                  {/* NEW: scope toggle */}
+                  <div style={styles.scopePills}>
+                    <button
+                      style={{
+                        ...styles.scopeBtn,
+                        ...(fileScope === "system" ? styles.scopeActive : {}),
+                      }}
+                      onClick={() => setFileScope("system")}
+                    >
+                      System Data
+                    </button>
+                    <button
+                      style={{
+                        ...styles.scopeBtn,
+                        ...(fileScope === "user" ? styles.scopeActive : {}),
+                      }}
+                      onClick={() => setFileScope("user")}
+                    >
+                      User Files
+                    </button>
+                  </div>
+
+                  <button style={styles.secondaryBtn} onClick={() => refreshFiles(fileScope)}>
                     Refresh
                   </button>
 
@@ -222,7 +253,7 @@ export default function RootWise() {
                     }}
                     onClick={async () => {
                       try {
-                        const res = await rootwiseApi.readFile(selected);
+                        const res = await rootwiseApi.readFile(selected, fileScope);
                         setPreviewText(res.text || "");
                         setPreviewImg(res.preview || "");
                       } catch (e) {
@@ -241,7 +272,6 @@ export default function RootWise() {
               </div>
             </>
           )}
-
         </main>
       </div>
     </div>
@@ -398,5 +428,28 @@ const styles = {
     padding: 12,
     maxHeight: 340,
     overflow: "auto",
+  },
+
+  // NEW styles for scope toggle
+  scopePills: {
+    display: "flex",
+    gap: 8,
+    padding: 4,
+    borderRadius: 14,
+    border: "1px solid rgba(0,0,0,0.08)",
+    background: "rgba(255,255,255,0.8)",
+  },
+  scopeBtn: {
+    padding: "8px 10px",
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.10)",
+    background: "rgba(255,255,255,0.9)",
+    fontWeight: 900,
+    cursor: "pointer",
+    fontSize: 12,
+  },
+  scopeActive: {
+    background: "#E6F0D7",
+    border: "1px solid rgba(0,0,0,0.14)",
   },
 };

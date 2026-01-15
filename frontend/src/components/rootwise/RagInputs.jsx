@@ -1,49 +1,104 @@
 import React from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { rootwiseApi } from "../../api/rootwise";
 
-export default function RagInputs({ onAdded }) {
+const SEASONS = ["Fall", "Summer", "Winter", "Spring"];
+
+const COMMON_RESTRICTIONS = [
+  "gluten-free",
+  "lactose-free",
+  "dairy-free",
+  "egg-free",
+  "nut allergy",
+  "peanut allergy",
+  "shellfish allergy",
+  "soy-free",
+  "low FODMAP",
+  "vegetarian",
+  "vegan",
+];
+
+function normalizeCommaList(s) {
+  // "a, b ,  c" -> "a, b, c" (dedupe, trim, keep order)
+  const items = (s || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean);
+
+  const seen = new Set();
+  const out = [];
+  for (const it of items) {
+    const key = it.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(it);
+  }
+  return out.join(", ");
+}
+
+export default function UserContextInputs({ onAdded }) {
   const [ingredients, setIngredients] = useState("");
-  const [season, setSeason] = useState("");
-  const [restrictions, setRestrictions] = useState("");
+  const [season, setSeason] = useState(""); // must be one of SEASONS or ""
+  const [selectedRestrictions, setSelectedRestrictions] = useState([]);
+  const [customRestriction, setCustomRestriction] = useState("");
   const [status, setStatus] = useState("");
 
-  const addIngredients = async () => {
-    const v = ingredients.trim();
+  const restrictionsCsv = useMemo(() => {
+    const merged = [...selectedRestrictions];
+    const custom = normalizeCommaList(customRestriction);
+    if (custom) {
+      for (const it of custom.split(",").map((x) => x.trim()).filter(Boolean)) {
+        if (!merged.some((r) => r.toLowerCase() === it.toLowerCase())) merged.push(it);
+      }
+    }
+    return merged.join(", ");
+  }, [selectedRestrictions, customRestriction]);
+
+  const toggleRestriction = (r) => {
+    setSelectedRestrictions((prev) => {
+      const exists = prev.some((x) => x.toLowerCase() === r.toLowerCase());
+      if (exists) return prev.filter((x) => x.toLowerCase() !== r.toLowerCase());
+      return [...prev, r];
+    });
+  };
+
+  const saveIngredients = async () => {
+    const v = normalizeCommaList(ingredients);
     if (!v) return;
     setStatus("Saving ingredients…");
     try {
       await rootwiseApi.ragAdd("", v, "");
       setIngredients("");
-      setStatus("✅ Ingredients saved to RAG");
+      setStatus("✅ Ingredients saved");
       onAdded?.();
     } catch (e) {
       setStatus(`❌ ${String(e)}`);
     }
   };
 
-  const addSeason = async () => {
-    const v = season.trim();
+  const saveSeason = async () => {
+    const v = (season || "").trim();
     if (!v) return;
     setStatus("Saving season…");
     try {
       await rootwiseApi.ragAdd(v, "", "");
       setSeason("");
-      setStatus("✅ Season saved to RAG");
+      setStatus("✅ Season saved");
       onAdded?.();
     } catch (e) {
       setStatus(`❌ ${String(e)}`);
     }
   };
 
-  const addRestrictions = async () => {
-    const v = restrictions.trim();
+  const saveRestrictions = async () => {
+    const v = restrictionsCsv.trim();
     if (!v) return;
     setStatus("Saving dietary restrictions…");
     try {
       await rootwiseApi.ragAdd("", "", v);
-      setRestrictions("");
-      setStatus("✅ Dietary restrictions saved to RAG");
+      setSelectedRestrictions([]);
+      setCustomRestriction("");
+      setStatus("✅ Dietary restrictions saved");
       onAdded?.();
     } catch (e) {
       setStatus(`❌ ${String(e)}`);
@@ -53,9 +108,9 @@ export default function RagInputs({ onAdded }) {
   return (
     <div style={styles.card}>
       <div style={styles.header}>
-        <div style={styles.title}>🌾 Add to Your RAG Dataset</div>
+        <div style={styles.title}>🧾 Your Context</div>
         <div style={styles.hint}>
-          Tailor RootWise to your context: what you have, what season it is, and what you can’t eat.
+          This helps RootWise tailor suggestions: what you have, what season it is, and what you can’t eat.
         </div>
       </div>
 
@@ -68,34 +123,64 @@ export default function RagInputs({ onAdded }) {
             onChange={(e) => setIngredients(e.target.value)}
             placeholder="e.g. lentils, daikon, lemon zest"
           />
-          <button style={styles.btn} onClick={addIngredients}>
-            ➕ Add Ingredients
+          <button style={styles.btn} onClick={saveIngredients}>
+            ➕ Save Ingredients
           </button>
         </div>
 
         <div>
-          <div style={styles.label}>Season</div>
-          <input
-            style={styles.input}
+          <div style={styles.label}>Season (pick one)</div>
+          <select
+            style={styles.select}
             value={season}
             onChange={(e) => setSeason(e.target.value)}
-            placeholder="e.g. early summer, winter"
-          />
-          <button style={styles.btn} onClick={addSeason}>
-            📅 Add Season
+          >
+            <option value="">Select…</option>
+            {SEASONS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <button style={styles.btn} onClick={saveSeason}>
+            📅 Save Season
           </button>
         </div>
 
         <div>
-          <div style={styles.label}>Dietary Restrictions (comma-separated)</div>
+          <div style={styles.label}>Dietary Restrictions (select + add your own)</div>
+
+          <div style={styles.checklist}>
+            {COMMON_RESTRICTIONS.map((r) => {
+              const checked = selectedRestrictions.some((x) => x.toLowerCase() === r.toLowerCase());
+              return (
+                <label key={r} style={styles.checkItem}>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleRestriction(r)}
+                  />
+                  <span style={styles.checkText}>{r}</span>
+                </label>
+              );
+            })}
+          </div>
+
+          <div style={styles.subLabel}>Add your own (comma-separated)</div>
           <input
             style={styles.input}
-            value={restrictions}
-            onChange={(e) => setRestrictions(e.target.value)}
-            placeholder="e.g. gluten-free, nut allergy, low FODMAP"
+            value={customRestriction}
+            onChange={(e) => setCustomRestriction(e.target.value)}
+            placeholder="e.g. sesame allergy, low sodium"
           />
-          <button style={styles.btn} onClick={addRestrictions}>
-            🚫 Add Restrictions
+
+          <div style={styles.preview}>
+            <div style={styles.previewLabel}>Saved value (comma-separated)</div>
+            <div style={styles.previewText}>{restrictionsCsv || "—"}</div>
+          </div>
+
+          <button style={styles.btn} onClick={saveRestrictions}>
+            🚫 Save Restrictions
           </button>
         </div>
       </div>
@@ -122,6 +207,7 @@ const styles = {
     gap: 10,
   },
   label: { fontSize: 12, fontWeight: 800, opacity: 0.75, marginBottom: 6 },
+  subLabel: { fontSize: 12, fontWeight: 800, opacity: 0.65, marginTop: 10, marginBottom: 6 },
   input: {
     width: "100%",
     padding: "10px 12px",
@@ -130,6 +216,40 @@ const styles = {
     outline: "none",
     marginBottom: 8,
   },
+  select: {
+    width: "100%",
+    padding: "10px 12px",
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.12)",
+    outline: "none",
+    marginBottom: 8,
+    background: "white",
+  },
+  checklist: {
+    border: "1px solid rgba(0,0,0,0.10)",
+    borderRadius: 12,
+    padding: 10,
+    background: "rgba(0,0,0,0.02)",
+  },
+  checkItem: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    padding: "6px 2px",
+    fontSize: 12,
+    cursor: "pointer",
+  },
+  checkText: { opacity: 0.9 },
+  preview: {
+    border: "1px dashed rgba(0,0,0,0.18)",
+    borderRadius: 12,
+    padding: 10,
+    marginTop: 8,
+    marginBottom: 8,
+    background: "rgba(255,255,255,0.8)",
+  },
+  previewLabel: { fontSize: 11, fontWeight: 900, opacity: 0.6, marginBottom: 4 },
+  previewText: { fontSize: 12, fontWeight: 700, opacity: 0.9 },
   btn: {
     width: "100%",
     padding: "10px 12px",

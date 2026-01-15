@@ -22,8 +22,10 @@ export const rootwiseApi = {
     return apiForm("/api/rootwise/docs/load", fd);
   },
 
-  listFiles: () => apiJson("/api/rootwise/system/files"),
-  readFile: (name) => apiJson(`/api/rootwise/system/file?name=${encodeURIComponent(name)}`),
+  // NEW: scope-aware file listing/reading
+  listFiles: (scope = "system") => apiJson(`/api/rootwise/system/files?scope=${encodeURIComponent(scope)}`),
+  readFile: (name, scope = "system") =>
+    apiJson(`/api/rootwise/system/file?scope=${encodeURIComponent(scope)}&name=${encodeURIComponent(name)}`),
 
   streamChat: async ({ message, history, onMessage, onDone, onError }) => {
     try {
@@ -43,10 +45,6 @@ export const rootwiseApi = {
       let buffer = "";
 
       const emitEvent = (rawEvent) => {
-        // rawEvent is a block separated by \n\n
-        // format:
-        // event: message
-        // data: {...json...}
         const lines = rawEvent.split("\n").filter(Boolean);
         let eventName = "message";
         let dataLine = "";
@@ -75,7 +73,6 @@ export const rootwiseApi = {
 
         buffer += decoder.decode(value, { stream: true });
 
-        // SSE events end with blank line
         const parts = buffer.split("\n\n");
         buffer = parts.pop() || "";
 

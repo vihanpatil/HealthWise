@@ -1,4 +1,3 @@
-# backend/app/logic/rag.py
 import os
 import threading
 from typing import Optional, List, Dict, Any

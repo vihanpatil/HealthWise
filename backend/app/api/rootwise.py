@@ -1,8 +1,10 @@
-from fastapi import APIRouter, UploadFile, File, Query
+from fastapi import APIRouter, UploadFile, File, Query, HTTPException
 from fastapi.responses import StreamingResponse
+from pathlib import Path
 import json
 import asyncio
 
+from app.config import SYSTEM_DATA_DIR, USER_STATE_DIR
 from app.logic.rootwise import (
     set_user_name,
     append_to_user_rag,
@@ -96,16 +98,67 @@ async def docs_load(files: list[UploadFile] = File(...)):
             try: os.remove(p)
             except: pass
 
+def _resolve_scope_dir(scope: str) -> Path:
+    s = (scope or "system").strip().lower()
+    if s == "system":
+        return SYSTEM_DATA_DIR
+    if s == "user":
+        return USER_STATE_DIR
+    raise HTTPException(status_code=400, detail="Invalid scope. Use scope=system or scope=user.")
+
+
 @router.get("/system/files")
-def system_files():
-    return {"ok": True, "files": list_system_data_files()}
+def system_files(scope: str = Query("system")):
+    base_dir = _resolve_scope_dir(scope)
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    files = []
+    for p in base_dir.iterdir():
+        if p.is_file() and p.name.endswith((".txt", ".pdf")):
+            files.append(p.name)
+
+    files.sort()
+    return {"ok": True, "files": files}
+
 
 @router.get("/system/file")
-def system_file(name: str = Query(...)):
-    # read_selected_file returns (text, preview_image?)
-    text, preview = read_selected_file(name)
-    # preview is likely path/None; return both
-    return {"ok": True, "text": text, "preview": preview}
+def system_file(name: str = Query(...), scope: str = Query("system")):
+    base_dir = _resolve_scope_dir(scope)
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    # Prevent path traversal
+    safe_name = name.replace("\\", "/").split("/")[-1]
+    target = base_dir / safe_name
+
+    if not target.exists() or not target.is_file():
+        raise HTTPException(status_code=404, detail="File not found.")
+
+    # TXT: return content
+    if safe_name.endswith(".txt"):
+        try:
+            text = target.read_text(errors="ignore")
+        except Exception:
+            text = target.read_bytes().decode("utf-8", errors="ignore")
+        return {"ok": True, "text": text, "preview": ""}
+
+    # PDF: reuse your existing preview renderer but only for system scope if you want.
+    # Minimal: render first page preview for both scopes (same logic you already used)
+    try:
+        from pdf2image import convert_from_path
+        import os
+        import uuid
+
+        images = convert_from_path(str(target), dpi=100)
+        os.makedirs("temp_renders", exist_ok=True)
+
+        img = images[0]
+        img_path = f"temp_renders/{uuid.uuid4().hex}_page_0.png"
+        img.save(img_path, "PNG")
+
+        return {"ok": True, "text": "PDF rendered preview available.", "preview": img_path}
+    except Exception as e:
+        return {"ok": True, "text": f"Error rendering PDF: {str(e)}", "preview": ""}
+
 
 
 def normalize_history(history):
