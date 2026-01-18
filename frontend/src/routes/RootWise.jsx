@@ -357,7 +357,7 @@ const styles = {
     outline: "none",
   },
   textarea: {
-    width: "100%",
+    width: "92%",
     padding: "10px 12px",
     borderRadius: 12,
     border: "1px solid rgba(0,0,0,0.12)",

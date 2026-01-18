@@ -7,34 +7,25 @@ First create a .env file in your root directory
 ```
 NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
+DATABASE_URL=postgresql+psycopg2://postgres@localhost:5432/zonewise
 ```
 
-## Files
+### 2. Creating Virtual Environment
+First, ensure python version is 3.9.6
+```
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install -U pip setuptools wheel
+pip install -r requirements.txt
+```
 
-Ensure the following files are included in your repo before building the Docker image:
-
-### app/main.py
-Main function, all logic is imported. 
-
-### rootwise.py
-The meat and potatoes, this is where the query engine and completions model are initialized and accessed. 
-
-### vis-transformer.py
-Modular implementation of the vision transformer.
-
-### best.pt 
-YOLOv8 weights for vegetable detection.
-
-### requirements.txt
-A file to track dependencies. 
-
-## Run the backend (Terminal 1):
+## 3. Run the backend (Terminal 1):
 ```
 cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-## Run the frontend (Terminal 2):
+## 4. Run the frontend (Terminal 2):
 ```
 cd frontend
 npm ci
