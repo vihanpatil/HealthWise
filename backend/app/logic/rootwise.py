@@ -9,7 +9,7 @@ from typing import List, Optional, Tuple, Any, Dict
 import requests
 from pdf2image import convert_from_path
 
-from app.config import SYSTEM_DATA_DIR
+from app.config import SYSTEM_DATA_DIR, USER_STATE_DIR
 from app.logic import rag
 
 
@@ -44,20 +44,15 @@ def set_user_name(name: str) -> str:
     filename = f"{name.strip()}RAG.txt"
     user_rag_file = filename
 
-    path = SYSTEM_DATA_DIR / filename
-    SYSTEM_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
+    path = USER_STATE_DIR / filename
 
     # Create the file if missing, but DO NOT rebuild index here
     if not path.exists():
-        path.write_text(f"{name.strip()}'s RAG session initialized.\n")
-
-        # If you implement dirty-flag in rag.py:
-        if hasattr(rag, "mark_dirty"):
-            rag.mark_dirty()
+        path.write_text(f"{name.strip()}'s session initialized.\n")
 
     # If file already exists: do nothing (no rebuild)
     return f"File {filename} ready."
-
 
 
 def append_to_user_rag(entry: str) -> str:
@@ -67,8 +62,13 @@ def append_to_user_rag(entry: str) -> str:
     if not entry or not entry.strip():
         return "Nothing to add."
 
-    rag.append_text_file(user_rag_file, entry.strip())
-    return "Entry added and index updated."
+    USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
+    path = USER_STATE_DIR / user_rag_file
+
+    with open(path, "a") as f:
+        f.write(entry.strip() + "\n")
+
+    return "Entry added."
 
 
 # ----------------------------
@@ -155,35 +155,35 @@ def load_documents(file_objs) -> str:
 
 
 # ----------------------------
-# Structured user inputs -> stored as files in SYSTEM_DATA_DIR (unified index rebuild)
+# Structured user inputs -> stored as files in USER_STATE_DIR (NOT embedded)
 # ----------------------------
 def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
     """
-    Writes user inputs as separate files inside SYSTEM_DATA_DIR and rebuilds unified index.
+    Writes user inputs as separate files inside USER_STATE_DIR (NOT embedded).
     - Season: overwrite
-    - Ingredients: append history
+    - Ingredients: overwrite
     - Restrictions: overwrite
     """
     try:
-        SYSTEM_DATA_DIR.mkdir(parents=True, exist_ok=True)
+        USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
 
         if season and season.strip():
-            rag.add_text_file("given_season.txt", f"Season: {season.strip()}\n")
+            (USER_STATE_DIR / "given_season.txt").write_text(f"Season: {season.strip()}\n")
 
         if ingredients and ingredients.strip():
-            rag.append_text_file("given_ingredients.txt", f"Ingredients: {ingredients.strip()}")
+            (USER_STATE_DIR / "given_ingredients.txt").write_text(f"Ingredients: {ingredients.strip()}\n")
 
         if restrictions and restrictions.strip():
-            rag.add_text_file("given_restrictions.txt", f"Dietary Restrictions: {restrictions.strip()}\n")
+            (USER_STATE_DIR / "given_restrictions.txt").write_text(f"Dietary Restrictions: {restrictions.strip()}\n")
 
         # If none were provided, no-op but keep index intact
         if not any([season and season.strip(), ingredients and ingredients.strip(), restrictions and restrictions.strip()]):
             return "No new data provided."
 
-        return "Input added to RAG database!"
+        return "User state saved."
 
     except Exception as e:
-        return f"Error updating RAG: {str(e)}"
+        return f"Error updating user state: {str(e)}"
 
 
 # ----------------------------
@@ -267,9 +267,9 @@ def stream_response(message: str, history):
 
     try:
         # Load user context files (not as evidence; just constraints)
-        ingredients = _read_text_if_exists(SYSTEM_DATA_DIR / "given_ingredients.txt")
-        season = _read_text_if_exists(SYSTEM_DATA_DIR / "given_season.txt")
-        allergies = _read_text_if_exists(SYSTEM_DATA_DIR / "given_restrictions.txt")
+        ingredients = _read_text_if_exists(USER_STATE_DIR / "given_ingredients.txt")
+        season = _read_text_if_exists(USER_STATE_DIR / "given_season.txt")
+        allergies = _read_text_if_exists(USER_STATE_DIR / "given_restrictions.txt")
 
         # Retrieve evidence (top-k chunks)
         hits = rag.retrieve(message, top_k=6)
@@ -313,7 +313,8 @@ def stream_response(message: str, history):
             "- Cite sources inline like ... [1][2]. Do NOT put citations on their own line.\n"
             "- Only cite a source if that specific chunk explicitly supports that specific claim.\n"
             "- Do not reuse citations across unrelated claims.\n"
-            "- Never invent citations.\n\n"
+            "- Never invent citations.\n"
+            "- USER-SPECIFIC INPUTS are authoritative constraints and must NOT be cited.\n\n"
             "RESPONSE STYLE:\n"
             "- Keep output concise: 2–3 ideas max.\n"
             "- Prioritize ingredients the user already has.\n"
