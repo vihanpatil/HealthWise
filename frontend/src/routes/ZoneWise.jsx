@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -22,11 +20,13 @@ export default function ZoneWise() {
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
   const [age, setAge] = useState("");
   const [heightCm, setHeightCm] = useState("");
   const [weightKg, setWeightKg] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -35,10 +35,10 @@ export default function ZoneWise() {
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // dashboard state
-  const [days, setDays] = useState(7);
-  const [data, setData] = useState(null);
-  const [metricType, setMetricType] = useState("");
+  // dashboard state (heart_rate only)
+  const [minutes, setMinutes] = useState(60);
+  const [zones, setZones] = useState(null);
+
 
   // On mount: if token exists, verify it and load dashboard
   useEffect(() => {
@@ -53,7 +53,6 @@ export default function ZoneWise() {
         setMe(who);
         setAuthed(true);
       } catch {
-        // invalid token
         clearToken();
         if (!mounted) return;
         setMe(null);
@@ -66,36 +65,28 @@ export default function ZoneWise() {
     };
   }, []);
 
-  // Whenever we become authed OR change days, load metrics (me endpoint)
-  useEffect(() => {
-    if (!authed) return;
+  // Fetch heart-rate zones whenever authed or minutes changes
+useEffect(() => {
+  if (!authed) return;
 
-    let mounted = true;
-    (async () => {
-      setIsLoading(true);
-      setStatus("");
-      try {
-        const res = await apiJson(`/api/zonewise/metrics/daily/me?days=${days}`);
-        if (!mounted) return;
-        setData(res);
+  let mounted = true;
+  (async () => {
+    try {
+      const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
+      if (!mounted) return;
+      setZones(res);
+    } catch (e) {
+      if (!mounted) return;
+      setZones(null);
+      setStatus(`❌ ${String(e.message || e)}`);
+    }
+  })();
 
-        // pick default metric type
-        const keys = Object.keys(res?.series || {}).sort();
-        setMetricType((prev) => (prev && keys.includes(prev) ? prev : keys[0] || ""));
-      } catch (e) {
-        if (!mounted) return;
-        setData(null);
-        setStatus(`❌ ${String(e.message || e)}`);
-      } finally {
-        if (!mounted) return;
-        setIsLoading(false);
-      }
-    })();
+  return () => {
+    mounted = false;
+  };
+}, [authed, minutes]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [authed, days]);
 
   async function onSubmitAuth(e) {
     e.preventDefault();
@@ -115,20 +106,33 @@ export default function ZoneWise() {
       const h = parseFloat(String(heightCm).trim());
       const w = parseFloat(String(weightKg).trim());
 
+      if (!name.trim()) {
+        setStatus("❌ Name is required.");
+        setIsLoading(false);
+        return;
+      }
+      if (!email.trim()) {
+        setStatus("❌ Email is required.");
+        setIsLoading(false);
+        return;
+      }
       if (!Number.isFinite(a) || a < 1) {
         setStatus("❌ Age must be a valid number.");
         setIsLoading(false);
         return;
       }
-
       if (!Number.isFinite(h) || h <= 0) {
         setStatus("❌ Height must be a valid number (e.g. 175 or 175.5).");
         setIsLoading(false);
         return;
       }
-
       if (!Number.isFinite(w) || w <= 0) {
         setStatus("❌ Weight must be a valid number (e.g. 72 or 72.3).");
+        setIsLoading(false);
+        return;
+      }
+      if (gender !== "male" && gender !== "female") {
+        setStatus("❌ Gender must be male or female.");
         setIsLoading(false);
         return;
       }
@@ -141,7 +145,6 @@ export default function ZoneWise() {
               const a = parseInt(String(age).trim(), 10);
               const h = parseFloat(String(heightCm).trim());
               const w = parseFloat(String(weightKg).trim());
-
               return {
                 email: email.trim(),
                 password,
@@ -187,63 +190,29 @@ export default function ZoneWise() {
     setAuthed(false);
     setMe(null);
     setData(null);
-    setMetricType("");
     setStatus("");
+
     setEmail("");
     setPassword("");
     setMode("login");
+
     setName("");
     setGender("male");
     setAge("");
     setHeightCm("");
     setWeightKg("");
+
     setConfirmPassword("");
     setShowPassword(false);
     setShowConfirmPassword(false);
-
   }
-
-  // Dashboard computed values
-  const metricTypes = useMemo(() => Object.keys(data?.series || {}).sort(), [data]);
-
-  useEffect(() => {
-    if (!metricType && metricTypes.length) setMetricType(metricTypes[0]);
-    if (metricType && metricTypes.length && !metricTypes.includes(metricType)) {
-      setMetricType(metricTypes[0] || "");
-    }
-  }, [metricTypes, metricType]);
-
-  const series = useMemo(() => {
-    const rows = data?.series?.[metricType] || [];
-    const isSteps = metricType?.toLowerCase() === "steps";
-    const valueKey = isSteps ? "sum_value" : "avg_value";
-    return rows.map((r) => ({ day: r.day, value: r[valueKey], unit: r.unit || "" }));
-  }, [data, metricType]);
-
-  const unit = series?.[0]?.unit || "";
-
-  const kpis = useMemo(() => {
-    if (!series.length) return null;
-
-    const last = series[series.length - 1]?.value;
-    const nums = series.map((r) => Number(r.value)).filter(Number.isFinite);
-
-    const avg = nums.reduce((a, b) => a + b, 0) / Math.max(1, nums.length);
-    const min = nums.length ? Math.min(...nums) : null;
-    const max = nums.length ? Math.max(...nums) : null;
-
-    return { last: fmt(last), avg: fmt(avg), min: fmt(min), max: fmt(max) };
-  }, [series]);
-
-  const isSteps = metricType?.toLowerCase() === "steps";
-  const Chart = isSteps ? BarChartView : LineChartView;
 
   return (
     <div style={styles.page}>
       <header style={styles.header}>
         <div>
           <div style={styles.title}>ZoneWise</div>
-          <div style={styles.subtitle}>Daily metrics dashboard (from your Postgres)</div>
+          <div style={styles.subtitle}>Daily heart rate dashboard (from your Postgres)</div>
         </div>
         <Link to="/rootwise" style={styles.linkBtn}>
           ← Back to RootWise
@@ -325,7 +294,7 @@ export default function ZoneWise() {
                 autoComplete="email"
               />
 
-              {/* Password field with Show/Hide button */}
+              {/* Password */}
               <div style={styles.passwordRow}>
                 <input
                   style={{ ...styles.input, margin: 0 }}
@@ -335,16 +304,12 @@ export default function ZoneWise() {
                   type={showPassword ? "text" : "password"}
                   autoComplete={mode === "register" ? "new-password" : "current-password"}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((v) => !v)}
-                  style={styles.showBtn}
-                >
+                <button type="button" onClick={() => setShowPassword((v) => !v)} style={styles.showBtn}>
                   {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
 
-              {/* Confirm password only on register */}
+              {/* Confirm password */}
               {mode === "register" ? (
                 <div style={styles.passwordRow}>
                   <input
@@ -400,7 +365,7 @@ export default function ZoneWise() {
           </div>
         </div>
       ) : (
-        <>
+          <>
           {/* TOP BAR */}
           <div style={{ ...styles.toolbar, marginTop: 12 }}>
             <div style={{ fontSize: 12, opacity: 0.8 }}>
@@ -408,24 +373,13 @@ export default function ZoneWise() {
             </div>
 
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
+              {/* NEW: zones window */}
               <div style={styles.control}>
-                <div style={styles.label}>Range</div>
-                <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={styles.select}>
-                  <option value={7}>Last 7 days</option>
-                  <option value={14}>Last 14 days</option>
-                  <option value={30}>Last 30 days</option>
-                </select>
-              </div>
-
-              <div style={styles.control}>
-                <div style={styles.label}>Metric</div>
-                <select value={metricType} onChange={(e) => setMetricType(e.target.value)} style={styles.select}>
-                  {metricTypes.length === 0 ? <option value="">(none)</option> : null}
-                  {metricTypes.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
+                <div style={styles.label}>Zones window</div>
+                <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} style={styles.select}>
+                  <option value={30}>Last 30 min</option>
+                  <option value={60}>Last 60 min</option>
+                  <option value={90}>Last 90 min</option>
                 </select>
               </div>
 
@@ -438,81 +392,34 @@ export default function ZoneWise() {
           </div>
 
           {/* DASHBOARD */}
-          {isLoading && !data ? (
-            <div style={styles.empty}>Loading your dashboard…</div>
-          ) : kpis ? (
-            <div style={styles.kpiGrid}>
-              <KpiCard title="Last value" value={`${kpis.last}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title={`${days}-day avg`} value={`${kpis.avg}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title="Min" value={`${kpis.min}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title="Max" value={`${kpis.max}${unit ? ` ${unit}` : ""}`} />
-            </div>
-          ) : (
-            <div style={styles.empty}>
-              No data for this user yet. Insert rows into <code>public.metrics</code> for this user_id.
-            </div>
-          )}
-
-          <div style={styles.card}>
-            <div style={styles.cardHeader}>
-              <div style={styles.cardTitle}>
-                {metricType || "Metric"} {unit ? <span style={{ opacity: 0.6 }}>({unit})</span> : null}
+          {/* NEW: Heart-rate zones bar chart (requires `zones` state fetched from /metrics/heart_zones/me) */}
+          {zones?.zones?.length ? (
+            <div style={styles.card}>
+              <div style={styles.cardHeader}>
+                <div style={styles.cardTitle}>Heart Rate Zones</div>
+                <div style={styles.cardHint}>
+                  Minutes in each zone (last {zones.minutes_window} min, max HR {zones.max_hr})
+                </div>
               </div>
-              <div style={styles.cardHint}>
-                {isSteps ? "Bars show daily total steps." : "Line shows daily average value."}
+
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={zones.zones} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <Tooltip />
+                    <Bar dataKey="minutes" />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
-
-            <div style={{ height: 320 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <Chart data={series} />
-              </ResponsiveContainer>
-            </div>
-          </div>
+          ) : null}
         </>
+
       )}
     </div>
   );
-}
-
-function LineChartView({ data }) {
-  return (
-    <LineChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-      <YAxis tick={{ fontSize: 12 }} />
-      <Tooltip />
-      <Line type="monotone" dataKey="value" strokeWidth={3} dot={{ r: 3 }} />
-    </LineChart>
-  );
-}
-
-function BarChartView({ data }) {
-  return (
-    <BarChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-      <YAxis tick={{ fontSize: 12 }} />
-      <Tooltip />
-      <Bar dataKey="value" />
-    </BarChart>
-  );
-}
-
-function KpiCard({ title, value }) {
-  return (
-    <div style={styles.kpiCard}>
-      <div style={styles.kpiTitle}>{title}</div>
-      <div style={styles.kpiValue}>{value}</div>
-    </div>
-  );
-}
-
-function fmt(x) {
-  if (x === null || x === undefined) return "—";
-  const n = Number(x);
-  if (!Number.isFinite(n)) return String(x);
-  return (Math.round(n * 100) / 100).toString();
 }
 
 const styles = {
@@ -543,7 +450,7 @@ const styles = {
     color: "white",
     fontWeight: 800,
     fontSize: 13,
-    height: 17,
+    height: 20,
   },
 
   authWrap: { marginTop: 18, display: "flex", justifyContent: "center" },
@@ -651,6 +558,7 @@ const styles = {
     borderRadius: 16,
     background: "rgba(255,255,255,0.95)",
   },
+
   row2: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -678,5 +586,4 @@ const styles = {
     cursor: "pointer",
     whiteSpace: "nowrap",
   },
-
 };
