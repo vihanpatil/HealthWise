@@ -7,7 +7,9 @@ First create a .env file in your root directory
 ```
 NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
-DATABASE_URL=postgresql+psycopg2://postgres@localhost:5432/zonewise
+DATABASE_URL={CONTACT MAHYAR VAHABI FOR THIS INFO}
+JWT_ALG=HS256
+JWT_EXPIRE_HOURS=1
 ```
 
 ### 2. Creating Virtual Environment
