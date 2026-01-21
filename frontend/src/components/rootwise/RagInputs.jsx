@@ -209,7 +209,7 @@ const styles = {
   label: { fontSize: 12, fontWeight: 800, opacity: 0.75, marginBottom: 6 },
   subLabel: { fontSize: 12, fontWeight: 800, opacity: 0.65, marginTop: 10, marginBottom: 6 },
   input: {
-    width: "100%",
+    width: "97%",
     padding: "10px 12px",
     borderRadius: 12,
     border: "1px solid rgba(0,0,0,0.12)",

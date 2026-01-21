@@ -1,7 +1,5 @@
-import { apiJson } from "./client";
+import { apiFetch } from "./client";
 
-export const zonewiseApi = {
-  listUsers: () => apiJson("/api/zonewise/users"),
-  dailyMetrics: (userId, days = 7) =>
-    apiJson(`/api/zonewise/metrics/daily?user_id=${encodeURIComponent(userId)}&days=${days}`),
-};
+export async function dailyMetricsMe(days = 7) {
+  return apiFetch(`/api/zonewise/metrics/daily/me?days=${days}`);
+}

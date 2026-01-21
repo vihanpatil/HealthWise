@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,291 +9,416 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import { zonewiseApi } from "../api/zonewise";
-
-const LS_USER_ID_KEY = "zonewise_user_id";
+import { apiJson, getToken, setToken, clearToken } from "../api/client";
 
 export default function ZoneWise() {
-  const [userIdInput, setUserIdInput] = useState("");
-  const [registeredUserId, setRegisteredUserId] = useState(() => localStorage.getItem(LS_USER_ID_KEY) || "");
+  // auth state
+  const [authed, setAuthed] = useState(false);
+  const [me, setMe] = useState(null);
 
-  const [days, setDays] = useState(7);
-  const [data, setData] = useState(null);
+  // auth form
+  const [mode, setMode] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("male");
+  const [age, setAge] = useState("");
+  const [heightCm, setHeightCm] = useState("");
+  const [weightKg, setWeightKg] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // shared UI state
   const [status, setStatus] = useState("");
-  const [hasAttemptedRegister, setHasAttemptedRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [metricType, setMetricType] = useState("");
+  // dashboard state (heart_rate only)
+  const [minutes, setMinutes] = useState(60);
+  const [zones, setZones] = useState(null);
 
-  const showDashboard = Boolean(registeredUserId && data);
 
-  async function register() {
-    setHasAttemptedRegister(true);
-    setStatus("");
+  // On mount: if token exists, verify it and load dashboard
+  useEffect(() => {
+    const token = getToken();
+    if (!token) return;
 
-    const candidate = (userIdInput || "").trim();
+    let mounted = true;
+    (async () => {
+      try {
+        const who = await apiJson("/api/auth/me");
+        if (!mounted) return;
+        setMe(who);
+        setAuthed(true);
+      } catch {
+        clearToken();
+        if (!mounted) return;
+        setMe(null);
+        setAuthed(false);
+      }
+    })();
 
-    // 1) Validate ONLY on register click
-    if (!isUuid(candidate)) {
-      setRegisteredUserId("");
-      setData(null);
-      localStorage.removeItem(LS_USER_ID_KEY);
-      setStatus("❌ Please enter a valid User ID (UUID).");
-      return;
-    }
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
-    // 2) Try to load metrics (acts as existence check)
-    setIsLoading(true);
-    setStatus("Loading…");
+  // Fetch heart-rate zones whenever authed or minutes changes
+useEffect(() => {
+  if (!authed) return;
 
+  let mounted = true;
+  (async () => {
     try {
-      const res = await zonewiseApi.dailyMetrics(candidate, days);
-      const hasAnySeries = Object.keys(res?.series || {}).length > 0;
+      const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
+      if (!mounted) return;
+      setZones(res);
+    } catch (e) {
+      if (!mounted) return;
+      setZones(null);
+      setStatus(`❌ ${String(e.message || e)}`);
+    }
+  })();
 
-      if (!hasAnySeries) {
-        setRegisteredUserId("");
-        setData(null);
-        localStorage.removeItem(LS_USER_ID_KEY);
-        setStatus("❌ User not found. Double-check your UUID.");
+  return () => {
+    mounted = false;
+  };
+}, [authed, minutes]);
+
+
+  async function onSubmitAuth(e) {
+    e.preventDefault();
+
+    setStatus("");
+    setIsLoading(true);
+
+    // Register-only validation
+    if (mode === "register") {
+      if (password !== confirmPassword) {
+        setStatus("❌ Passwords do not match.");
+        setIsLoading(false);
         return;
       }
 
-      // 3) Success: register + show dashboard
-      setRegisteredUserId(candidate);
-      localStorage.setItem(LS_USER_ID_KEY, candidate);
+      const a = parseInt(String(age).trim(), 10);
+      const h = parseFloat(String(heightCm).trim());
+      const w = parseFloat(String(weightKg).trim());
 
-      setData(res);
+      if (!name.trim()) {
+        setStatus("❌ Name is required.");
+        setIsLoading(false);
+        return;
+      }
+      if (!email.trim()) {
+        setStatus("❌ Email is required.");
+        setIsLoading(false);
+        return;
+      }
+      if (!Number.isFinite(a) || a < 1) {
+        setStatus("❌ Age must be a valid number.");
+        setIsLoading(false);
+        return;
+      }
+      if (!Number.isFinite(h) || h <= 0) {
+        setStatus("❌ Height must be a valid number (e.g. 175 or 175.5).");
+        setIsLoading(false);
+        return;
+      }
+      if (!Number.isFinite(w) || w <= 0) {
+        setStatus("❌ Weight must be a valid number (e.g. 72 or 72.3).");
+        setIsLoading(false);
+        return;
+      }
+      if (gender !== "male" && gender !== "female") {
+        setStatus("❌ Gender must be male or female.");
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    try {
+      const payload =
+        mode === "register"
+          ? (() => {
+              const a = parseInt(String(age).trim(), 10);
+              const h = parseFloat(String(heightCm).trim());
+              const w = parseFloat(String(weightKg).trim());
+              return {
+                email: email.trim(),
+                password,
+                name: name.trim(),
+                gender,
+                age: a,
+                height_cm: h,
+                weight_kg: w,
+              };
+            })()
+          : {
+              email: email.trim(),
+              password,
+            };
+
+      const res =
+        mode === "register"
+          ? await apiJson("/api/auth/register", "POST", payload)
+          : await apiJson("/api/auth/login", "POST", payload);
+
+      if (!res?.token) {
+        throw new Error("Missing token from server");
+      }
+
+      setToken(res.token);
+
+      const who = await apiJson("/api/auth/me");
+      setMe(who);
+      setAuthed(true);
       setStatus("");
-    } catch (e) {
-      const msg = String(e);
-      const isNotFound = msg.includes("404") || msg.toLowerCase().includes("not found");
-
-      setRegisteredUserId("");
-      setData(null);
-      localStorage.removeItem(LS_USER_ID_KEY);
-
-      setStatus(isNotFound ? "❌ User not found. Double-check your UUID." : `❌ ${msg}`);
+    } catch (err) {
+      clearToken();
+      setAuthed(false);
+      setMe(null);
+      setStatus(`❌ ${String(err.message || err)}`);
     } finally {
       setIsLoading(false);
     }
   }
 
-  const metricTypes = useMemo(() => Object.keys(data?.series || {}).sort(), [data]);
+  function onLogout() {
+    clearToken();
+    setAuthed(false);
+    setMe(null);
+    setData(null);
+    setStatus("");
 
-  useEffect(() => {
-    if (!metricType && metricTypes.length) setMetricType(metricTypes[0]);
-    if (metricType && metricTypes.length && !metricTypes.includes(metricType)) {
-      setMetricType(metricTypes[0] || "");
-    }
-  }, [metricTypes, metricType]);
+    setEmail("");
+    setPassword("");
+    setMode("login");
 
-  const series = useMemo(() => {
-    const rows = data?.series?.[metricType] || [];
-    const isSteps = metricType?.toLowerCase() === "steps";
-    const valueKey = isSteps ? "sum_value" : "avg_value";
-    return rows.map((r) => ({ day: r.day, value: r[valueKey], unit: r.unit || "" }));
-  }, [data, metricType]);
+    setName("");
+    setGender("male");
+    setAge("");
+    setHeightCm("");
+    setWeightKg("");
 
-  const unit = series?.[0]?.unit || "";
-
-  const kpis = useMemo(() => {
-    if (!series.length) return null;
-    const last = series[series.length - 1]?.value;
-    const nums = series.map((r) => Number(r.value)).filter(Number.isFinite);
-
-    const avg = nums.reduce((a, b) => a + b, 0) / Math.max(1, nums.length);
-    const min = nums.length ? Math.min(...nums) : null;
-    const max = nums.length ? Math.max(...nums) : null;
-
-    return { last: fmt(last), avg: fmt(avg), min: fmt(min), max: fmt(max) };
-  }, [series]);
-
-  const isSteps = metricType?.toLowerCase() === "steps";
-  const Chart = isSteps ? BarChartView : LineChartView;
+    setConfirmPassword("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+  }
 
   return (
     <div style={styles.page}>
       <header style={styles.header}>
         <div>
           <div style={styles.title}>ZoneWise</div>
-          <div style={styles.subtitle}>Daily metrics dashboard (from your Postgres)</div>
+          <div style={styles.subtitle}>Daily heart rate dashboard (from your Postgres)</div>
         </div>
         <Link to="/rootwise" style={styles.linkBtn}>
           ← Back to RootWise
         </Link>
       </header>
 
-      {/* Only show input+register until successful registration */}
-      <div style={styles.toolbar}>
-        <div style={{ ...styles.control, flex: 1, minWidth: 320 }}>
-          <div style={styles.label}>User ID (UUID)</div>
+      {/* AUTH GATE */}
+      {!authed ? (
+        <div style={styles.authWrap}>
+          <div style={styles.authCard}>
+            <div style={styles.authTitle}>{mode === "register" ? "Create account" : "Login"}</div>
 
-          <div style={styles.registerRow}>
-            <input
-              value={userIdInput}
-              onChange={(e) => setUserIdInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") register(); // enter always triggers (validates inside)
-              }}
-              placeholder="Paste your UUID"
-              style={{
-                ...styles.input,
-                height: styles.btnHeight,
-                border:
-                  userIdInput.length === 0
-                    ? styles.input.border
-                    : isUuid(userIdInput.trim())
-                    ? "1px solid rgba(0,0,0,0.12)"
-                    : "1px solid rgba(220,0,0,0.35)",
-              }}
-            />
+            <form onSubmit={onSubmitAuth} style={{ display: "grid", gap: 10 }}>
+              {mode === "register" ? (
+                <>
+                  <input
+                    style={styles.input}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Full name"
+                    autoComplete="name"
+                  />
 
-            {/* ALWAYS ACTIVE */}
-            <button
-              onClick={register}
-              style={{
-                ...styles.primaryBtn,
-                height: styles.btnHeight,
-                minWidth: 130,
-                opacity: isLoading ? 0.7 : 1,
-                cursor: isLoading ? "wait" : "pointer",
-              }}
-            >
-              {isLoading ? "Loading…" : "Register"}
-            </button>
+                  <div style={styles.row2}>
+                    <div>
+                      <div style={styles.smallLabel}>Gender</div>
+                      <select style={styles.select} value={gender} onChange={(e) => setGender(e.target.value)}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <div style={styles.smallLabel}>Age</div>
+                      <input
+                        style={styles.input}
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        placeholder="e.g. 23"
+                        inputMode="numeric"
+                      />
+                    </div>
+                  </div>
+
+                  <div style={styles.row2}>
+                    <div>
+                      <div style={styles.smallLabel}>Height (cm)</div>
+                      <input
+                        style={styles.input}
+                        type="number"
+                        step="any"
+                        value={heightCm}
+                        onChange={(e) => setHeightCm(e.target.value)}
+                        placeholder="e.g. 175"
+                        inputMode="decimal"
+                      />
+                    </div>
+                    <div>
+                      <div style={styles.smallLabel}>Weight (kg)</div>
+                      <input
+                        style={styles.input}
+                        type="number"
+                        step="any"
+                        value={weightKg}
+                        onChange={(e) => setWeightKg(e.target.value)}
+                        placeholder="e.g. 72"
+                        inputMode="decimal"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : null}
+
+              <input
+                style={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                autoComplete="email"
+              />
+
+              {/* Password */}
+              <div style={styles.passwordRow}>
+                <input
+                  style={{ ...styles.input, margin: 0 }}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete={mode === "register" ? "new-password" : "current-password"}
+                />
+                <button type="button" onClick={() => setShowPassword((v) => !v)} style={styles.showBtn}>
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+
+              {/* Confirm password */}
+              {mode === "register" ? (
+                <div style={styles.passwordRow}>
+                  <input
+                    style={{ ...styles.input, margin: 0 }}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((v) => !v)}
+                    style={styles.showBtn}
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              ) : null}
+
+              <button
+                style={{
+                  ...styles.primaryBtn,
+                  height: styles.btnHeight,
+                  opacity: isLoading ? 0.7 : 1,
+                  cursor: isLoading ? "wait" : "pointer",
+                }}
+                type="submit"
+              >
+                {isLoading ? "Please wait…" : mode === "register" ? "Create account" : "Login"}
+              </button>
+            </form>
+
+            <div style={{ marginTop: 10, fontSize: 12, opacity: 0.8 }}>
+              {mode === "register" ? (
+                <>
+                  Already have an account?{" "}
+                  <button style={styles.linkInlineBtn} onClick={() => setMode("login")} type="button">
+                    Login
+                  </button>
+                </>
+              ) : (
+                <>
+                  New here?{" "}
+                  <button style={styles.linkInlineBtn} onClick={() => setMode("register")} type="button">
+                    Create account
+                  </button>
+                </>
+              )}
+            </div>
+
+            {status ? <div style={styles.status}>{status}</div> : null}
           </div>
-
-          <div style={{ fontSize: 11, opacity: 0.65, marginTop: 6 }}>
-            Tip: copy the UUID from your DB (public.users.id). Stored locally in this browser.
-          </div>
-
-          {/* No messages while typing; only after they click register */}
-          {hasAttemptedRegister && status ? (
-            <div style={{ fontSize: 12, opacity: 0.85, marginTop: 10 }}>{status}</div>
-          ) : null}
         </div>
-      </div>
-
-      {/* Dashboard renders ONLY after success */}
-      {showDashboard ? (
-        <>
+      ) : (
+          <>
+          {/* TOP BAR */}
           <div style={{ ...styles.toolbar, marginTop: 12 }}>
-            <div style={styles.control}>
-              <div style={styles.label}>Range</div>
-              <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={styles.select}>
-                <option value={7}>Last 7 days</option>
-                <option value={14}>Last 14 days</option>
-                <option value={30}>Last 30 days</option>
-              </select>
+            <div style={{ fontSize: 12, opacity: 0.8 }}>
+              Logged in as <b>{me?.email || "—"}</b>
             </div>
 
-            <div style={styles.control}>
-              <div style={styles.label}>Metric</div>
-              <select value={metricType} onChange={(e) => setMetricType(e.target.value)} style={styles.select}>
-                {metricTypes.length === 0 ? <option value="">(none)</option> : null}
-                {metricTypes.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
+            <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
+              {/* NEW: zones window */}
+              <div style={styles.control}>
+                <div style={styles.label}>Zones window</div>
+                <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} style={styles.select}>
+                  <option value={30}>Last 30 min</option>
+                  <option value={60}>Last 60 min</option>
+                  <option value={90}>Last 90 min</option>
+                </select>
+              </div>
+
+              <button style={{ ...styles.secondaryBtn, height: styles.btnHeight }} onClick={onLogout}>
+                Log out
+              </button>
             </div>
 
-            <button
-              onClick={() => {
-                localStorage.removeItem(LS_USER_ID_KEY);
-                setRegisteredUserId("");
-                setData(null);
-                setMetricType("");
-                setHasAttemptedRegister(false);
-                setStatus("");
-                setUserIdInput("");
-              }}
-              style={{ ...styles.secondaryBtn, height: styles.btnHeight }}
-            >
-              Log out
-            </button>
+            {status ? <div style={{ fontSize: 12, opacity: 0.8 }}>{status}</div> : null}
           </div>
 
-          {kpis ? (
-            <div style={styles.kpiGrid}>
-              <KpiCard title="Last value" value={`${kpis.last}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title={`${days}-day avg`} value={`${kpis.avg}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title="Min" value={`${kpis.min}${unit ? ` ${unit}` : ""}`} />
-              <KpiCard title="Max" value={`${kpis.max}${unit ? ` ${unit}` : ""}`} />
-            </div>
-          ) : (
-            <div style={styles.empty}>
-              No data for this user yet. Insert rows into <code>public.metrics</code> for this user_id.
-            </div>
-          )}
-
-          <div style={styles.card}>
-            <div style={styles.cardHeader}>
-              <div style={styles.cardTitle}>
-                {metricType || "Metric"} {unit ? <span style={{ opacity: 0.6 }}>({unit})</span> : null}
+          {/* DASHBOARD */}
+          {/* NEW: Heart-rate zones bar chart (requires `zones` state fetched from /metrics/heart_zones/me) */}
+          {zones?.zones?.length ? (
+            <div style={styles.card}>
+              <div style={styles.cardHeader}>
+                <div style={styles.cardTitle}>Heart Rate Zones</div>
+                <div style={styles.cardHint}>
+                  Minutes in each zone (last {zones.minutes_window} min, max HR {zones.max_hr})
+                </div>
               </div>
-              <div style={styles.cardHint}>
-                {isSteps ? "Bars show daily total steps." : "Line shows daily average value."}
+
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={zones.zones} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <Tooltip />
+                    <Bar dataKey="minutes" />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
-
-            <div style={{ height: 320 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <Chart data={series} />
-              </ResponsiveContainer>
-            </div>
-          </div>
+          ) : null}
         </>
-      ) : null}
+
+      )}
     </div>
-  );
-}
-
-function LineChartView({ data }) {
-  return (
-    <LineChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-      <YAxis tick={{ fontSize: 12 }} />
-      <Tooltip />
-      <Line type="monotone" dataKey="value" strokeWidth={3} dot={{ r: 3 }} />
-    </LineChart>
-  );
-}
-
-function BarChartView({ data }) {
-  return (
-    <BarChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-      <YAxis tick={{ fontSize: 12 }} />
-      <Tooltip />
-      <Bar dataKey="value" />
-    </BarChart>
-  );
-}
-
-function KpiCard({ title, value }) {
-  return (
-    <div style={styles.kpiCard}>
-      <div style={styles.kpiTitle}>{title}</div>
-      <div style={styles.kpiValue}>{value}</div>
-    </div>
-  );
-}
-
-function fmt(x) {
-  if (x === null || x === undefined) return "—";
-  const n = Number(x);
-  if (!Number.isFinite(n)) return String(x);
-  return (Math.round(n * 100) / 100).toString();
-}
-
-function isUuid(s) {
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-    (s || "").trim()
   );
 }
 
@@ -327,11 +450,35 @@ const styles = {
     color: "white",
     fontWeight: 800,
     fontSize: 13,
-    height: 17,
+    height: 20,
   },
+
+  authWrap: { marginTop: 18, display: "flex", justifyContent: "center" },
+  authCard: {
+    width: "100%",
+    maxWidth: 520,
+    border: "1px solid rgba(0,0,0,0.08)",
+    borderRadius: 16,
+    padding: 16,
+    background: "rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+  },
+  authTitle: { fontSize: 18, fontWeight: 900, marginBottom: 12 },
+  status: { marginTop: 10, fontSize: 12, opacity: 0.9 },
+
+  linkInlineBtn: {
+    border: "none",
+    background: "transparent",
+    color: "#2D3A2E",
+    fontWeight: 900,
+    cursor: "pointer",
+    padding: 0,
+  },
+
   toolbar: {
     marginTop: 12,
     display: "flex",
+    justifyContent: "space-between",
     gap: 10,
     alignItems: "flex-end",
     flexWrap: "wrap",
@@ -340,10 +487,9 @@ const styles = {
     border: "1px solid rgba(0,0,0,0.08)",
     background: "linear-gradient(180deg, rgba(242,246,234,1) 0%, rgba(255,255,255,1) 100%)",
   },
+
   control: { minWidth: 180 },
   label: { fontSize: 12, fontWeight: 800, opacity: 0.75, marginBottom: 6 },
-
-  registerRow: { display: "flex", gap: 10, alignItems: "center" },
 
   input: {
     width: "100%",
@@ -411,5 +557,33 @@ const styles = {
     border: "1px solid rgba(0,0,0,0.08)",
     borderRadius: 16,
     background: "rgba(255,255,255,0.95)",
+  },
+
+  row2: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 10,
+  },
+  smallLabel: {
+    fontSize: 11,
+    fontWeight: 800,
+    opacity: 0.7,
+    marginBottom: 6,
+  },
+  passwordRow: {
+    display: "flex",
+    gap: 10,
+    alignItems: "center",
+  },
+  showBtn: {
+    height: 42,
+    padding: "0 12px",
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.12)",
+    background: "#F2F6EA",
+    color: "#1c2a1f",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
   },
 };
