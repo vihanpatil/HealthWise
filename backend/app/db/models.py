@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Float, String, ForeignKey
+from sqlalchemy import Column, DateTime, Float, Integer, String, ForeignKey, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
 import uuid
@@ -21,6 +21,11 @@ class User(Base):
     __table_args__ = {"schema": "public"}
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = Column(String)
+    name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    password_hash = Column(String, nullable=False)
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    gender = Column(String, nullable=False)           # "male" | "female"
+    weight_kg = Column(Float, nullable=False)         # store kg
+    height_cm = Column(Float, nullable=False)         # store cm
+    age = Column(Integer, nullable=False)

@@ -11,76 +11,199 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import { zonewiseApi } from "../api/zonewise";
-
-const LS_USER_ID_KEY = "zonewise_user_id";
+import { apiJson, getToken, setToken, clearToken } from "../api/client";
 
 export default function ZoneWise() {
-  const [userIdInput, setUserIdInput] = useState("");
-  const [registeredUserId, setRegisteredUserId] = useState(() => localStorage.getItem(LS_USER_ID_KEY) || "");
+  // auth state
+  const [authed, setAuthed] = useState(false);
+  const [me, setMe] = useState(null);
 
-  const [days, setDays] = useState(7);
-  const [data, setData] = useState(null);
+  // auth form
+  const [mode, setMode] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [heightCm, setHeightCm] = useState("");
+  const [weightKg, setWeightKg] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // shared UI state
   const [status, setStatus] = useState("");
-  const [hasAttemptedRegister, setHasAttemptedRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // dashboard state
+  const [days, setDays] = useState(7);
+  const [data, setData] = useState(null);
   const [metricType, setMetricType] = useState("");
 
-  const showDashboard = Boolean(registeredUserId && data);
+  // On mount: if token exists, verify it and load dashboard
+  useEffect(() => {
+    const token = getToken();
+    if (!token) return;
 
-  async function register() {
-    setHasAttemptedRegister(true);
-    setStatus("");
+    let mounted = true;
+    (async () => {
+      try {
+        const who = await apiJson("/api/auth/me");
+        if (!mounted) return;
+        setMe(who);
+        setAuthed(true);
+      } catch {
+        // invalid token
+        clearToken();
+        if (!mounted) return;
+        setMe(null);
+        setAuthed(false);
+      }
+    })();
 
-    const candidate = (userIdInput || "").trim();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
-    // 1) Validate ONLY on register click
-    if (!isUuid(candidate)) {
-      setRegisteredUserId("");
-      setData(null);
-      localStorage.removeItem(LS_USER_ID_KEY);
-      setStatus("❌ Please enter a valid User ID (UUID).");
-      return;
-    }
+  // Whenever we become authed OR change days, load metrics (me endpoint)
+  useEffect(() => {
+    if (!authed) return;
 
-    // 2) Try to load metrics (acts as existence check)
-    setIsLoading(true);
-    setStatus("Loading…");
+    let mounted = true;
+    (async () => {
+      setIsLoading(true);
+      setStatus("");
+      try {
+        const res = await apiJson(`/api/zonewise/metrics/daily/me?days=${days}`);
+        if (!mounted) return;
+        setData(res);
 
-    try {
-      const res = await zonewiseApi.dailyMetrics(candidate, days);
-      const hasAnySeries = Object.keys(res?.series || {}).length > 0;
-
-      if (!hasAnySeries) {
-        setRegisteredUserId("");
+        // pick default metric type
+        const keys = Object.keys(res?.series || {}).sort();
+        setMetricType((prev) => (prev && keys.includes(prev) ? prev : keys[0] || ""));
+      } catch (e) {
+        if (!mounted) return;
         setData(null);
-        localStorage.removeItem(LS_USER_ID_KEY);
-        setStatus("❌ User not found. Double-check your UUID.");
+        setStatus(`❌ ${String(e.message || e)}`);
+      } finally {
+        if (!mounted) return;
+        setIsLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, [authed, days]);
+
+  async function onSubmitAuth(e) {
+    e.preventDefault();
+
+    setStatus("");
+    setIsLoading(true);
+
+    // Register-only validation
+    if (mode === "register") {
+      if (password !== confirmPassword) {
+        setStatus("❌ Passwords do not match.");
+        setIsLoading(false);
         return;
       }
 
-      // 3) Success: register + show dashboard
-      setRegisteredUserId(candidate);
-      localStorage.setItem(LS_USER_ID_KEY, candidate);
+      const a = parseInt(String(age).trim(), 10);
+      const h = parseFloat(String(heightCm).trim());
+      const w = parseFloat(String(weightKg).trim());
 
-      setData(res);
+      if (!Number.isFinite(a) || a < 1) {
+        setStatus("❌ Age must be a valid number.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!Number.isFinite(h) || h <= 0) {
+        setStatus("❌ Height must be a valid number (e.g. 175 or 175.5).");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!Number.isFinite(w) || w <= 0) {
+        setStatus("❌ Weight must be a valid number (e.g. 72 or 72.3).");
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    try {
+      const payload =
+        mode === "register"
+          ? (() => {
+              const a = parseInt(String(age).trim(), 10);
+              const h = parseFloat(String(heightCm).trim());
+              const w = parseFloat(String(weightKg).trim());
+
+              return {
+                email: email.trim(),
+                password,
+                name: name.trim(),
+                gender,
+                age: a,
+                height_cm: h,
+                weight_kg: w,
+              };
+            })()
+          : {
+              email: email.trim(),
+              password,
+            };
+
+      const res =
+        mode === "register"
+          ? await apiJson("/api/auth/register", "POST", payload)
+          : await apiJson("/api/auth/login", "POST", payload);
+
+      if (!res?.token) {
+        throw new Error("Missing token from server");
+      }
+
+      setToken(res.token);
+
+      const who = await apiJson("/api/auth/me");
+      setMe(who);
+      setAuthed(true);
       setStatus("");
-    } catch (e) {
-      const msg = String(e);
-      const isNotFound = msg.includes("404") || msg.toLowerCase().includes("not found");
-
-      setRegisteredUserId("");
-      setData(null);
-      localStorage.removeItem(LS_USER_ID_KEY);
-
-      setStatus(isNotFound ? "❌ User not found. Double-check your UUID." : `❌ ${msg}`);
+    } catch (err) {
+      clearToken();
+      setAuthed(false);
+      setMe(null);
+      setStatus(`❌ ${String(err.message || err)}`);
     } finally {
       setIsLoading(false);
     }
   }
 
+  function onLogout() {
+    clearToken();
+    setAuthed(false);
+    setMe(null);
+    setData(null);
+    setMetricType("");
+    setStatus("");
+    setEmail("");
+    setPassword("");
+    setMode("login");
+    setName("");
+    setGender("male");
+    setAge("");
+    setHeightCm("");
+    setWeightKg("");
+    setConfirmPassword("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+
+  }
+
+  // Dashboard computed values
   const metricTypes = useMemo(() => Object.keys(data?.series || {}).sort(), [data]);
 
   useEffect(() => {
@@ -101,6 +224,7 @@ export default function ZoneWise() {
 
   const kpis = useMemo(() => {
     if (!series.length) return null;
+
     const last = series[series.length - 1]?.value;
     const nums = series.map((r) => Number(r.value)).filter(Number.isFinite);
 
@@ -126,99 +250,197 @@ export default function ZoneWise() {
         </Link>
       </header>
 
-      {/* Only show input+register until successful registration */}
-      <div style={styles.toolbar}>
-        <div style={{ ...styles.control, flex: 1, minWidth: 320 }}>
-          <div style={styles.label}>User ID (UUID)</div>
+      {/* AUTH GATE */}
+      {!authed ? (
+        <div style={styles.authWrap}>
+          <div style={styles.authCard}>
+            <div style={styles.authTitle}>{mode === "register" ? "Create account" : "Login"}</div>
 
-          <div style={styles.registerRow}>
-            <input
-              value={userIdInput}
-              onChange={(e) => setUserIdInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") register(); // enter always triggers (validates inside)
-              }}
-              placeholder="Paste your UUID"
-              style={{
-                ...styles.input,
-                height: styles.btnHeight,
-                border:
-                  userIdInput.length === 0
-                    ? styles.input.border
-                    : isUuid(userIdInput.trim())
-                    ? "1px solid rgba(0,0,0,0.12)"
-                    : "1px solid rgba(220,0,0,0.35)",
-              }}
-            />
+            <form onSubmit={onSubmitAuth} style={{ display: "grid", gap: 10 }}>
+              {mode === "register" ? (
+                <>
+                  <input
+                    style={styles.input}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Full name"
+                    autoComplete="name"
+                  />
 
-            {/* ALWAYS ACTIVE */}
-            <button
-              onClick={register}
-              style={{
-                ...styles.primaryBtn,
-                height: styles.btnHeight,
-                minWidth: 130,
-                opacity: isLoading ? 0.7 : 1,
-                cursor: isLoading ? "wait" : "pointer",
-              }}
-            >
-              {isLoading ? "Loading…" : "Register"}
-            </button>
+                  <div style={styles.row2}>
+                    <div>
+                      <div style={styles.smallLabel}>Gender</div>
+                      <select style={styles.select} value={gender} onChange={(e) => setGender(e.target.value)}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <div style={styles.smallLabel}>Age</div>
+                      <input
+                        style={styles.input}
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        placeholder="e.g. 23"
+                        inputMode="numeric"
+                      />
+                    </div>
+                  </div>
+
+                  <div style={styles.row2}>
+                    <div>
+                      <div style={styles.smallLabel}>Height (cm)</div>
+                      <input
+                        style={styles.input}
+                        type="number"
+                        step="any"
+                        value={heightCm}
+                        onChange={(e) => setHeightCm(e.target.value)}
+                        placeholder="e.g. 175"
+                        inputMode="decimal"
+                      />
+                    </div>
+                    <div>
+                      <div style={styles.smallLabel}>Weight (kg)</div>
+                      <input
+                        style={styles.input}
+                        type="number"
+                        step="any"
+                        value={weightKg}
+                        onChange={(e) => setWeightKg(e.target.value)}
+                        placeholder="e.g. 72"
+                        inputMode="decimal"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : null}
+
+              <input
+                style={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                autoComplete="email"
+              />
+
+              {/* Password field with Show/Hide button */}
+              <div style={styles.passwordRow}>
+                <input
+                  style={{ ...styles.input, margin: 0 }}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete={mode === "register" ? "new-password" : "current-password"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  style={styles.showBtn}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+
+              {/* Confirm password only on register */}
+              {mode === "register" ? (
+                <div style={styles.passwordRow}>
+                  <input
+                    style={{ ...styles.input, margin: 0 }}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((v) => !v)}
+                    style={styles.showBtn}
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              ) : null}
+
+              <button
+                style={{
+                  ...styles.primaryBtn,
+                  height: styles.btnHeight,
+                  opacity: isLoading ? 0.7 : 1,
+                  cursor: isLoading ? "wait" : "pointer",
+                }}
+                type="submit"
+              >
+                {isLoading ? "Please wait…" : mode === "register" ? "Create account" : "Login"}
+              </button>
+            </form>
+
+            <div style={{ marginTop: 10, fontSize: 12, opacity: 0.8 }}>
+              {mode === "register" ? (
+                <>
+                  Already have an account?{" "}
+                  <button style={styles.linkInlineBtn} onClick={() => setMode("login")} type="button">
+                    Login
+                  </button>
+                </>
+              ) : (
+                <>
+                  New here?{" "}
+                  <button style={styles.linkInlineBtn} onClick={() => setMode("register")} type="button">
+                    Create account
+                  </button>
+                </>
+              )}
+            </div>
+
+            {status ? <div style={styles.status}>{status}</div> : null}
           </div>
-
-          <div style={{ fontSize: 11, opacity: 0.65, marginTop: 6 }}>
-            Tip: copy the UUID from your DB (public.users.id). Stored locally in this browser.
-          </div>
-
-          {/* No messages while typing; only after they click register */}
-          {hasAttemptedRegister && status ? (
-            <div style={{ fontSize: 12, opacity: 0.85, marginTop: 10 }}>{status}</div>
-          ) : null}
         </div>
-      </div>
-
-      {/* Dashboard renders ONLY after success */}
-      {showDashboard ? (
+      ) : (
         <>
+          {/* TOP BAR */}
           <div style={{ ...styles.toolbar, marginTop: 12 }}>
-            <div style={styles.control}>
-              <div style={styles.label}>Range</div>
-              <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={styles.select}>
-                <option value={7}>Last 7 days</option>
-                <option value={14}>Last 14 days</option>
-                <option value={30}>Last 30 days</option>
-              </select>
+            <div style={{ fontSize: 12, opacity: 0.8 }}>
+              Logged in as <b>{me?.email || "—"}</b>
             </div>
 
-            <div style={styles.control}>
-              <div style={styles.label}>Metric</div>
-              <select value={metricType} onChange={(e) => setMetricType(e.target.value)} style={styles.select}>
-                {metricTypes.length === 0 ? <option value="">(none)</option> : null}
-                {metricTypes.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
+            <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
+              <div style={styles.control}>
+                <div style={styles.label}>Range</div>
+                <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={styles.select}>
+                  <option value={7}>Last 7 days</option>
+                  <option value={14}>Last 14 days</option>
+                  <option value={30}>Last 30 days</option>
+                </select>
+              </div>
+
+              <div style={styles.control}>
+                <div style={styles.label}>Metric</div>
+                <select value={metricType} onChange={(e) => setMetricType(e.target.value)} style={styles.select}>
+                  {metricTypes.length === 0 ? <option value="">(none)</option> : null}
+                  {metricTypes.map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button style={{ ...styles.secondaryBtn, height: styles.btnHeight }} onClick={onLogout}>
+                Log out
+              </button>
             </div>
 
-            <button
-              onClick={() => {
-                localStorage.removeItem(LS_USER_ID_KEY);
-                setRegisteredUserId("");
-                setData(null);
-                setMetricType("");
-                setHasAttemptedRegister(false);
-                setStatus("");
-                setUserIdInput("");
-              }}
-              style={{ ...styles.secondaryBtn, height: styles.btnHeight }}
-            >
-              Log out
-            </button>
+            {status ? <div style={{ fontSize: 12, opacity: 0.8 }}>{status}</div> : null}
           </div>
 
-          {kpis ? (
+          {/* DASHBOARD */}
+          {isLoading && !data ? (
+            <div style={styles.empty}>Loading your dashboard…</div>
+          ) : kpis ? (
             <div style={styles.kpiGrid}>
               <KpiCard title="Last value" value={`${kpis.last}${unit ? ` ${unit}` : ""}`} />
               <KpiCard title={`${days}-day avg`} value={`${kpis.avg}${unit ? ` ${unit}` : ""}`} />
@@ -248,7 +470,7 @@ export default function ZoneWise() {
             </div>
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 }
@@ -293,12 +515,6 @@ function fmt(x) {
   return (Math.round(n * 100) / 100).toString();
 }
 
-function isUuid(s) {
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-    (s || "").trim()
-  );
-}
-
 const styles = {
   btnHeight: 42,
 
@@ -329,9 +545,33 @@ const styles = {
     fontSize: 13,
     height: 17,
   },
+
+  authWrap: { marginTop: 18, display: "flex", justifyContent: "center" },
+  authCard: {
+    width: "100%",
+    maxWidth: 520,
+    border: "1px solid rgba(0,0,0,0.08)",
+    borderRadius: 16,
+    padding: 16,
+    background: "rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+  },
+  authTitle: { fontSize: 18, fontWeight: 900, marginBottom: 12 },
+  status: { marginTop: 10, fontSize: 12, opacity: 0.9 },
+
+  linkInlineBtn: {
+    border: "none",
+    background: "transparent",
+    color: "#2D3A2E",
+    fontWeight: 900,
+    cursor: "pointer",
+    padding: 0,
+  },
+
   toolbar: {
     marginTop: 12,
     display: "flex",
+    justifyContent: "space-between",
     gap: 10,
     alignItems: "flex-end",
     flexWrap: "wrap",
@@ -340,10 +580,9 @@ const styles = {
     border: "1px solid rgba(0,0,0,0.08)",
     background: "linear-gradient(180deg, rgba(242,246,234,1) 0%, rgba(255,255,255,1) 100%)",
   },
+
   control: { minWidth: 180 },
   label: { fontSize: 12, fontWeight: 800, opacity: 0.75, marginBottom: 6 },
-
-  registerRow: { display: "flex", gap: 10, alignItems: "center" },
 
   input: {
     width: "100%",
@@ -412,4 +651,32 @@ const styles = {
     borderRadius: 16,
     background: "rgba(255,255,255,0.95)",
   },
+  row2: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 10,
+  },
+  smallLabel: {
+    fontSize: 11,
+    fontWeight: 800,
+    opacity: 0.7,
+    marginBottom: 6,
+  },
+  passwordRow: {
+    display: "flex",
+    gap: 10,
+    alignItems: "center",
+  },
+  showBtn: {
+    height: 42,
+    padding: "0 12px",
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.12)",
+    background: "#F2F6EA",
+    color: "#1c2a1f",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  },
+
 };
