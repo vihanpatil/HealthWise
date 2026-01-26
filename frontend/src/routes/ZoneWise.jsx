@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+// frontend/src/routes/ZoneWise.jsx
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   XAxis,
@@ -8,8 +9,11 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  Cell,
 } from "recharts";
 import { apiJson, getToken, setToken, clearToken } from "../api/client";
+import ZoneChat from "../components/zonewise/Chat";
+
 
 export default function ZoneWise() {
   // auth state
@@ -39,6 +43,26 @@ export default function ZoneWise() {
   const [minutes, setMinutes] = useState(60);
   const [zones, setZones] = useState(null);
 
+  const RANK_COLORS = ["#4CAF50", "#8BC34A", "#FFC107", "#FF9800", "#F44336"]; 
+
+  const orderedZones = zones?.zones ?? [];
+
+  const zoneFillByRank = (() => {
+    const sorted = orderedZones
+      .map((z, idx) => ({
+        ...z,
+        _idx: idx,
+        minutes: Number(z.minutes ?? 0),
+        zoneNum: Number(z.zone),
+      }))
+      .sort((a, b) => (b.minutes - a.minutes) || (a.zoneNum - b.zoneNum)); // stable tie-break
+
+    const m = {};
+    sorted.forEach((z, rank) => {
+      m[z.zoneNum] = RANK_COLORS[Math.min(rank, RANK_COLORS.length - 1)];
+    });
+    return m;
+  })();
 
   // On mount: if token exists, verify it and load dashboard
   useEffect(() => {
@@ -189,7 +213,6 @@ useEffect(() => {
     clearToken();
     setAuthed(false);
     setMe(null);
-    setData(null);
     setStatus("");
 
     setEmail("");
@@ -380,6 +403,7 @@ useEffect(() => {
                   <option value={30}>Last 30 min</option>
                   <option value={60}>Last 60 min</option>
                   <option value={90}>Last 90 min</option>
+                  <option value={0}>All time</option>
                 </select>
               </div>
 
@@ -393,30 +417,44 @@ useEffect(() => {
 
           {/* DASHBOARD */}
           {/* NEW: Heart-rate zones bar chart (requires `zones` state fetched from /metrics/heart_zones/me) */}
-          {zones?.zones?.length ? (
-            <div style={styles.card}>
-              <div style={styles.cardHeader}>
-                <div style={styles.cardTitle}>Heart Rate Zones</div>
-                <div style={styles.cardHint}>
-                  Minutes in each zone (last {zones.minutes_window} min, max HR {zones.max_hr})
+          {/* DASHBOARD */}
+          <div style={styles.row2}>
+            {/* left: chart */}
+            {zones?.zones?.length ? (
+              <div style={styles.card}>
+                <div style={styles.cardHeader}>
+                  <div style={styles.cardTitle}>Heart Rate Zones</div>
+                  <div style={styles.cardHint}>
+                    Minutes in each zone ({zones.minutes_window === 0 ? "all time" : `last ${zones.minutes_window} min`}, max HR{" "}
+                    {zones.max_hr})
+                  </div>
+                </div>
+
+                <div style={{ height: 240 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={orderedZones} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="label" tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 12 }} />
+                      <Tooltip />
+                      <Bar dataKey="minutes" radius={[10, 10, 0, 0]}>
+                        {orderedZones.map((d, i) => (
+                          <Cell key={`cell-${i}`} fill={zoneFillByRank[Number(d.zone)] || "#999"} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
+            ) : (
+              <div style={styles.empty}>No zone data yet.</div>
+            )}
 
-              <div style={{ height: 240 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={zones.zones} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="label" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip />
-                    <Bar dataKey="minutes" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          ) : null}
+            {/* right: chat */}
+            <ZoneChat />
+          </div>
+
         </>
-
       )}
     </div>
   );

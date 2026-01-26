@@ -1,3 +1,4 @@
+// frontend/src/routes/RootWise.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Chat from "../components/rootwise/Chat";

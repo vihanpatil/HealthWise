@@ -62,7 +62,7 @@
   },
   {
     "Prompt": "What’s the best way to store fresh herbs to make them last longer?",
-    "Response": "When it comes to storing fresh herbs, it's essential to treat them with care to maximize their lifespan. According to our trusted sources in ./system_data, storing fresh herbs upright in a jar of water, similar to how you would treat flowers, is an excellent approach. Simply trim the stems, place them in a jar of water, and cover loosely with a produce bag. Don't forget to change the water every couple of days for the best results. Additionally, you can also dry or freeze fresh herbs to preserve them for future use. Would you like some tips on how to do that?"
+    "Response": "When it comes to storing fresh herbs, it's essential to treat them with care to maximize their lifespan. According to our trusted sources in ./rootwise_data, storing fresh herbs upright in a jar of water, similar to how you would treat flowers, is an excellent approach. Simply trim the stems, place them in a jar of water, and cover loosely with a produce bag. Don't forget to change the water every couple of days for the best results. Additionally, you can also dry or freeze fresh herbs to preserve them for future use. Would you like some tips on how to do that?"
   },
   {
     "Prompt": "How do I use carrot tops and beet greens so they don’t go to waste?",
