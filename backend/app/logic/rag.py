@@ -1,3 +1,4 @@
+# backend/app/logic/rag.py
 import os
 import threading
 from typing import Optional, List, Dict, Any
@@ -13,7 +14,7 @@ from llama_index.embeddings.nvidia import NVIDIAEmbedding
 _query_engine = None
 _index = None
 _embed_model = None
-_rag_store = "./rootwise_data"
+_rag_store = None
 _lock = threading.Lock()
 _dirty = False
 _embed_dim = None
@@ -26,6 +27,8 @@ def maybe_rebuild():
     global _dirty
     with _lock:
         if _dirty:
+            if not _rag_store:
+                raise RuntimeError("RAG store path not set; cannot rebuild.")
             build_index(_rag_store)
             _dirty = False
 
@@ -55,6 +58,10 @@ def ensure_store_exists(store_path: Optional[str] = None) -> str:
     global _rag_store
     if store_path:
         _rag_store = store_path
+
+    if not _rag_store:
+        raise RuntimeError("RAG store path not set. Pass store_path to ensure_store_exists/build_index.")
+
     os.makedirs(_rag_store, exist_ok=True)
     return _rag_store
 
@@ -76,6 +83,7 @@ def _load_all_documents() -> list:
     ensure_store_exists()
     documents = []
     for fname in os.listdir(_rag_store):
+        
         if not fname.endswith(SUPPORTED_EXTS):
             continue
         full_path = os.path.join(_rag_store, fname)
@@ -90,7 +98,7 @@ def _load_all_documents() -> list:
     return documents
 
 
-def build_index(store_path: str = "./rootwise_data") -> str:
+def build_index(store_path: str) -> str:
     """
     Build (or rebuild) the in-memory index and query engine.
     Thread-safe.
@@ -103,7 +111,7 @@ def build_index(store_path: str = "./rootwise_data") -> str:
         if not docs:
             _query_engine = None
             _index = None
-            return "Error: No valid .txt/.pdf documents found in rootwise_data."
+            return f"Error: No valid .txt/.pdf documents found in {store_path}."
 
         dim = get_embed_dim()
         vector_store = FaissVectorStore(faiss_index=faiss.IndexFlatL2(dim))

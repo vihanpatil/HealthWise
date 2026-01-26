@@ -1,53 +1,82 @@
 # backend/app/logic/zonewise_chat.py
-from pathlib import Path
 from typing import Any, Dict, List
+from pathlib import Path
 
 from app.config import ZONEWISE_DATA
 from app.logic.rag_instance import get_rag
-from app.logic.rootwise import call_nvidia_chat  # reuse same NVIDIA chat helper
-from app.logic.rootwise import _safe_has_good_hits, _format_evidence  # reuse helpers
+from app.logic.rootwise import call_nvidia_chat  # reuse the NVIDIA chat helper
 
 rag_zone = get_rag(str(ZONEWISE_DATA))
+
 
 def initialize_zonewise_rag() -> str:
     ZONEWISE_DATA.mkdir(parents=True, exist_ok=True)
     return rag_zone.build()
 
+
+# ---- local helpers (avoid importing private "_" helpers from rootwise.py) ----
+# def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
+#     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
+#     return len(good) >= 2
+
+
+def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
+    blocks = []
+    for i, h in enumerate(hits):
+        txt = (h.get("text") or "").strip()
+        if not txt:
+            continue
+        if len(txt) > max_chars_per_chunk:
+            txt = txt[:max_chars_per_chunk].rstrip() + "…"
+
+        src = h.get("file") or "unknown"
+        page = h.get("page")
+        page_str = str(page) if page is not None else "?"
+        blocks.append(f"[{i+1}] (source: {src}, page: {page_str})\n{txt}")
+    return "\n\n".join(blocks)
+
+
 def stream_zonewise_response(message: str, history):
     if history is None:
         history = []
 
-    # ensure ZONEWISE index
-    init_msg = rag_zone.ensure_ready()
-    # If still not ready, respond gracefully
-    # (rag_module sets readiness based on internal state)
+    try:
+        init_msg = rag_zone.ensure_ready()
+    except Exception as e:
+        yield history + [(message, f"ZoneWise RAG not ready. Error: {str(e)}")]
+        return
+
     try:
         hits = rag_zone.retrieve(message, top_k=6)
     except Exception as e:
-        yield history + [(message, f"ZoneWise RAG not ready. {init_msg}. Error: {e}")]
+        yield history + [(message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")]
         return
 
     k = len(hits)
 
+    # TODO: uncomment these once we have better data, for now not having this shows the chatbot at least trying to answer prompts
+    
     # agentic retry if weak
-    if not _safe_has_good_hits(hits):
-        reformulated = call_nvidia_chat([
-            {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
-            {"role": "user", "content": message},
-        ])
-        hits = rag_zone.retrieve(reformulated, top_k=6)
-        k = len(hits)
+    # if not _safe_has_good_hits(hits):
+    #     reformulated = call_nvidia_chat([
+    #         {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
+    #         {"role": "user", "content": message},
+    #     ])
+    #     hits = rag_zone.retrieve(reformulated, top_k=6)
+    #     k = len(hits)
 
-    if not _safe_has_good_hits(hits):
-        assistant_text = (
-            "I can’t find strong support for that in the ZoneWise documents currently loaded.\n\n"
-            "If you add the relevant PDF/TXT to system_data/zonewise_data, I’ll answer using only that source."
-        )
-        yield history + [(message, assistant_text)]
-        return
+    # # refuse to invent
+    # if not _safe_has_good_hits(hits):
+    #     assistant_text = (
+    #         "I can’t find strong support for that in the ZoneWise documents currently loaded.\n\n"
+    #         "If you add the relevant PDF/TXT to system_data/zonewise_data, I’ll answer using only that source."
+    #     )
+    #     yield history + [(message, assistant_text)]
+    #     return
 
     evidence = _format_evidence(hits)
 
+    # lightweight recent context (not evidence)
     truncated_history = ""
     if history:
         for user_msg, assistant_msg in history[-2:]:
@@ -66,7 +95,7 @@ def stream_zonewise_response(message: str, history):
     )
 
     user_prompt = (
-        f"RECENT CHAT (context only, not evidence):\n{truncated_history}\n\n"
+        f"RECENT CHAT (context only, not evidence):\n{truncated_history or '(none)'}\n\n"
         f"EVIDENCE (authoritative):\n{evidence}\n\n"
         f"USER QUESTION:\n{message}\n\n"
         "Answer using ONLY the evidence. Keep it short and practical."

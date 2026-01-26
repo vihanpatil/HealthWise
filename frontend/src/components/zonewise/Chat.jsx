@@ -1,3 +1,4 @@
+// frontend/src/components/zonewise/Chat.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { zonewiseApi } from "../../api/zonewise";
 
@@ -73,7 +74,7 @@ export default function ZoneChat() {
       <div style={styles.header}>
         <div>
           <div style={styles.title}>ZoneWise Chat</div>
-          <div style={styles.hint}>Ask questions grounded in your system_data/zonewise_data evidence.</div>
+          <div style={styles.hint}>Ask questions grounded in your zonewise_data evidence.</div>
         </div>
         <button onClick={clear} style={styles.clearBtn} disabled={isStreaming}>Clear</button>
       </div>

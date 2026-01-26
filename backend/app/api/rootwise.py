@@ -120,6 +120,45 @@ def system_files(scope: str = Query("system")):
     return {"ok": True, "files": files}
 
 
+@router.get("/system/file")
+def system_file(name: str = Query(...), scope: str = Query("system")):
+    base_dir = _resolve_scope_dir(scope)
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    # Prevent path traversal
+    safe_name = name.replace("\\", "/").split("/")[-1]
+    target = base_dir / safe_name
+
+    if not target.exists() or not target.is_file():
+        raise HTTPException(status_code=404, detail="File not found.")
+
+    # TXT: return content
+    if safe_name.endswith(".txt"):
+        try:
+            text = target.read_text(errors="ignore")
+        except Exception:
+            text = target.read_bytes().decode("utf-8", errors="ignore")
+        return {"ok": True, "text": text, "preview": ""}
+
+    # PDF: reuse your existing preview renderer but only for system scope if you want.
+    # Minimal: render first page preview for both scopes (same logic you already used)
+    try:
+        from pdf2image import convert_from_path
+        import os
+        import uuid
+
+        images = convert_from_path(str(target), dpi=100)
+        os.makedirs("temp_renders", exist_ok=True)
+
+        img = images[0]
+        img_path = f"temp_renders/{uuid.uuid4().hex}_page_0.png"
+        img.save(img_path, "PNG")
+
+        return {"ok": True, "text": "PDF rendered preview available.", "preview": img_path}
+    except Exception as e:
+        return {"ok": True, "text": f"Error rendering PDF: {str(e)}", "preview": ""}
+
+
 def normalize_history(history):
     # Convert list of tuples -> list of 2-item lists (JSON friendly)
     out = []
