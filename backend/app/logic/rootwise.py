@@ -1,3 +1,4 @@
+# backend/app/logic/rootwise.py
 import os
 import sys
 import shutil
@@ -9,14 +10,14 @@ from typing import List, Optional, Tuple, Any, Dict
 import requests
 from pdf2image import convert_from_path
 
-from app.config import SYSTEM_DATA_DIR, USER_STATE_DIR
+from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic import rag
 
 
 # ----------------------------
 # Globals
 # ----------------------------
-user_rag_file: Optional[str] = None  # stored as filename inside SYSTEM_DATA_DIR (e.g., "MahyarRAG.txt")
+user_rag_file: Optional[str] = None  # stored as filename inside ROOTWISE_DATA (e.g., "MahyarRAG.txt")
 
 SUPPORTED_EXTS = (".txt", ".pdf")
 
@@ -26,15 +27,15 @@ SUPPORTED_EXTS = (".txt", ".pdf")
 # ----------------------------
 def initialize_rootwise_rag() -> str:
     """
-    Build a single unified index from SYSTEM_DATA_DIR.
+    Build a single unified index from ROOTWISE_DATA.
     Call this once on app startup (or after significant doc changes).
     """
-    rag.ensure_store_exists(str(SYSTEM_DATA_DIR))
-    return rag.build_index(str(SYSTEM_DATA_DIR))
+    rag.ensure_store_exists(str(ROOTWISE_DATA))
+    return rag.build_index(str(ROOTWISE_DATA))
 
 
 # ----------------------------
-# User RAG (writes into SYSTEM_DATA_DIR and rebuilds unified index)
+# User RAG (writes into ROOTWISE_DATA and rebuilds unified index)
 # ----------------------------
 def set_user_name(name: str) -> str:
     global user_rag_file
@@ -111,11 +112,11 @@ def handle_image_upload(image_path: str) -> str:
 
 
 # ----------------------------
-# Document uploading (copy into SYSTEM_DATA_DIR, rebuild unified index)
+# Document uploading (copy into ROOTWISE_DATA, rebuild unified index)
 # ----------------------------
 def load_documents(file_objs) -> str:
     """
-    Copies uploaded files into SYSTEM_DATA_DIR and rebuilds the unified index.
+    Copies uploaded files into ROOTWISE_DATA and rebuilds the unified index.
     IMPORTANT: does NOT overwrite the index with only uploaded docs.
     """
     try:
@@ -124,7 +125,7 @@ def load_documents(file_objs) -> str:
         if not isinstance(file_objs, list):
             file_objs = [file_objs]
 
-        SYSTEM_DATA_DIR.mkdir(parents=True, exist_ok=True)
+        ROOTWISE_DATA.mkdir(parents=True, exist_ok=True)
 
         copied_any = False
         for file_obj in file_objs:
@@ -139,7 +140,7 @@ def load_documents(file_objs) -> str:
                 print(f"Skipping unsupported file: {file_name}")
                 continue
 
-            dest_path = SYSTEM_DATA_DIR / file_name
+            dest_path = ROOTWISE_DATA / file_name
             shutil.copyfile(file_obj.name, str(dest_path))
             print(f"Copied file to: {dest_path}")
             copied_any = True
@@ -147,7 +148,7 @@ def load_documents(file_objs) -> str:
         if not copied_any:
             return "No valid documents were uploaded."
 
-        return rag.build_index(str(SYSTEM_DATA_DIR))
+        return rag.build_index(str(ROOTWISE_DATA))
 
     except Exception as e:
         # Keep user-facing message honest
@@ -255,7 +256,7 @@ def stream_response(message: str, history):
     if not rag.is_ready():
         # Try to build index automatically
         try:
-            init_msg = rag.build_index(str(SYSTEM_DATA_DIR))
+            init_msg = rag.build_index(str(ROOTWISE_DATA))
             if not rag.is_ready():
                 updated_history = history + [(message, f"RAG not ready. {init_msg}")]
                 yield updated_history
@@ -288,7 +289,7 @@ def stream_response(message: str, history):
         if not _safe_has_good_hits(hits):
             assistant_text = (
                 "I can’t find strong support for that in the documents currently loaded.\n\n"
-                "If you upload the relevant PDF/TXT (or add it to system_data), I’ll answer using only that source."
+                "If you upload the relevant PDF/TXT (or add it to rootwise_data), I’ll answer using only that source."
             )
             updated_history = history + [(message, assistant_text)]
             yield updated_history
@@ -356,7 +357,7 @@ def stream_response(message: str, history):
 # ----------------------------
 def list_system_data_files() -> List[str]:
     try:
-        rag.ensure_store_exists(str(SYSTEM_DATA_DIR))
+        rag.ensure_store_exists(str(ROOTWISE_DATA))
         return rag.list_rag_files()
     except Exception as e:
         return [f"Error: {e}"]
@@ -370,7 +371,7 @@ def read_selected_file(filename: str) -> Tuple[str, Optional[str]]:
     if not filename:
         return "No file selected.", None
 
-    full_path = SYSTEM_DATA_DIR / filename
+    full_path = ROOTWISE_DATA / filename
     if not full_path.exists():
         return "File not found.", None
 

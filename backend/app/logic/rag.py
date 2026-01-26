@@ -13,7 +13,7 @@ from llama_index.embeddings.nvidia import NVIDIAEmbedding
 _query_engine = None
 _index = None
 _embed_model = None
-_rag_store = "./system_data"
+_rag_store = "./rootwise_data"
 _lock = threading.Lock()
 _dirty = False
 _embed_dim = None
@@ -70,7 +70,7 @@ def list_rag_files() -> List[str]:
 # ---------- Indexing ----------
 def _load_all_documents() -> list:
     """
-    Loads all supported files from system_data into llama_index documents.
+    Loads all supported files from rootwise_data into llama_index documents.
     Skips bad files without failing the whole init.
     """
     ensure_store_exists()
@@ -90,7 +90,7 @@ def _load_all_documents() -> list:
     return documents
 
 
-def build_index(store_path: str = "./system_data") -> str:
+def build_index(store_path: str = "./rootwise_data") -> str:
     """
     Build (or rebuild) the in-memory index and query engine.
     Thread-safe.
@@ -103,7 +103,7 @@ def build_index(store_path: str = "./system_data") -> str:
         if not docs:
             _query_engine = None
             _index = None
-            return "Error: No valid .txt/.pdf documents found in system_data."
+            return "Error: No valid .txt/.pdf documents found in rootwise_data."
 
         dim = get_embed_dim()
         vector_store = FaissVectorStore(faiss_index=faiss.IndexFlatL2(dim))
