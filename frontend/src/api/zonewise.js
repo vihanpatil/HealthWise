@@ -5,6 +5,11 @@ export async function dailyMetricsMe(days = 7) {
   return apiJson(`/api/zonewise/metrics/daily/me?days=${days}`);
 }
 
+export async function heartRateMe(minutes = 60) {
+  return apiJson(`/api/zonewise/metrics/heart_rate/me?minutes=${minutes}`);
+}
+
+
 export const zonewiseApi = {
   streamChat: async ({ message, history, onMessage, onDone, onError }) => {
     try {

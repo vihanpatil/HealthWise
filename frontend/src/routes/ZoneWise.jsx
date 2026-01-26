@@ -40,10 +40,18 @@ export default function ZoneWise() {
   const [isLoading, setIsLoading] = useState(false);
 
   // dashboard state (heart_rate only)
-  const [minutes, setMinutes] = useState(60);
+  const [minutes, setMinutes] = useState(0);
   const [zones, setZones] = useState(null);
 
-  const RANK_COLORS = ["#4CAF50", "#8BC34A", "#FFC107", "#FF9800", "#F44336"]; 
+  const RANK_COLORS = {
+    0: "#90A4AE", // Zone 0 (Resting) – calm gray/blue
+    1: "#4CAF50", // Zone 1 – green
+    2: "#8BC34A", // Zone 2 – light green
+    3: "#FFC107", // Zone 3 – yellow
+    4: "#FF9800", // Zone 4 – orange
+    5: "#F44336", // Zone 5 – red
+  };
+
 
   const orderedZones = zones?.zones ?? [];
 
@@ -233,10 +241,6 @@ useEffect(() => {
   return (
     <div style={styles.page}>
       <header style={styles.header}>
-        <div>
-          <div style={styles.title}>ZoneWise</div>
-          <div style={styles.subtitle}>Daily heart rate dashboard (from your Postgres)</div>
-        </div>
         <Link to="/rootwise" style={styles.linkBtn}>
           ← Back to RootWise
         </Link>
@@ -391,14 +395,17 @@ useEffect(() => {
           <>
           {/* TOP BAR */}
           <div style={{ ...styles.toolbar, marginTop: 12 }}>
-            <div style={{ fontSize: 12, opacity: 0.8 }}>
-              Logged in as <b>{me?.email || "—"}</b>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={styles.logo}>🫀</div>
+              <div>
+                <div style={styles.title}>ZoneWise</div>
+                <div style={{ ...styles.subtitle, lineHeight: 1.15 }}>Heart rate zones & daily physiology insights</div>
+              </div>
             </div>
 
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
               {/* NEW: zones window */}
               <div style={styles.control}>
-                <div style={styles.label}>Zones window</div>
                 <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} style={styles.select}>
                   <option value={30}>Last 30 min</option>
                   <option value={60}>Last 60 min</option>
@@ -489,6 +496,16 @@ const styles = {
     fontWeight: 800,
     fontSize: 13,
     height: 20,
+  },
+  logo: {
+    width: 42,
+    height: 42,
+    borderRadius: 14,
+    display: "grid",
+    placeItems: "center",
+    background: "#E6F0D7",
+    border: "1px solid rgba(0,0,0,0.08)",
+    fontSize: 20,
   },
 
   authWrap: { marginTop: 18, display: "flex", justifyContent: "center" },

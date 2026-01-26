@@ -3,7 +3,7 @@ from fastapi import APIRouter, Query, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from datetime import timedelta
+from datetime import datetime, timedelta
 from uuid import UUID
 import json, asyncio
 
@@ -26,8 +26,8 @@ def heart_zones_me(
     user_uuid = UUID(user_id)
 
     u = db.query(User.age).filter(User.id == user_uuid).first()
-    age = u[0]
-    max_hr = max(160, 220 - (age))
+    age = int(u[0]) if u and u[0] is not None else 30  # fallback
+    max_hr = max(160, 220 - age)
 
     q = (
         db.query(Metric.value)
@@ -43,7 +43,7 @@ def heart_zones_me(
 
     rows = q.all()
 
-    z1 = z2 = z3 = z4 = z5 = 0
+    z0 = z1 = z2 = z3 = z4 = z5 = 0
     for (val,) in rows:
         if val is None:
             continue
@@ -60,6 +60,8 @@ def heart_zones_me(
             z2 += 1
         elif pct >= 0.50:
             z1 += 1
+        else:
+            z0 += 1
 
     return {
         "ok": True,
@@ -67,6 +69,7 @@ def heart_zones_me(
         "minutes_window": minutes,  # 0 means all-time
         "max_hr": max_hr,
         "zones": [
+            {"zone": 0, "label": "Zone 0", "minutes": z0},
             {"zone": 1, "label": "Zone 1", "minutes": z1},
             {"zone": 2, "label": "Zone 2", "minutes": z2},
             {"zone": 3, "label": "Zone 3", "minutes": z3},
@@ -105,3 +108,31 @@ async def chat_stream(payload: dict):
             yield sse("error", {"error": str(e)})
 
     return StreamingResponse(gen(), media_type="text/event-stream")
+
+def heart_rate_series(db: Session, user_id, minutes=60):
+    start = datetime.utcnow() - timedelta(minutes=minutes)
+
+    return (
+        db.query(
+            func.date_trunc("minute", Metric.ts).label("ts"),
+            func.avg(Metric.value).label("bpm")
+        )
+        .filter(
+            Metric.user_id == user_id,
+            Metric.metric_type == "heart_rate",
+            Metric.ts >= start,
+        )
+        .group_by("ts")
+        .order_by("ts")
+        .all()
+    )
+    
+@router.get("/metrics/heart_rate/me")
+def my_heart_rate(minutes: int = 60,
+                  db: Session = Depends(get_db),
+                  user_id = Depends(get_current_user_id)):
+    rows = heart_rate_series(db, user_id, minutes)
+    return [
+        {"ts": r.ts.isoformat(), "bpm": float(r.bpm)}
+        for r in rows
+    ]

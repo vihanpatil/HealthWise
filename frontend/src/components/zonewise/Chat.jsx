@@ -122,7 +122,7 @@ export default function ZoneChat() {
 }
 
 const styles = {
-  wrap: { border: "1px solid rgba(0,0,0,0.08)", borderRadius: 16, padding: 12, background: "linear-gradient(180deg, rgba(242,246,234,1) 0%, rgba(255,255,255,1) 100%)" },
+  wrap: { marginTop: 14, border: "1px solid rgba(0,0,0,0.08)", borderRadius: 16, padding: 12, background: "linear-gradient(180deg, rgba(242,246,234,1) 0%, rgba(255,255,255,1) 100%)" },
   header: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, marginBottom: 10 },
   title: { fontSize: 14, fontWeight: 900 },
   hint: { fontSize: 12, opacity: 0.75, marginTop: 2 },

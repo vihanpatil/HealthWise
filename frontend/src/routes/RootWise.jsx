@@ -189,9 +189,7 @@ export default function RootWise() {
           </div>
 
           {activeTab === "chat" ? (
-            <div style={styles.card}>
-              <Chat />
-            </div>
+            <Chat />
           ) : (
             <>
               <RagInputs onAdded={refreshFiles} />
