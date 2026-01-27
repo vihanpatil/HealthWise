@@ -1,137 +1,49 @@
+# backend/app/api/zonewise.py
 from fastapi import APIRouter, Query, Depends
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
-from sqlalchemy import func, cast, Date, String
-from datetime import timedelta
+from sqlalchemy import func
+from datetime import datetime, timedelta
 from uuid import UUID
+import json, asyncio
 
 from app.db.session import get_db
 from app.db.models import User, Metric
 from app.logic.auth_deps import get_current_user_id
+from app.logic.zonewise import stream_zonewise_response
+
 
 router = APIRouter()
 
 
-@router.get("/users")
-def list_users(db: Session = Depends(get_db)):
-    rows = (
-        db.query(
-            User.id.label("id"),
-            func.coalesce(User.name, User.email, cast(User.id, String)).label("label"),
-        )
-        .order_by(User.created_at.asc())
-        .all()
-    )
-
-    users = []
-    for id_val, label_val in rows:
-        users.append(
-            {
-                "id": str(id_val),
-                "label": label_val if label_val is not None else str(id_val),
-            }
-        )
-
-    return {"ok": True, "users": users}
-
-
-def _metrics_daily_for_user_uuid(*, user_uuid: UUID, days: int, db: Session):
-    day_col = cast(func.date_trunc("day", Metric.ts), Date)
-
-    rows = (
-        db.query(
-            Metric.metric_type.label("metric_type"),
-            day_col.label("day"),
-            func.avg(Metric.value).label("avg_value"),
-            func.sum(Metric.value).label("sum_value"),
-            func.min(Metric.value).label("min_value"),
-            func.max(Metric.value).label("max_value"),
-            func.count().label("n"),
-            func.max(Metric.unit).label("unit"),
-        )
-        .filter(
-            Metric.user_id == user_uuid,
-            Metric.ts >= func.now() - timedelta(days=days),
-        )
-        .group_by(Metric.metric_type, day_col)
-        .order_by(Metric.metric_type.asc(), day_col.asc())
-        .all()
-    )
-
-    out = {}
-    for metric_type, day, avg_value, sum_value, min_value, max_value, n, unit in rows:
-        out.setdefault(metric_type, []).append(
-            {
-                "metric_type": metric_type,
-                "day": day.isoformat() if day else None,
-                "avg_value": float(avg_value) if avg_value is not None else None,
-                "sum_value": float(sum_value) if sum_value is not None else None,
-                "min_value": float(min_value) if min_value is not None else None,
-                "max_value": float(max_value) if max_value is not None else None,
-                "n": int(n) if n is not None else 0,
-                "unit": unit,
-            }
-        )
-
-    return {"ok": True, "user_id": str(user_uuid), "days": days, "series": out}
-
-
-@router.get("/metrics/minutely/me")
-def metrics_minutely_me(
-    minutes: int = Query(60, ge=1, le=1440),
-    metric_type: str = Query("heart_rate"),
-    db: Session = Depends(get_db),
-    user_id: str = Depends(get_current_user_id),
-):
-    user_uuid = UUID(user_id)
-
-    rows = (
-        db.query(
-            Metric.ts.label("ts"),
-            Metric.value.label("value"),
-            Metric.unit.label("unit"),
-        )
-        .filter(
-            Metric.user_id == user_uuid,
-            Metric.metric_type == metric_type,
-            Metric.ts >= func.now() - timedelta(minutes=minutes),
-        )
-        .order_by(Metric.ts.asc())
-        .all()
-    )
-
-    series = [
-        {"ts": r.ts.isoformat(), "value": float(r.value), "unit": r.unit or ""}
-        for r in rows
-    ]
-
-    return {"ok": True, "metric_type": metric_type, "minutes": minutes, "series": series}
-
 @router.get("/metrics/heart_zones/me")
 def heart_zones_me(
-    minutes: int = Query(60, ge=1, le=1440),
+    minutes: int = Query(60, ge=0, le=1440),  # <-- allow 0
     metric_type: str = Query("heart_rate"),
     db: Session = Depends(get_db),
     user_id: str = Depends(get_current_user_id),
 ):
     user_uuid = UUID(user_id)
 
-    # Get user's age (needed for max HR heuristic)
     u = db.query(User.age).filter(User.id == user_uuid).first()
-    age = u[0]
-    max_hr = max(160, 220 - (age ))
+    age = int(u[0]) if u and u[0] is not None else 30  # fallback
+    max_hr = max(160, 220 - age)
 
-    rows = (
+    q = (
         db.query(Metric.value)
         .filter(
             Metric.user_id == user_uuid,
             Metric.metric_type == metric_type,
-            Metric.ts >= func.now() - timedelta(minutes=minutes),
         )
-        .all()
     )
 
-    # Count minutes in each zone
-    z1 = z2 = z3 = z4 = z5 = 0
+    # only apply window if minutes > 0
+    if minutes > 0:
+        q = q.filter(Metric.ts >= func.now() - timedelta(minutes=minutes))
+
+    rows = q.all()
+
+    z0 = z1 = z2 = z3 = z4 = z5 = 0
     for (val,) in rows:
         if val is None:
             continue
@@ -148,13 +60,16 @@ def heart_zones_me(
             z2 += 1
         elif pct >= 0.50:
             z1 += 1
+        else:
+            z0 += 1
 
     return {
         "ok": True,
         "metric_type": metric_type,
-        "minutes_window": minutes,
+        "minutes_window": minutes,  # 0 means all-time
         "max_hr": max_hr,
         "zones": [
+            {"zone": 0, "label": "Zone 0", "minutes": z0},
             {"zone": 1, "label": "Zone 1", "minutes": z1},
             {"zone": 2, "label": "Zone 2", "minutes": z2},
             {"zone": 3, "label": "Zone 3", "minutes": z3},
@@ -162,3 +77,62 @@ def heart_zones_me(
             {"zone": 5, "label": "Zone 5", "minutes": z5},
         ],
     }
+
+def sse(event: str, data: dict) -> str:
+    return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+def normalize_history(history):
+    out = []
+    for item in history or []:
+        if isinstance(item, (list, tuple)) and len(item) == 2:
+            out.append([str(item[0]), str(item[1])])
+        else:
+            out.append([str(item), ""])
+    return out
+
+def sse(event: str, data: dict) -> str:
+    return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+@router.post("/chat/stream")
+async def chat_stream(payload: dict):
+    message = payload.get("message", "")
+    history = payload.get("history", [])
+
+    async def gen():
+        try:
+            for updated_history in stream_zonewise_response(message, history):
+                yield sse("message", {"history": normalize_history(updated_history)})
+                await asyncio.sleep(0)
+            yield sse("done", {"ok": True})
+        except Exception as e:
+            yield sse("error", {"error": str(e)})
+
+    return StreamingResponse(gen(), media_type="text/event-stream")
+
+def heart_rate_series(db: Session, user_id, minutes=60):
+    start = datetime.utcnow() - timedelta(minutes=minutes)
+
+    return (
+        db.query(
+            func.date_trunc("minute", Metric.ts).label("ts"),
+            func.avg(Metric.value).label("bpm")
+        )
+        .filter(
+            Metric.user_id == user_id,
+            Metric.metric_type == "heart_rate",
+            Metric.ts >= start,
+        )
+        .group_by("ts")
+        .order_by("ts")
+        .all()
+    )
+    
+@router.get("/metrics/heart_rate/me")
+def my_heart_rate(minutes: int = 60,
+                  db: Session = Depends(get_db),
+                  user_id = Depends(get_current_user_id)):
+    rows = heart_rate_series(db, user_id, minutes)
+    return [
+        {"ts": r.ts.isoformat(), "bpm": float(r.bpm)}
+        for r in rows
+    ]

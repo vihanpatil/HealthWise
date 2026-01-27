@@ -1,18 +1,17 @@
+# backend/app/api/rootwise.py
 from fastapi import APIRouter, UploadFile, File, Query, HTTPException
 from fastapi.responses import StreamingResponse
 from pathlib import Path
 import json
 import asyncio
 
-from app.config import SYSTEM_DATA_DIR, USER_STATE_DIR
+from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic.rootwise import (
     set_user_name,
     append_to_user_rag,
     handle_image_upload,
     add_to_rag,
     load_documents,
-    list_system_data_files,
-    read_selected_file,
     stream_response,
 )
 
@@ -101,7 +100,7 @@ async def docs_load(files: list[UploadFile] = File(...)):
 def _resolve_scope_dir(scope: str) -> Path:
     s = (scope or "system").strip().lower()
     if s == "system":
-        return SYSTEM_DATA_DIR
+        return ROOTWISE_DATA
     if s == "user":
         return USER_STATE_DIR
     raise HTTPException(status_code=400, detail="Invalid scope. Use scope=system or scope=user.")
@@ -158,7 +157,6 @@ def system_file(name: str = Query(...), scope: str = Query("system")):
         return {"ok": True, "text": "PDF rendered preview available.", "preview": img_path}
     except Exception as e:
         return {"ok": True, "text": f"Error rendering PDF: {str(e)}", "preview": ""}
-
 
 
 def normalize_history(history):

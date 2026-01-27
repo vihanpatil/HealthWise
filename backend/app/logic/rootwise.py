@@ -1,3 +1,4 @@
+# backend/app/logic/rootwise.py
 import os
 import sys
 import shutil
@@ -9,14 +10,15 @@ from typing import List, Optional, Tuple, Any, Dict
 import requests
 from pdf2image import convert_from_path
 
-from app.config import SYSTEM_DATA_DIR, USER_STATE_DIR
-from app.logic import rag
+from app.config import ROOTWISE_DATA, USER_STATE_DIR
+from app.logic.rag_instance import get_rag
 
 
 # ----------------------------
 # Globals
 # ----------------------------
-user_rag_file: Optional[str] = None  # stored as filename inside SYSTEM_DATA_DIR (e.g., "MahyarRAG.txt")
+user_rag_file: Optional[str] = None  # stored as filename inside USER_STATE_DIR (e.g., "MahyarRAG.txt")
+rag_root = get_rag(str(ROOTWISE_DATA))
 
 SUPPORTED_EXTS = (".txt", ".pdf")
 
@@ -26,15 +28,14 @@ SUPPORTED_EXTS = (".txt", ".pdf")
 # ----------------------------
 def initialize_rootwise_rag() -> str:
     """
-    Build a single unified index from SYSTEM_DATA_DIR.
+    Build a single unified index from ROOTWISE_DATA.
     Call this once on app startup (or after significant doc changes).
     """
-    rag.ensure_store_exists(str(SYSTEM_DATA_DIR))
-    return rag.build_index(str(SYSTEM_DATA_DIR))
+    return rag_root.build()
 
 
 # ----------------------------
-# User RAG (writes into SYSTEM_DATA_DIR and rebuilds unified index)
+# User RAG (writes into USER_STATE_DIR, NOT embedded)
 # ----------------------------
 def set_user_name(name: str) -> str:
     global user_rag_file
@@ -51,7 +52,6 @@ def set_user_name(name: str) -> str:
     if not path.exists():
         path.write_text(f"{name.strip()}'s session initialized.\n")
 
-    # If file already exists: do nothing (no rebuild)
     return f"File {filename} ready."
 
 
@@ -111,11 +111,11 @@ def handle_image_upload(image_path: str) -> str:
 
 
 # ----------------------------
-# Document uploading (copy into SYSTEM_DATA_DIR, rebuild unified index)
+# Document uploading (copy into ROOTWISE_DATA, rebuild unified index)
 # ----------------------------
 def load_documents(file_objs) -> str:
     """
-    Copies uploaded files into SYSTEM_DATA_DIR and rebuilds the unified index.
+    Copies uploaded files into ROOTWISE_DATA and rebuilds the unified index.
     IMPORTANT: does NOT overwrite the index with only uploaded docs.
     """
     try:
@@ -124,7 +124,7 @@ def load_documents(file_objs) -> str:
         if not isinstance(file_objs, list):
             file_objs = [file_objs]
 
-        SYSTEM_DATA_DIR.mkdir(parents=True, exist_ok=True)
+        ROOTWISE_DATA.mkdir(parents=True, exist_ok=True)
 
         copied_any = False
         for file_obj in file_objs:
@@ -139,7 +139,7 @@ def load_documents(file_objs) -> str:
                 print(f"Skipping unsupported file: {file_name}")
                 continue
 
-            dest_path = SYSTEM_DATA_DIR / file_name
+            dest_path = ROOTWISE_DATA / file_name
             shutil.copyfile(file_obj.name, str(dest_path))
             print(f"Copied file to: {dest_path}")
             copied_any = True
@@ -147,10 +147,9 @@ def load_documents(file_objs) -> str:
         if not copied_any:
             return "No valid documents were uploaded."
 
-        return rag.build_index(str(SYSTEM_DATA_DIR))
+        return rag_root.build()
 
     except Exception as e:
-        # Keep user-facing message honest
         return f"Error uploading documents: {str(e)}"
 
 
@@ -176,8 +175,11 @@ def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
         if restrictions and restrictions.strip():
             (USER_STATE_DIR / "given_restrictions.txt").write_text(f"Dietary Restrictions: {restrictions.strip()}\n")
 
-        # If none were provided, no-op but keep index intact
-        if not any([season and season.strip(), ingredients and ingredients.strip(), restrictions and restrictions.strip()]):
+        if not any([
+            season and season.strip(),
+            ingredients and ingredients.strip(),
+            restrictions and restrictions.strip()
+        ]):
             return "No new data provided."
 
         return "User state saved."
@@ -211,17 +213,6 @@ def _read_text_if_exists(path: Path) -> str:
 
 
 def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
-    """
-    Works even if rag.has_good_hits isn't implemented.
-    """
-    fn = getattr(rag, "has_good_hits", None)
-    if callable(fn):
-        try:
-            return bool(fn(hits))
-        except Exception:
-            pass
-
-    # fallback heuristic
     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
     return len(good) >= 2
 
@@ -251,29 +242,21 @@ def stream_response(message: str, history):
     if history is None:
         history = []
 
-    # Ensure index is ready
-    if not rag.is_ready():
-        # Try to build index automatically
-        try:
-            init_msg = rag.build_index(str(SYSTEM_DATA_DIR))
-            if not rag.is_ready():
-                updated_history = history + [(message, f"RAG not ready. {init_msg}")]
-                yield updated_history
-                return
-        except Exception as e:
-            updated_history = history + [(message, f"RAG not ready. Error: {str(e)}")]
-            yield updated_history
-            return
+    # Ensure index is ready (instance-scoped)
+    try:
+        rag_root.ensure_ready()
+    except Exception as e:
+        yield history + [(message, f"RAG not ready. Error: {str(e)}")]
+        return
 
     try:
-        # Load user context files (not as evidence; just constraints)
+        # Load user context files (not evidence; just constraints)
         ingredients = _read_text_if_exists(USER_STATE_DIR / "given_ingredients.txt")
         season = _read_text_if_exists(USER_STATE_DIR / "given_season.txt")
         allergies = _read_text_if_exists(USER_STATE_DIR / "given_restrictions.txt")
 
-        # Retrieve evidence (top-k chunks)
-        hits = rag.retrieve(message, top_k=6)
-        
+        # First attempt: retrieve using the original message
+        hits = rag_root.retrieve(message, top_k=6)
         k = len(hits)
 
         # Agentic step: if weak, reformulate once and retry
@@ -282,16 +265,16 @@ def stream_response(message: str, history):
                 {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
                 {"role": "user", "content": message}
             ])
-            hits = rag.retrieve(reformulated, top_k=6)
+            hits = rag_root.retrieve(reformulated, top_k=6)
+            k = len(hits)
 
         # If still weak, refuse to invent
         if not _safe_has_good_hits(hits):
             assistant_text = (
                 "I can’t find strong support for that in the documents currently loaded.\n\n"
-                "If you upload the relevant PDF/TXT (or add it to system_data), I’ll answer using only that source."
+                "If you upload the relevant PDF/TXT (or add it to rootwise_data), I’ll answer using only that source."
             )
-            updated_history = history + [(message, assistant_text)]
-            yield updated_history
+            yield history + [(message, assistant_text)]
             return
 
         evidence = _format_evidence(hits)
@@ -347,8 +330,7 @@ def stream_response(message: str, history):
         yield updated_history
 
     except Exception as e:
-        updated_history = history + [(message, f"Error processing query: {str(e)}")]
-        yield updated_history
+        yield history + [(message, f"Error processing query: {str(e)}")]
 
 
 # ----------------------------
@@ -356,8 +338,7 @@ def stream_response(message: str, history):
 # ----------------------------
 def list_system_data_files() -> List[str]:
     try:
-        rag.ensure_store_exists(str(SYSTEM_DATA_DIR))
-        return rag.list_rag_files()
+        return rag_root.list_files()
     except Exception as e:
         return [f"Error: {e}"]
 
@@ -370,7 +351,7 @@ def read_selected_file(filename: str) -> Tuple[str, Optional[str]]:
     if not filename:
         return "No file selected.", None
 
-    full_path = SYSTEM_DATA_DIR / filename
+    full_path = ROOTWISE_DATA / filename
     if not full_path.exists():
         return "File not found.", None
 
@@ -398,11 +379,12 @@ def read_selected_file(filename: str) -> Tuple[str, Optional[str]]:
 # For evaluation.py (grounded retrieval snippet)
 # ----------------------------
 def retrieve_relevant_context(prompt: str, max_chars: int = 2000) -> str:
-    if not rag.is_ready():
+    try:
+        rag_root.ensure_ready()
+    except Exception:
         raise Exception("RAG not initialized. Call initialize_rootwise_rag() first.")
 
-    # Prefer raw evidence instead of a synthesized answer
-    hits = rag.retrieve(prompt, top_k=4)
+    hits = rag_root.retrieve(prompt, top_k=4)
     if not hits:
         return ""
 

@@ -1,3 +1,4 @@
+// frontend/src/routes/RootWise.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Chat from "../components/rootwise/Chat";
@@ -188,9 +189,7 @@ export default function RootWise() {
           </div>
 
           {activeTab === "chat" ? (
-            <div style={styles.card}>
-              <Chat />
-            </div>
+            <Chat />
           ) : (
             <>
               <RagInputs onAdded={refreshFiles} />
