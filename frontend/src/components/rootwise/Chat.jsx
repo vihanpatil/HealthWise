@@ -3,19 +3,17 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { rootwiseApi } from "../../api/rootwise";
 
 export default function Chat() {
-  const [messages, setMessages] = useState([]); // [{role, text}]
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [status, setStatus] = useState(""); // "Streaming..." | "Error" | ""
+  const [status, setStatus] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
 
   const scrollRef = useRef(null);
 
-  // Auto-scroll when messages update
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, status]);
 
-  // Backend expects history as [[user, assistant], ...]
   const historyTuples = useMemo(() => {
     const tuples = [];
     for (let i = 0; i < messages.length; i += 2) {
@@ -34,7 +32,6 @@ export default function Chat() {
     setStatus("Streaming...");
     setIsStreaming(true);
 
-    // Optimistic: add user + placeholder assistant bubble
     setMessages((prev) => [...prev, { role: "user", text: msg }, { role: "assistant", text: "" }]);
 
     await rootwiseApi.streamChat({

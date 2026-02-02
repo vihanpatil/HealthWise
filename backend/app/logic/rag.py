@@ -19,9 +19,11 @@ _lock = threading.Lock()
 _dirty = False
 _embed_dim = None
 
+
 def mark_dirty():
     global _dirty
     _dirty = True
+
 
 def maybe_rebuild():
     global _dirty
@@ -31,6 +33,7 @@ def maybe_rebuild():
                 raise RuntimeError("RAG store path not set; cannot rebuild.")
             build_index(_rag_store)
             _dirty = False
+
 
 SUPPORTED_EXTS = (".txt", ".pdf")
 
@@ -60,7 +63,9 @@ def ensure_store_exists(store_path: Optional[str] = None) -> str:
         _rag_store = store_path
 
     if not _rag_store:
-        raise RuntimeError("RAG store path not set. Pass store_path to ensure_store_exists/build_index.")
+        raise RuntimeError(
+            "RAG store path not set. Pass store_path to ensure_store_exists/build_index."
+        )
 
     os.makedirs(_rag_store, exist_ok=True)
     return _rag_store
@@ -69,7 +74,8 @@ def ensure_store_exists(store_path: Optional[str] = None) -> str:
 def list_rag_files() -> List[str]:
     ensure_store_exists()
     return [
-        f for f in os.listdir(_rag_store)
+        f
+        for f in os.listdir(_rag_store)
         if f.endswith(SUPPORTED_EXTS) and os.path.isfile(os.path.join(_rag_store, f))
     ]
 
@@ -83,14 +89,13 @@ def _load_all_documents() -> list:
     ensure_store_exists()
     documents = []
     for fname in os.listdir(_rag_store):
-        
+
         if not fname.endswith(SUPPORTED_EXTS):
             continue
         full_path = os.path.join(_rag_store, fname)
         try:
             reader = SimpleDirectoryReader(
-                input_files=[full_path],
-                file_extractor={".pdf": PDFReader()}
+                input_files=[full_path], file_extractor={".pdf": PDFReader()}
             )
             documents.extend(reader.load_data())
         except Exception as e:
@@ -183,12 +188,19 @@ def retrieve(text: str, top_k: int = 5) -> List[Dict[str, Any]]:
     for r in results:
         node = r.node
         meta = node.metadata or {}
-        out.append({
-            "score": getattr(r, "score", None),
-            "text": node.get_text(),
-            "file": meta.get("file_name") or meta.get("filename") or meta.get("source") or meta.get("file_path"),
-            "page": meta.get("page_label") or meta.get("page") or meta.get("page_number"),
-        })
+        out.append(
+            {
+                "score": getattr(r, "score", None),
+                "text": node.get_text(),
+                "file": meta.get("file_name")
+                or meta.get("filename")
+                or meta.get("source")
+                or meta.get("file_path"),
+                "page": meta.get("page_label")
+                or meta.get("page")
+                or meta.get("page_number"),
+            }
+        )
     return out
 
 

@@ -3,7 +3,7 @@ import { getToken } from "../../api/client";
 import { login, register, me, logout } from "../../api/auth";
 
 export default function AuthGate({ children }) {
-  const [mode, setMode] = useState("login"); // "login" | "register"
+  const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,7 +13,6 @@ export default function AuthGate({ children }) {
   const [authed, setAuthed] = useState(false);
   const [user, setUser] = useState(null);
 
-  // If token exists, verify it
   useEffect(() => {
     const token = getToken();
     if (!token) return;
@@ -26,7 +25,6 @@ export default function AuthGate({ children }) {
         setUser(u);
         setAuthed(true);
       } catch {
-        // token invalid
         if (!mounted) return;
         setAuthed(false);
         setUser(null);

@@ -16,30 +16,21 @@ import ZoneChat from "../components/zonewise/Chat";
 
 
 export default function ZoneWise() {
-  // auth state
   const [authed, setAuthed] = useState(false);
   const [me, setMe] = useState(null);
-
-  // auth form
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [name, setName] = useState("");
   const [gender, setGender] = useState("male");
   const [age, setAge] = useState("");
   const [heightCm, setHeightCm] = useState("");
   const [weightKg, setWeightKg] = useState("");
-
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // shared UI state
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // dashboard state (heart_rate only)
   const [minutes, setMinutes] = useState(0);
   const [zones, setZones] = useState(null);
 
@@ -63,16 +54,18 @@ export default function ZoneWise() {
         minutes: Number(z.minutes ?? 0),
         zoneNum: Number(z.zone),
       }))
-      .sort((a, b) => (b.minutes - a.minutes) || (a.zoneNum - b.zoneNum)); // stable tie-break
+      .sort((a, b) => (b.minutes - a.minutes) || (a.zoneNum - b.zoneNum));
+
+    const maxRank = Object.keys(RANK_COLORS).length - 1;
 
     const m = {};
     sorted.forEach((z, rank) => {
-      m[z.zoneNum] = RANK_COLORS[Math.min(rank, RANK_COLORS.length - 1)];
+      m[z.zoneNum] = RANK_COLORS[Math.min(rank, maxRank)];
     });
     return m;
   })();
 
-  // On mount: if token exists, verify it and load dashboard
+
   useEffect(() => {
     const token = getToken();
     if (!token) return;
@@ -97,27 +90,26 @@ export default function ZoneWise() {
     };
   }, []);
 
-  // Fetch heart-rate zones whenever authed or minutes changes
-useEffect(() => {
-  if (!authed) return;
+  useEffect(() => {
+    if (!authed) return;
 
-  let mounted = true;
-  (async () => {
-    try {
-      const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
-      if (!mounted) return;
-      setZones(res);
-    } catch (e) {
-      if (!mounted) return;
-      setZones(null);
-      setStatus(`❌ ${String(e.message || e)}`);
-    }
-  })();
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
+        if (!mounted) return;
+        setZones(res);
+      } catch (e) {
+        if (!mounted) return;
+        setZones(null);
+        setStatus(`❌ ${String(e.message || e)}`);
+      }
+    })();
 
-  return () => {
-    mounted = false;
-  };
-}, [authed, minutes]);
+    return () => {
+      mounted = false;
+    };
+  }, [authed, minutes]);
 
 
   async function onSubmitAuth(e) {
@@ -126,7 +118,6 @@ useEffect(() => {
     setStatus("");
     setIsLoading(true);
 
-    // Register-only validation
     if (mode === "register") {
       if (password !== confirmPassword) {
         setStatus("❌ Passwords do not match.");
@@ -424,7 +415,6 @@ useEffect(() => {
 
           {/* DASHBOARD */}
           {/* NEW: Heart-rate zones bar chart (requires `zones` state fetched from /metrics/heart_zones/me) */}
-          {/* DASHBOARD */}
           <div style={styles.row2}>
             {/* left: chart */}
             {zones?.zones?.length ? (
