@@ -7,6 +7,11 @@ from app.db.session import get_db
 from app.db.models import User
 from app.logic.auth import hash_password, verify_password, create_access_token
 from app.logic.auth_deps import get_current_user_id
+from pathlib import Path
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parents[3]
+load_dotenv(BASE_DIR / ".env")
 
 router = APIRouter()
 
