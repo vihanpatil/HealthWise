@@ -1,0 +1,810 @@
+Skip to main content
+BMC journals have moved to Springer Nature Link. Learn more about website changes.
+Log in
+Find a journal
+Publish with us
+Track your research
+Search
+ Saved research
+ Cart
+Home  BMC Cardiovascular Disorders  Article
+Obstructive sleep apnea and the risk of sudden cardiac death: a systematic review and meta-analysis
+Systematic Review
+Open access
+Published: 21 October 2025
+Volume 25, article number 751, (2025)
+Cite this article
+
+You have full access to this
+open access
+article
+
+Download PDF
+Save article
+BMC Cardiovascular Disorders
+Aims and scope
+Submit manuscript
+Obstructive sleep apnea and the risk of sudden cardiac death: a systematic review and meta-analysis
+Download PDF
+Xiaorong Zou, Xiong Zhou & Song Yi 
+
+1645 Accesses
+
+Explore all metrics 
+
+Abstract
+Background
+
+Obstructive sleep apnea (OSA) has been linked to adverse cardiovascular outcomes, but its role as a risk factor for sudden cardiac death (SCD) remains uncertain. This systematic review and meta-analysis aimed to evaluate the association between OSA and SCD and assess the influence of disease severity and treatment.
+
+Methods
+
+A comprehensive search of PubMed, Scopus, Web of Science, and Google Scholar was conducted up to January 17, 2025. We included observational studies reporting the association between OSA and SCD. Data were pooled using a random-effects model. Subgroup analyses were performed based on apnea-hypopnea index (AHI) and CPAP treatment. A separate meta-analysis examined adjusted odds ratios (aORs). Heterogeneity was assessed using the I² statistic, and publication bias was evaluated via funnel and Galbraith plots.
+
+Results
+
+Twelve studies (527,069 participants: 18,084 OSA, 508,985 non-OSA) were included. The pooled odds ratio for SCD in OSA patients was 1.41 (95% CI: 0.91–2.16; p = 0.12), with high heterogeneity (I² = 79.3%). Subgroup analysis showed increased risk in untreated OSA (OR = 3.87; 95% CI: 1.09–13.81; p = 0.04), but not in those receiving CPAP. Adjusted estimates showed no significant association (aOR = 0.90; 95% CI: 0.17–1.98; p = 0.10), with high heterogeneity (I² = 95.9%). Sensitivity analyses indicated moderate result stability; however, potential publication bias was observed.
+
+Conclusion
+
+Available evidence is insufficient to establish a definitive association between OSA and SCD. Some subgroup analyses suggest an elevated risk in untreated OSA, but overall findings are heterogeneous and limited by study design.
+
+Trial registration
+
+Not applicable.
+
+ View this article's peer review reports
+Similar content being viewed by others
+The effect of obstructive sleep apnea on the increased risk of cardiovascular disease: a systematic review and meta-analysis
+Article 19 November 2021
+Obstructive sleep apnoea heterogeneity and cardiovascular disease
+Article 10 March 2023
+Sleep-disordered breathing and severe aortic stenosis
+Article 26 April 2017
+Explore related subjects
+Discover the latest articles, books and news in related subjects, suggested using machine learning.
+Cardiovascular Diseases
+Cardiology
+Carotid artery disease
+Research on Associations
+Risk Factors
+Sleep Disorders
+Background
+
+Obstructive sleep apnea (OSA) is a prevalent sleep-related breathing disorder characterized by repetitive episodes of upper airway obstruction during sleep, resulting in intermittent hypoxia, sleep fragmentation, and sympathetic nervous system activation [1]. It is estimated to affect nearly one billion individuals globally, with rising prevalence in parallel with obesity and aging populations [2]. OSA has been increasingly recognized as a contributor to a range of adverse cardiovascular outcomes, including hypertension, atrial fibrillation, myocardial infarction, and stroke [3].
+
+Sudden cardiac death (SCD), defined as an unexpected death due to cardiac causes occurring within a short time period (generally within one hour of symptom onset), remains a leading cause of mortality worldwide [4]. The pathophysiology of SCD is complex and multifactorial, with a substantial proportion attributed to ventricular arrhythmias and structural heart disease [5]. Given the mechanistic plausibility linking OSA to arrhythmogenesis—via intermittent hypoxia, oxidative stress, autonomic dysregulation, and endothelial dysfunction—OSA has emerged as a potential risk factor for SCD [6].
+
+Several epidemiological studies have investigated the association between OSA and the risk of SCD, yielding conflicting results. While some prospective cohorts have suggested a significantly increased risk of SCD among individuals with OSA [7, 8], others have found no such association after adjustment for traditional cardiovascular risk factors [9, 10]. In addition, important clinical questions remain unanswered, such as whether the severity of OSA (e.g., based on apnea-hypopnea index [AHI] thresholds) or the use of continuous positive airway pressure (CPAP) therapy modifies the risk of SCD. Furthermore, no prior meta-analysis has comprehensively synthesized both unadjusted and adjusted estimates to evaluate the independent contribution of OSA to the risk of SCD.
+
+To address these knowledge gaps, we conducted a systematic review and meta-analysis to (1) evaluate the pooled association between OSA and OSA; (2) explore potential modifiers of risk through subgroup analyses based on OSA severity and treatment status; and (3) assess whether OSA remains an independent predictor of SCD after adjustment for confounding variables. By clarifying the relationship between OSA and SCD, this study aims to inform clinical risk stratification and underscore the importance of timely diagnosis and management of sleep-disordered breathing in cardiovascular prevention strategies.
+
+Methods
+Protocol and registration
+
+This systematic review and meta-analysis was conducted in accordance with the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines. The study protocol was developed a priori but was not registered in PROSPERO. This review followed the PECOS (population, exposure, comparison, outcome, and study design) framework, where we focused on observational studies reporting the rate of SCD in patients with and without OSA.
+
+Data sources and search strategy
+
+A comprehensive literature search was performed across four major databases: PubMed, Scopus, Web of Science, and Google Scholar (only the first 200 records) [11]. The final search was conducted on January 17, 2025. Search strategies were tailored to each database using combinations of medical subject headings (MeSH) and keywords related to SCD and OSA. These terms included, cardiac, cardiovascular, death, mortality, arrest, sudden, and sleep apnea. A full search query can be found in Supplementary Table 1. All search results were imported into a reference manager, and duplicates were removed prior to screening.
+
+Eligibility criteria
+
+Studies were eligible for inclusion if they met the following criteria:
+
+1.
+
+Reported original data on the incidence or risk of sudden cardiac death in individuals with obstructive sleep apnea;
+
+2.
+
+Included a comparator group without OSA (studies with comparator groups of OSA and non-OSA participants);
+
+3.
+
+Provided sufficient data to calculate the pooled incidence rate or odds ratio (OR) or adjusted odds ratio (aOR);
+
+4.
+
+Employed a cohort or case-control design;
+
+5.
+
+Were published in English.
+
+Exclusion criteria included: case reports, review articles, editorials, studies lacking relevant outcomes, and conference abstracts without full data. We also excluded studies that focused on sudden death of non-cardiac causes or did not mention the cause of death in these cases.
+
+Study selection and data extraction
+
+Two reviewers independently screened titles and abstracts for eligibility, followed by full-text review. Discrepancies were resolved through discussion or consultation with a third reviewer. Data were extracted using a standardized form, including information on study design, population characteristics, OSA diagnosis method, treatment status, outcome definitions, effect estimates, and confounders included in adjusted models.
+
+Quality assessment
+
+The methodological quality of included studies was assessed using the Newcastle-Ottawa Scale (NOS) for observational studies [12]. Domains assessed included selection of cohorts, comparability of groups, and outcome assessment. The AHRQ thresholds were applied for classification into good, fair, or poor quality (criteria provided in Supplementary Material). A detailed breakdown of NOS item scoring for each study is provided as well.
+
+Statistical analysis
+
+Meta-analyses were performed using random-effects models (REML estimator) to account for between-study heterogeneity. The primary outcome was the odds ratio for sudden cardiac death in patients with OSA compared to those without OSA. Subgroup analyses were conducted based on AHI cutoff values and CPAP treatment status. A separate pooled analysis was conducted using adjusted odds ratios from studies that controlled for confounding variables. Heterogeneity was quantified using the I² statistic, τ², and Cochran’s Q test.
+
+Sensitivity analyses were performed using a leave-one-out approach to examine the influence of individual studies on pooled estimates. We performed a sensitivity analysis stratified by diagnostic method (self-reported, physician-diagnosed, not reported) to assess whether diagnostic variability influenced the pooled estimates. Publication bias was assessed through visual inspection of funnel plots and Galbraith plots. Given the variability in SCD definitions (e.g., 1 h vs. 24 h, witnessed vs. unwitnessed, autopsy-confirmed vs. not), formal quantitative assessment of this heterogeneity (e.g., meta-regression) was not feasible due to the small number of studies in each definitional category.
+
+All analyses were conducted using STATA (Version 18, StataCorp, USA).
+
+Results
+Literature search and study selection
+
+The initial database search yielded a total of 2,592 records: 385 from PubMed, 1,922 from Scopus, 285 from Web of Science, and approximately 200 from Google Scholar. After removal of 435 duplicates through EndNote software, 2,157 unique records were screened by title and abstract. Of these, 2,126 were excluded for not meeting the inclusion criteria. Full texts of 31 articles were assessed for eligibility. Ultimately, 14 studies met al.l inclusion criteria and were included in the qualitative and quantitative synthesis [7,8,9,10, 13,14,15,16,17,18,19,20,21,22].
+
+Seventeen studies were excluded at the full-text stage for the following reasons (Supplementary Table 2): SCD was not clearly defined or not attributed to cardiac mortality (n = 13); sample size was fewer than 20 patients (n = 1); duplication of data (n = 1); or all patients had SCD at baseline (n = 2). A PRISMA flow diagram detailing the selection process is presented in Fig. 1.
+
+Fig. 1
+
+A PRISMA flow diagram showing the results of the literature search and screening processes
+
+Full size image
+Baseline characteristics of included studies
+
+The 14 included studies encompassed data from diverse geographic regions, including the United States (n = 8), South Korea (n = 1), Egypt (n = 1), Canada (n = 1), Sweden (n = 1), Russia (n = 1), and Spain (n = 1). Publication years ranged from 2001 to 2024, with study periods spanning from as early as 1987 to 2021. Study designs included retrospective cohort studies (n = 9), prospective cohort or surveillance studies (n = 3), and one prospective case-control study.
+
+The total sample size across all studies exceeded 527,069 (18,084 OSA and 508,985 non-OSA) participants, largely driven by two population-based cohorts: Arora (2024) and Gami (2013) [14]. The proportion of patients with OSA varied widely between studies, ranging from as few as 44 patients (Sweed, 2019) [21] to over 6,000 (Gami, 2013) [14]. OSA diagnosis methods also differed, with some studies using AHI thresholds derived from sleep studies (e.g., AHI ≥ 5 or > 15), while others relied on physician diagnoses or self-reported history.
+
+The definition of sudden cardiac death was generally consistent across studies, involving sudden unexpected death due to presumed or confirmed cardiac causes, often occurring within 1 h of symptom onset or within 24 h of last being seen alive. However, a few studies provided broader operational definitions based on emergency room records or dialysis session documentation.
+
+Where reported, the mean age of OSA patients ranged from 50.7 to 71.5 years. Body mass index (BMI) was inconsistently reported; however, available data indicated a higher mean BMI in OSA patients compared to non-OSA counterparts. Sex distribution was reported in most studies, with males comprising the majority of the OSA cohorts. A detailed summary of each study’s characteristics, including study design, population demographics, OSA and SCD definitions, and sample sizes, is presented in Table 1.
+
+Table 1 Baseline characteristics of included studies investigating sudden cardiac death in obstructive sleep apnea
+Full size table
+Methodological quality of included studies
+
+Among cohort studies, only one study had good overall quality, six had fair quality, and six had poor quality (Table 2). Poor quality was attributed mainly to lack of confounding adjustment and lack of information on follow-up rate/duration. As for the single included case-control study, it was graded as fair quality.
+
+Table 2 Methodological quality of included cohort studies assessed by the Newcastle Ottawa scale
+Full size table
+Pooled risk of sudden cardiac death in OSA
+
+In the overall pooled analysis, OSA was not associated with a statistically significant increase in the risk of SCD. The random-effects meta-analysis yielded an odds ratio (OR) of 1.41 (95% confidence interval [CI]: 0.91–2.16; p = 0.12) (Fig. 2). Considerable heterogeneity was observed among the included studies (I² = 79.34%, τ² = 0.34; Q = 39.65, p < 0.001), indicating substantial variability in effect sizes across the studies included in this analysis.
+
+Fig. 2
+
+Forest plot of the risk of sudden cardiac death in obstructive sleep apnea
+
+Full size image
+Subgroup analysis based on AHI cutoff and diagnosis method
+
+To assess whether diagnostic thresholds or methods influenced the observed association, subgroup analyses were performed based on AHI cutoff (≥ 5 vs. >15 events/hour), physician diagnosis, and self-reported OSA (Fig. 3). The test for subgroup differences was not statistically significant (Qb = 2.80, p = 0.59), suggesting that these stratifications did not account for the heterogeneity. Specifically, the incidence rate of SCD was 0% (0–1%) in AHI > 15, 12% (0–25%) in AHI ≥ 5, 1% (0–3%) in physician-diagnosed cases, and 28% (0–82%) in self-reported cases.
+
+Fig. 3
+
+Forest plot of the risk of sudden cardiac death in obstructive sleep apnea, stratified by AHI cutoff points. AHI: apnea-hypopnea index
+
+Full size image
+
+Within the AHI > 15 group, the pooled OR was 2.93 (95% CI: 0.89–9.63; p = 0.08), reflecting a non-significant trend toward increased risk. For studies using an AHI ≥ 5 cutoff, the OR was 1.96 (95% CI: 0.66–5.81; p = 0.22). Physician-diagnosed OSA yielded an OR of 1.09 (95% CI: 0.51–2.33; p = 0.83), and self-reported OSA showed an OR of 1.14 (95% CI: 0.38–3.46; p = 0.81). Notably, heterogeneity remained high within most subgroups (I² between 41.82% and 77.64%), indicating persistent between-study variability. The small number of studies and wide confidence intervals make this result highly imprecise and not conclusive.
+
+Subgroup analysis based on CPAP treatment status
+
+The prevalence of SCD differed from CPAP-treated to untreated OSA patients (0% vs. 5%, p = 0.19). Subgroup analysis stratified by treatment status revealed a notable difference in risk patterns. In studies that assessed CPAP-treated patients, the pooled OR was 1.55 (95% CI: 0.07–32.47; p = 0.23) (Fig. 4). The wide confidence intervals reflect imprecision due to only two available studies, Limiting the ability to draw definitive conclusions. In contrast, among untreated patients with OSA, the risk of SCD was significantly elevated, with a pooled OR of 3.87 (95% CI: 1.09–13.81; p = 0.04). The overall analysis combining both treated and untreated OSA groups demonstrated a significant association with increased risk (OR = 3.31; 95% CI: 1.03–10.08; p = 0.02). Despite these trends, the test of subgroup differences was not statistically significant (Qb = 0.02, p = 0.90), suggesting that treatment status alone did not account for the observed between-study heterogeneity. Of note, heterogeneity within this analysis was minimal (I² = 0%), which may reflect greater consistency in effect sizes within treatment subgroups.
+
+Fig. 4
+
+Forest plot of the risk of sudden cardiac death in obstructive sleep apnea, stratified by treatment status
+
+Full size image
+Pooled analysis of adjusted odds ratios
+
+Three studies provided adjusted effect estimates accounting for confounders through multivariable regression models (Fig. 5). The pooled analysis of these adjusted odds ratios revealed no statistically significant association between OSA and SCD (aOR = 0.90; 95% CI: 0.17–1.98; p = 0.10). However, the heterogeneity across these studies was considerable (I² = 95.95%, τ² = 0.84; Q = 22.86, p < 0.001), indicating that differences in study design, adjustment factors, and population characteristics may have contributed to the wide variation in reported effect sizes.
+
+Fig. 5
+
+Forest plot showing the pooled adjusted odds ratio from logistic regression models of included studies
+
+Full size image
+
+Details of the covariates included in each adjusted model are provided in Supplementary Table 3. These varied considerably between studies, with some adjusting only for coronary artery disease, and others including a broader set of cardiovascular and metabolic comorbidities.
+
+Sensitivity analysis
+
+A leave-one-out sensitivity analysis was conducted to evaluate the robustness of the pooled estimate (Supplementary Fig. 1). Exclusion of individual studies did not meaningfully alter the overall findings, with recalculated ORs ranging from 1.29 to 1.57 and all 95% confidence intervals overlapping with the null. Notably, the exclusion of Gami (2013) [14] resulted in a marginally significant pooled OR (p = 0.042), while all other exclusions yielded non-significant results (p-values ranging from 0.049 to 0.249). These findings suggest moderate stability of the overall association, though certain influential studies may impact the statistical significance.
+
+When stratified by OSA diagnostic method, physician-diagnosed OSA showed no significant association with SCD (OR = 1.21; 95% CI: 0.89–1.72; I² = 72.3%), self-reported OSA showed no significant association (OR = 1.07; 95% CI: 0.45–2.54; I² = 74.4%), while studies not reporting diagnostic criteria showed a significant association (OR = 1.69; 95% CI: 1.27–2.24; I² = 0%) (Supplementary Fig. 2).
+
+Publication bias and heterogeneity diagnostics
+
+Visual inspection of the funnel plot revealed mild asymmetry, raising the possibility of publication bias or small-study effects (Supplementary Fig. 3). Egger’s regression test; however, showed non-significant risk of bias (p = 0.192). This was further supported by the Galbraith plot (Supplementary Fig. 4), which showed multiple studies falling outside the ± 2 standard error boundaries, consistent with significant heterogeneity and potential outliers. Collectively, these plots underscore the variability in the literature and the need for cautious interpretation of the pooled findings.
+
+Discussion
+
+In this systematic review and meta-analysis, we synthesized available evidence to assess the risk of SCD in individuals with OSA, incorporating both unadjusted and adjusted effect estimates. While our overall pooled analysis demonstrated a non-significant association between OSA and SCD, subgroup analyses revealed that untreated OSA was significantly associated with increased risk. Conversely, the available data on CPAP-treated OSA are limited to two studies, which show a trend similar to untreated OSA but with very wide confidence intervals, precluding definitive conclusions.
+
+Our findings are directionally consistent with those reported by Heilbrunn et al. [23], who found that individuals with OSA were nearly twice as likely to die from cardiac causes compared to those without OSA (HR = 1.94; 95% CI: 1.39–2.70) in a large-scale meta-analysis. However, their analysis focused broadly on cardiac mortality, whereas our study specifically examined SCD as a discrete endpoint, thereby offering more granular insight into arrhythmogenic outcomes​.
+
+The biological plausibility linking OSA and SCD is well-supported. Intermittent hypoxia, sympathetic surges, and intrathoracic pressure changes inherent to OSA episodes are well-documented arrhythmogenic substrates. Brodovskaya et al. [24] emphasized that these mechanisms contribute to myocardial electrical heterogeneity and autonomic imbalance, both of which are critical in the genesis of fatal ventricular arrhythmias​. Similarly, Gami et al. [25] previously demonstrated a strong association between the severity of nocturnal desaturation and SCD, independent of underlying cardiovascular disease—a finding echoed in our observation of elevated risk among untreated patients​.
+
+OSA may predispose to SCD through multiple interrelated mechanisms. Loke et al. [26] demonstrated that OSA is associated with higher risk of stroke and, in predominantly male cohorts, ischemic heart disease and cardiovascular death. Acute myocardial infarction and ischemia-related ventricular arrhythmias can serve as direct triggers for SCD in this population. Additionally, Teo et al. [27] reported that bradycardia, particularly nocturnal bradycardia, is highly prevalent among OSA patients, with pooled rates of 69.8% during sleep. Bradyarrhythmias may promote lethal conduction disturbances, particularly in the presence of structural heart disease or prolonged nocturnal hypoxia. Together with intermittent hypoxia, autonomic dysregulation, and myocardial electrical instability, these factors may create a pro-arrhythmic substrate conducive to sudden cardiac arrest and death in OSA.
+
+Recent evidence underscores that cardiovascular risk in hypertensive patients with OSA is not solely driven by traditional factors but also by specific anthropometric, metabolic, and biochemical markers. For example, the weight-adjusted waist index (WWI) has been shown to exhibit a J-shaped relationship with cardiovascular disease risk, with markedly elevated risk observed when WWI exceeds 11.5 cm/√kg [28]. Similarly, central adiposity combined with insulin resistance, as reflected by a higher triglyceride glucose index–waist circumference (TyG-WC), is associated with a substantially increased risk of first myocardial infarction [29]. Metabolic derangements such as hepatic steatosis also appear relevant, with the hepatic steatosis index (HSI) demonstrating a linear association with major adverse cardiac and cerebrovascular events (MACCE) [30]. Beyond metabolic parameters, elevated plasma homocysteine concentrations have been linked to a higher risk of first ischemic stroke, suggesting an additional pathway involving vascular endothelial dysfunction and prothrombotic states [31]. Furthermore, medication use may modify this risk profile; continuous aspirin use, although traditionally considered protective, was associated with increased MACCE incidence in this high-risk population [32]. Collectively, these findings highlight the multifactorial nature of cardiovascular risk in OSA and reinforce the need for comprehensive risk assessment beyond standard clinical parameters.
+
+Our analysis of adjusted data (aORs) did not yield a statistically significant association between OSA and SCD, despite high heterogeneity. This discrepancy may stem from differences in the covariates adjusted for across studies or insufficient statistical power. Furthermore, it raises the possibility that the apparent association seen in unadjusted models is at least partially explained by underlying cardiovascular comorbidities—an interpretation supported by Resende Martinez et al., [33] who found limited evidence for a direct OSA-SCD relationship in non-cardiac populations.
+
+Nevertheless, the observed significant risk among untreated individuals underscores the potential benefit of CPAP therapy. Fonseca et al. [34] reported that patients with untreated sleep apnea had a 2.5-fold increased risk of cardiac death, supporting the protective role of treatment modalities such as noninvasive ventilation and oral prostheses​. The therapeutic effect of CPAP may extend beyond oxygenation to modulate autonomic tone and reduce arrhythmogenic susceptibility—a hypothesis supported by Chahal and Somers [35], who proposed that OSA-driven ion channel remodeling may alter repolarization reserve, predisposing to lethal arrhythmias​.
+
+Our results also align with Ottaviani and Buja’s pathophysiological framework suggesting that both OSA and SCD may share inflammatory underpinnings, with interleukin-6 and other cytokines contributing to both ventricular instability and systemic proarrhythmic environments [36]​. Shamsuzzaman et al. [37] further demonstrated that OSA worsens QTc prolongation in patients with congenital long QT syndrome, reinforcing the interaction between sleep-disordered breathing and electrical instability even in genetically predisposed populations​.
+
+It is noteworthy that the timing of SCD events appears shifted in patients with OSA, as reported by Blackwell et al. [6], who found a higher incidence of fatal events between midnight and early morning in this population—a pattern that may further support a causative role of sleep-related pathophysiological mechanisms​.
+
+This meta-analysis highlights that the current evidence base is insufficient to draw definitive conclusions about the association between OSA and SCD. While some subgroup analyses indicate possible increased risk in untreated OSA, findings are inconsistent and limited by methodological variability. High-quality prospective studies are needed to clarify this relationship.
+
+Strengths and limitations
+
+A major strength of our study is its rigorous methodology, which includes a comprehensive search strategy, detailed subgroup analyses, and incorporation of both unadjusted and adjusted effect sizes. The focus on SCD specifically, rather than broad cardiovascular mortality, distinguishes our work from prior meta-analyses and allows for more precise clinical interpretations. It should be noted; however, that we did not register our protocol in PROSPERO due to the presence of a closely related existing protocol (CRD42020164941) and updated PROSPERO guidance discouraging duplicate registrations.
+
+However, limitations must be acknowledged. First, heterogeneity across studies remained substantial despite subgrouping, reflecting variability in diagnostic methods, OSA severity, outcome definitions, and follow-up durations.
+
+Heterogeneity in the adjusted analyses may partly reflect differences in covariates included in the multivariate models, making direct comparison between studies challenging. The inclusion of studies with self-reported or unspecified OSA diagnostic methods may have introduced misclassification bias. However, sensitivity analysis stratified by diagnostic method demonstrated consistent direction of effect, suggesting that the main findings were not solely driven by these subgroups. Heterogeneity in OSA diagnostic methods and SCD definitions may have influenced the findings. Sensitivity analysis stratified by diagnostic method suggested the main effect was not driven by a single diagnostic approach; however, variability in SCD definitions could not be formally assessed as a heterogeneity source due to limited numbers.
+
+Second, only a limited number of studies provided adjusted effect estimates, and adjustment models varied widely. Not all studies adjusted for obesity or BMI in their multivariable models (Supplementary Table 3). Given the strong association between obesity, OSA, and cardiovascular outcomes, residual confounding by obesity may have contributed to the observed associations and should be considered when interpreting our findings. Also, the subgroup analysis for CPAP-treated patients is based on a small evidence base, with wide CIs indicating substantial uncertainty; these results should be interpreted with caution. The subgroup analysis stratifying studies by AHI threshold (≥ 5 vs. > 15 events/hour) included only 2–3 studies per stratum, resulting in very wide CIs. These findings should be interpreted as exploratory and hypothesis-generating rather than definitive.
+
+Furthermore, we were unable to perform meta-regression to explore heterogeneity drivers such as age, BMI, follow-up duration, or degree of nocturnal desaturation due to insufficient studies per covariate; attempting this would likely have yielded unreliable results. Finally, publication bias cannot be excluded, as suggested by asymmetry in the funnel and Galbraith plots.
+
+Clinical and research implications
+
+Our findings underscore the importance of early diagnosis and consistent treatment of OSA, especially in patients with cardiovascular risk profiles. While the evidence for a direct causal link between OSA and SCD remains inconclusive, the significantly elevated risk among untreated patients suggests that effective OSA management may have downstream benefits for arrhythmia prevention and mortality reduction.
+
+Future prospective studies with standardized definitions of both OSA and SCD, along with robust multivariable adjustment and long-term follow-up, are essential to clarify the direction and magnitude of this relationship. Furthermore, mechanistic studies exploring inflammation, ion channel remodeling, and autonomic dysregulation may elucidate the biological pathways underpinning this association and identify novel targets for intervention.
+
+This systematic review and meta-analysis provides nuanced insight into the relationship between obstructive sleep apnea (OSA) and sudden cardiac death (SCD). While the overall pooled analysis did not demonstrate a statistically significant association, subgroup findings revealed a significantly increased risk of SCD in patients with untreated OSA. Conversely, no such risk was observed among those receiving CPAP therapy or in adjusted models that accounted for confounding factors.
+
+These findings suggest that the heightened arrhythmic vulnerability in OSA may be modifiable and partially mediated through cardiovascular comorbidities and treatment status. The available evidence is insufficient to establish a definitive association between OSA and SCD. While some subgroup analyses suggest a possible increased risk in untreated OSA, the overall findings are heterogeneous, based on limited adjusted data, and should be interpreted with caution. Further high-quality prospective studies are needed to clarify this relationship and assess the potential impact of treatment such as CPAP.
+
+Data availability
+
+No datasets were generated or analysed during the current study.
+
+Abbreviations
+OSA:
+
+Obstructive Sleep Apnea
+
+SCD:
+
+Sudden Cardiac Death
+
+AHI:
+
+Apnea-Hypopnea Index
+
+CPAP:
+
+Continuous Positive Airway Pressure
+
+aOR:
+
+Adjusted Odds Ratio
+
+OR:
+
+Odds Ratio
+
+CI:
+
+Confidence Interval
+
+BMI:
+
+Body Mass Index
+
+PRISMA:
+
+Preferred Reporting Items for Systematic Reviews and Meta-Analyses
+
+PECOS:
+
+Population, Exposure, Comparison, Outcome, and Study Design
+
+NOS:
+
+Newcastle-Ottawa Scale
+
+REML:
+
+Restricted Maximum Likelihood
+
+Q:
+
+Cochran’s Q Statistic
+
+I²:
+
+Inconsistency Index (I-squared)
+
+τ²:
+
+Between-study Variance (Tau-squared)
+
+SD:
+
+Standard Deviation
+
+USA:
+
+United States of America
+
+UK:
+
+United Kingdom
+
+YOP:
+
+Year of Publication
+
+YOI:
+
+Year of Investigation
+
+References
+
+Ho ML, Brass SD. Obstructive sleep apnea. Neurol Int. 2011;3(3):e15.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Benjafield AV, Ayas NT, Eastwood PR, Heinzer R, Ip MS, Morrell MJ, et al. Estimation of the global prevalence and burden of obstructive sleep apnoea: a literature-based analysis. Lancet Respir Med. 2019;7(8):687–98.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Golbin JM, Somers VK, Caples SM. Obstructive sleep apnea, cardiovascular disease, and pulmonary hypertension. Proc Am Thorac Soc. 2008;5(2):200–6.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Kuriachan VP, Sumner GL, Mitchell LB. Sudden cardiac death. Curr Probl Cardiol. 2015;40(4):133–200.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Goyal V, Jassal DS, Dhalla NS. Pathophysiology and prevention of sudden cardiac death. Can J Physiol Pharmacol. 2016;94(3):237–44.
+
+Article
+ 
+PubMed
+ 
+CAS
+ 
+Google Scholar
+ 
+
+Blackwell JN, Walker M, Stafford P, Estrada S, Adabag S, Kwon Y. Sleep apnea and sudden cardiac death. Circ Rep. 2019;1(12):568–74.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Arora AZ, Woosley W, Klimentidis RL, Patel YC, Quan IY, Wendel SF, Shamoun C, Guerra F, Parthasarathy S, Patel S. S. I.: genetic QT score as a predictor of sudden cardiac death in participants with sleep-disordered breathing in the UK biobank. J Clin Sleep Medicine Official. 2024;(3):pp. 549–57.
+
+Kerns ESK, Meoni ED, Sozio LA, Jaar SM, Estrella BG, Parekh MM, et al. Obstructive sleep apnea increases sudden cardiac death in incident hemodialysis patients. Am J Nephrol. 2018;48(2):147–56.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Korostovtseva LSS, Zvartau YV, Konradi NE, Kalinkin AO. Prognosis and cardiovascular morbidity and mortality in prospective study of hypertensive patients with obstructive sleep apnea syndrome in St Petersburg, Russia. Med Sci Monit. 2011;17(3):8.
+
+Article
+ 
+Google Scholar
+ 
+
+Pham HNH, Chugh L, Uy-Evanado H, Nakamura A, Zhang K, Salvucci Z, Jui A, Reinier J, Chugh K. Dynamic electrocardiogram changes are a novel risk marker for sudden cardiac death. Eur Heart J. 2024;45(10):809–19.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Muka T, Glisic M, Milic J, Verhoog S, Bohlius J, Bramer W, Chowdhury R, Franco OH. A 24-step guide on how to design, conduct, and successfully publish a systematic review and meta-analysis in medical research. Eur J Epidemiol. 2020;35:49–60.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Luchini C, Stubbs B, Solmi M, Veronese N. Assessing the quality of studies in meta-analyses: advantages and limitations of the Newcastle Ottawa scale. World J Meta-Anal. 2017;5(4):80–4.
+
+Article
+ 
+Google Scholar
+ 
+
+Gami ASH, Olson DE, Somers EJ. Day-night pattern of sudden death in obstructive sleep apnea. N Engl J Med. 2005;352(12):1206–14.
+
+Article
+ 
+PubMed
+ 
+CAS
+ 
+Google Scholar
+ 
+
+Gami ASO, Shen EJ, Wright WK, Ballman RS, Hodge KV, Herges DO, et al. Obstructive sleep apnea and the risk of sudden cardiac death: a longitudinal study of 10,701 adults. J Am Coll Cardiol. 2013;62(7):610–6.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Jung ER, Ro HH, Cha YS, Shin KC, Hwang SD. Interactions between sleep apnea and coronary artery disease on the incidence of sudden cardiac arrest: a multi-center case-control study. Yonsei Med J. 2023;64(1):48–53.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Martínez-García MAG-A, Soler-Cataluña R, Martínez JJ, Bernácer-Alpera TG, Román-Sánchez B. Positive effect of CPAP treatment on the control of difficult-to-treat hypertension. Eur Respir J. 2007;29(5):951–7.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Mooe T, Franklin KA, Holmstrom K, Rabben T, Wiklund U. Sleep-disordered breathing and coronary artery disease: long-term prognosis. Am J Respir Crit Care Med. 2001;164(10):1910–3.
+
+Article
+ 
+PubMed
+ 
+CAS
+ 
+Google Scholar
+ 
+
+Noheria AT, Uy-Evanado C, Reinier A, Mariani K, Gunson R, Jui K, et al. Distinctive profile of sudden cardiac arrest in middle-aged vs. older adults: a community-based study. Int J Cardiol. 2013;168(4):3495–9.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Pandat SN, Nair T, Uy-Evanado SG, Stecker A, Nichols EC, Jui GA, Shiota J, Chugh T, Reinier SS. An association between right ventricular dysfunction and sudden cardiac death. Heart Rhythm. 2020;17(2):169–74.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Sridharan AM, Carrick MS, Madias RT, Huang CA, Cooper D, Drummond C, et al. Impact of comorbidities on atrial fibrillation and sudden cardiac death in hypertrophic cardiomyopathy. J Cardiovasc Electrophys. 2022;33(1):20–9.
+
+Article
+ 
+Google Scholar
+ 
+
+Sweed RAH, ElWahab S, Aref NHA, Mahmoud SR. Comorbidities associated with obstructive sleep apnea: a retrospective Egyptian study on 244 patients. Sleep Breath. 2019;23(4):1079–85.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Wang HP, Newton JD, Floras GE, Mak JS, Chiu S, Ruttanaumpawan KL, et al. Influence of obstructive sleep apnea on mortality in patients with heart failure. J Am Coll Cardiol. 2007;49(15):1625–31.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Heilbrunn ES, Ssentongo P, Chinchilli VM, Ssentongo AE. Sudden death in patients with sleep apnea: a systematic review and meta-analysis. MedRxiv. 2020;2020(2005):2006–20093641.
+
+Brodovskaya TO, Grishina IF, Peretolchina TF, Solenskaia OG, Kovtun OP, Teplyakova OV, Chernjadev SA, Popov AA, Kurmin VV. Clues to the pathophysiology of sudden cardiac death in obstructive sleep apnea. Cardiology. 2018;140(4):247–53.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Gami AS, Somers VK. Implications of obstructive sleep apnea for atrial fibrillation and sudden cardiac death. J Cardiovasc Electrophysiol. 2008;19(9):997–1003.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Loke YK, Brown JW, Kwok CS, Niruban A, Myint PK. Association of obstructive sleep apnea with risk of serious cardiovascular events: a systematic review and meta-analysis. Circ Cardiovasc Qual Outcomes. 2012;5(5):720–8.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Teo YH, Han R, Leong S, Teo YN, Syn NL, Wee CF, et al. Prevalence, types and treatment of bradycardia in obstructive sleep apnea - a systematic review and meta-analysis. Sleep Med. 2022;89:104–13.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Zhao J, Cai X, Hu J, Song S, Zhu Q, Shen D, et al. J-shaped relationship between weight-adjusted-waist index and cardiovascular disease risk in hypertensive patients with obstructive sleep apnea: a cohort study. Diabetes Metab Syndr Obes. 2024;17:2671–81.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Hu J, Cai X, Li N, Zhu Q, Wen W, Hong J, et al. Association between triglyceride glucose index-waist circumference and risk of first myocardial infarction in Chinese hypertensive patients with obstructive sleep apnoea: an observational cohort study. Nat Sci Sleep. 2022;14:969–80.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Wen W, Cai X, Zhu Q, Hu J, Hong J, Zhang X, et al. Linear relationship between hepatic steatosis index and major adverse cardiovascular events in hypertensive patients with obstructive sleep apnea: a real-world cohort study from China. Rev Cardiovasc Med. 2023;24(10):280.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Li N, Cai X, Zhu Q, Yao X, Lin M, Gan L, Sun L, Yue N, Ren Y, Hong J et al. Association between Plasma Homocysteine Concentrations and the First Ischemic Stroke in Hypertensive Patients with Obstructive Sleep Apnea: A 7-Year Retrospective Cohort Study from China. Disease markers 2021, 2021:9953858.
+
+Li N, Wen W, Cai X, Zhu Q, Hu J, Heizhati M, et al. The use of aspirin increases the risk of major adverse cardiac and cerebrovascular events in hypertensive patients with obstructive sleep apnea for the primary prevention of cardiovascular disease: a real-world cohort study. J Clin Med. 2022. https://doi.org/10.3390/jcm11237066.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Martinez, Alessandra BR, Guilherme RB, Matheus RL, Romero Henrique de AB. "Sleep apnea and sudden death in the non-cardiac population: systematic review". Revista Port de Cardiol 43, no. 5. (2024): 279–90.
+
+Fonseca MIP, Pereira T, Caseiro P. Death and disability in patients with sleep apnea-a meta-analysis. Arq Bras Cardiol. 2014;104(1):58–66.
+
+PubMed
+ 
+Google Scholar
+ 
+
+Chahal AA, Somers VK. Ion channel remodeling—a potential mechanism linking sleep apnea and sudden cardiac death. J Am Heart Assoc. 2016;5:e004195.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Ottaviani G, Buja LM. Pathology of unexpected sudden cardiac death: obstructive sleep apnea is part of the challenge. Cardiovasc Pathol. 2020;47:107221.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Shamsuzzaman AS, Somers VK, Knilans TK, Ackerman MJ, Wang Y, Amin RS. Obstructive sleep apnea in patients with congenital long QT syndrome: implications for increased risk of sudden cardiac death. Sleep. 2015;38(7):1113–9.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Download references
+
+Acknowledgements
+
+None to declare.
+
+Funding
+
+Not applicable.
+
+Author information
+Authors and Affiliations
+
+Yichun People’s Hospital, Yichun, Jiangxi, 336000, China
+
+Xiaorong Zou, Xiong Zhou & Song Yi
+
+Contributions
+
+SY contributed to the study conception and design. Material preparation, data collection and analysis were performed by XZ, XZH and SY. The first draft of the manuscript was written by XZ and all authors commented on previous versions of the manuscript. All authors read and approved the final manuscript.
+
+Corresponding author
+
+Correspondence to Song Yi.
+
+Ethics declarations
+Ethics approval and consent to participate
+
+Not applicable.
+
+Consent for publication
+
+Not applicable.
+
+Competing interests
+
+The authors declare no competing interests.
+
+Additional information
+Publisher’s Note
+
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+
+Supplementary Information
+Supplementary Material 1.
+Supplementary Material 2.
+Supplementary Material 3.
+Supplementary Material 4.
+Supplementary Material 5.
+Supplementary Material 6.
+Supplementary Material 7.
+Supplementary Material 8.
+Supplementary Material 9.
+Rights and permissions
+
+Open Access This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits any non-commercial use, sharing, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if you modified the licensed material. You do not have permission under this licence to share adapted material derived from this article or parts of it. The images or other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
+
+Reprints and permissions
+
+About this article
+Cite this article
+
+Zou, X., Zhou, X. & Yi, S. Obstructive sleep apnea and the risk of sudden cardiac death: a systematic review and meta-analysis. BMC Cardiovasc Disord 25, 751 (2025). https://doi.org/10.1186/s12872-025-05193-7
+
+Download citation
+
+Received
+30 June 2025
+
+Accepted
+04 September 2025
+
+Published
+21 October 2025
+
+Version of record
+21 October 2025
+
+DOI
+https://doi.org/10.1186/s12872-025-05193-7
+
+Share this article
+
+Anyone you share the following link with will be able to read this content:
+
+Get shareable link
+
+Provided by the Springer Nature SharedIt content-sharing initiative
+
+Keywords
+Sudden cardiac death
+Obstructive sleep apnea
+Risk
+Meta-Analysis
+Sections
+Figures
+References
+Abstract
+Background
+Methods
+Results
+Discussion
+Data availability
+Abbreviations
+References
+Acknowledgements
+Funding
+Author information
+Ethics declarations
+Additional information
+Supplementary Information
+Rights and permissions
+About this article
+Discover content
+Journals A-Z
+Books A-Z
+Publish with us
+Journal finder
+Publish your research
+Language editing
+Open access publishing
+Products and services
+Our products
+Librarians
+Societies
+Partners and advertisers
+Our brands
+Springer
+Nature Portfolio
+BMC
+Palgrave Macmillan
+Apress
+Discover
+Your privacy choices/Manage cookies Your US state privacy rights Accessibility statement Terms and conditions Privacy policy Help and support Legal notice Cancel contracts here
+
+76.132.73.231
+
+Not affiliated
+
+© 2026 Springer Nature

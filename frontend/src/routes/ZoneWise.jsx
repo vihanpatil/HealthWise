@@ -79,7 +79,7 @@ export default function ZoneWise() {
   const [zones, setZones] = useState(null);
 
   const RANK_COLORS = {
-    0: "#90A4AE",
+    0: "#099c38",
     1: "#4CAF50",
     2: "#8BC34A",
     3: "#FFC107",
@@ -540,7 +540,7 @@ export default function ZoneWise() {
             )}
 
             {/* right: chat */}
-            <ZoneChat />
+            <ZoneChat minutes={minutes} zones={zones} />
           </div>
         </>
       )}

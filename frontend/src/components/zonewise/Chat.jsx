@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { zonewiseApi } from "../../api/zonewise";
 
-export default function ZoneChat() {
+export default function ZoneChat({ minutes = 0, zones = null }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [status, setStatus] = useState("");
@@ -12,6 +12,12 @@ export default function ZoneChat() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, status]);
+
+  useEffect(() => {
+    if (isStreaming) return;
+    setMessages([]);
+    setStatus("");
+  }, [minutes]);
 
   const historyTuples = useMemo(() => {
     const tuples = [];
@@ -35,6 +41,8 @@ export default function ZoneChat() {
     await zonewiseApi.streamChat({
       message: msg,
       history: historyTuples,
+      minutes,
+      onStarted: () => {},
       onMessage: (payload) => {
         const h = payload?.history;
         if (!Array.isArray(h) || h.length === 0) return;
