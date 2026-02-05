@@ -6,7 +6,7 @@ python-dotenv==1.0.0
 requests==2.32.5
 openai>=2.15.0,<3
 
-SQLAlchemy==2.0.25
+SQLAlchemy>=2.0.36
 psycopg[binary]==3.2.13
 
 llama-index==0.14.12
@@ -24,4 +24,4 @@ ultralytics==8.3.235
 passlib[bcrypt]==1.7.4
 bcrypt==4.1.2
 python-jose[cryptography]==3.3.0
-pydantic[email]>=2.8.0,<3
+pydantic[email]>=2.8.0,<3.0.0

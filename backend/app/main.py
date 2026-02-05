@@ -36,4 +36,4 @@ def startup():
 app.include_router(rootwise_router, prefix="/api/rootwise", tags=["rootwise"])
 app.include_router(zonewise_router, prefix="/api/zonewise", tags=["zonewise"])
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
-app.include_router(health_router, prefix="/api", tags=["health"])
+app.include_router(health_router, prefix="/api/health", tags=["health"])
