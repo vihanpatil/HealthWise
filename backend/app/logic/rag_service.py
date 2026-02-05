@@ -49,8 +49,10 @@ class RagService:
     def list_rag_files(self) -> List[str]:
         self.ensure_store_exists()
         return [
-            f for f in os.listdir(self.store_path)
-            if f.endswith(SUPPORTED_EXTS) and os.path.isfile(os.path.join(self.store_path, f))
+            f
+            for f in os.listdir(self.store_path)
+            if f.endswith(SUPPORTED_EXTS)
+            and os.path.isfile(os.path.join(self.store_path, f))
         ]
 
     # --- indexing ---
@@ -74,7 +76,9 @@ class RagService:
             if not docs:
                 self._index = None
                 self._query_engine = None
-                return f"Error: No valid .txt/.pdf documents found in {self.store_path}."
+                return (
+                    f"Error: No valid .txt/.pdf documents found in {self.store_path}."
+                )
 
             dim = self._get_embed_dim()
             vector_store = FaissVectorStore(faiss_index=faiss.IndexFlatL2(dim))
@@ -114,10 +118,17 @@ class RagService:
             for r in results:
                 node = r.node
                 meta = node.metadata or {}
-                out.append({
-                    "score": getattr(r, "score", None),
-                    "text": node.get_text(),
-                    "file": meta.get("file_name") or meta.get("filename") or meta.get("source") or meta.get("file_path"),
-                    "page": meta.get("page_label") or meta.get("page") or meta.get("page_number"),
-                })
+                out.append(
+                    {
+                        "score": getattr(r, "score", None),
+                        "text": node.get_text(),
+                        "file": meta.get("file_name")
+                        or meta.get("filename")
+                        or meta.get("source")
+                        or meta.get("file_path"),
+                        "page": meta.get("page_label")
+                        or meta.get("page")
+                        or meta.get("page_number"),
+                    }
+                )
             return out

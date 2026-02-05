@@ -23,7 +23,6 @@ export const rootwiseApi = {
     return apiForm("/api/rootwise/docs/load", fd);
   },
 
-  // NEW: scope-aware file listing/reading
   listFiles: (scope = "system") => apiJson(`/api/rootwise/system/files?scope=${encodeURIComponent(scope)}`),
   readFile: (name, scope = "system") =>
     apiJson(`/api/rootwise/system/file?scope=${encodeURIComponent(scope)}&name=${encodeURIComponent(name)}`),

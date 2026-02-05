@@ -18,11 +18,12 @@ app = FastAPI(title="RootWise API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite dev server
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.on_event("startup")
 def startup():
@@ -30,6 +31,7 @@ def startup():
     print("RootWise:", initialize_rootwise_rag())
     print("ZoneWise:", initialize_zonewise_rag())
     print("Startup complete.")
+
 
 app.include_router(rootwise_router, prefix="/api/rootwise", tags=["rootwise"])
 app.include_router(zonewise_router, prefix="/api/zonewise", tags=["zonewise"])

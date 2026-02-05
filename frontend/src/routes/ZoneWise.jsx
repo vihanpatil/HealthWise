@@ -1,5 +1,5 @@
 // frontend/src/routes/ZoneWise.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   XAxis,
@@ -14,48 +14,82 @@ import {
 import { apiJson, getToken, setToken, clearToken } from "../api/client";
 import ZoneChat from "../components/zonewise/Chat";
 
+function prettyError(err) {
+  if (err instanceof Error && typeof err.message === "string") return err.message;
+  if (err && typeof err.message === "string") return err.message;
+
+  const detail = err?.detail ?? err?.response?.detail ?? err?.data?.detail;
+
+  if (typeof detail === "string") return detail;
+
+  if (Array.isArray(detail)) {
+    const msgs = detail
+      .map((d) => {
+        if (typeof d === "string") return d;
+        if (d?.loc && d?.msg) return `${d.loc.join(".")}: ${d.msg}`;
+        if (d?.msg) return d.msg;
+        if (d?.message) return d.message;
+        return null;
+      })
+      .filter(Boolean);
+
+    if (msgs.length) return msgs.join(" • ");
+  }
+
+  if (err?.status && err?.statusText) return `${err.status} ${err.statusText}`;
+
+  try {
+    const s = JSON.stringify(err);
+    return s && s !== "{}" ? s : "Request failed";
+  } catch {
+    return "Request failed";
+  }
+}
+
+const PASSWORD_RULES = [
+  { key: "len", label: "At least 8 characters", test: (s) => (s || "").length >= 8 },
+  { key: "upper", label: "One uppercase letter (A–Z)", test: (s) => /[A-Z]/.test(s || "") },
+  { key: "lower", label: "One lowercase letter (a–z)", test: (s) => /[a-z]/.test(s || "") },
+  { key: "num", label: "One number (0–9)", test: (s) => /\d/.test(s || "") },
+  { key: "sym", label: "One symbol (e.g. !@#$)", test: (s) => /[^A-Za-z0-9]/.test(s || "") },
+];
+
+function evalPassword(pw) {
+  const results = PASSWORD_RULES.map((r) => ({ ...r, ok: r.test(pw) }));
+  return { results, allOk: results.every((r) => r.ok) };
+}
 
 export default function ZoneWise() {
-  // auth state
   const [authed, setAuthed] = useState(false);
   const [me, setMe] = useState(null);
-
-  // auth form
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [name, setName] = useState("");
   const [gender, setGender] = useState("male");
   const [age, setAge] = useState("");
   const [heightCm, setHeightCm] = useState("");
   const [weightKg, setWeightKg] = useState("");
-
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // shared UI state
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // dashboard state (heart_rate only)
   const [minutes, setMinutes] = useState(0);
   const [zones, setZones] = useState(null);
 
   const RANK_COLORS = {
-    0: "#90A4AE", // Zone 0 (Resting) – calm gray/blue
-    1: "#4CAF50", // Zone 1 – green
-    2: "#8BC34A", // Zone 2 – light green
-    3: "#FFC107", // Zone 3 – yellow
-    4: "#FF9800", // Zone 4 – orange
-    5: "#F44336", // Zone 5 – red
+    0: "#90A4AE",
+    1: "#4CAF50",
+    2: "#8BC34A",
+    3: "#FFC107",
+    4: "#FF9800",
+    5: "#F44336",
   };
-
 
   const orderedZones = zones?.zones ?? [];
 
-  const zoneFillByRank = (() => {
+  const zoneFillByRank = useMemo(() => {
     const sorted = orderedZones
       .map((z, idx) => ({
         ...z,
@@ -63,16 +97,20 @@ export default function ZoneWise() {
         minutes: Number(z.minutes ?? 0),
         zoneNum: Number(z.zone),
       }))
-      .sort((a, b) => (b.minutes - a.minutes) || (a.zoneNum - b.zoneNum)); // stable tie-break
+      .sort((a, b) => (b.minutes - a.minutes) || (a.zoneNum - b.zoneNum));
+
+    const maxRank = Object.keys(RANK_COLORS).length - 1;
 
     const m = {};
     sorted.forEach((z, rank) => {
-      m[z.zoneNum] = RANK_COLORS[Math.min(rank, RANK_COLORS.length - 1)];
+      m[z.zoneNum] = RANK_COLORS[Math.min(rank, maxRank)];
     });
     return m;
-  })();
+  }, [orderedZones]);
 
-  // On mount: if token exists, verify it and load dashboard
+  const pwEval = useMemo(() => evalPassword(password), [password]);
+  const showPwRules = mode === "register";
+
   useEffect(() => {
     const token = getToken();
     if (!token) return;
@@ -97,37 +135,39 @@ export default function ZoneWise() {
     };
   }, []);
 
-  // Fetch heart-rate zones whenever authed or minutes changes
-useEffect(() => {
-  if (!authed) return;
+  useEffect(() => {
+    if (!authed) return;
 
-  let mounted = true;
-  (async () => {
-    try {
-      const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
-      if (!mounted) return;
-      setZones(res);
-    } catch (e) {
-      if (!mounted) return;
-      setZones(null);
-      setStatus(`❌ ${String(e.message || e)}`);
-    }
-  })();
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await apiJson(`/api/zonewise/metrics/heart_zones/me?minutes=${minutes}`);
+        if (!mounted) return;
+        setZones(res);
+      } catch (e) {
+        if (!mounted) return;
+        setZones(null);
+        setStatus(`❌ ${prettyError(e)}`);
+      }
+    })();
 
-  return () => {
-    mounted = false;
-  };
-}, [authed, minutes]);
-
+    return () => {
+      mounted = false;
+    };
+  }, [authed, minutes]);
 
   async function onSubmitAuth(e) {
     e.preventDefault();
-
     setStatus("");
     setIsLoading(true);
 
-    // Register-only validation
     if (mode === "register") {
+      if (!pwEval.allOk) {
+        setStatus("❌ Password does not meet the requirements below.");
+        setIsLoading(false);
+        return;
+      }
+
       if (password !== confirmPassword) {
         setStatus("❌ Passwords do not match.");
         setIsLoading(false);
@@ -211,7 +251,7 @@ useEffect(() => {
       clearToken();
       setAuthed(false);
       setMe(null);
-      setStatus(`❌ ${String(err.message || err)}`);
+      setStatus(`❌ ${prettyError(err)}`);
     } finally {
       setIsLoading(false);
     }
@@ -250,7 +290,9 @@ useEffect(() => {
       {!authed ? (
         <div style={styles.authWrap}>
           <div style={styles.authCard}>
-            <div style={styles.authTitle}>{mode === "register" ? "Create account" : "Login"}</div>
+            <div style={styles.authTitle}>
+              {mode === "register" ? "Create account" : "Login"}
+            </div>
 
             <form onSubmit={onSubmitAuth} style={{ display: "grid", gap: 10 }}>
               {mode === "register" ? (
@@ -266,7 +308,11 @@ useEffect(() => {
                   <div style={styles.row2}>
                     <div>
                       <div style={styles.smallLabel}>Gender</div>
-                      <select style={styles.select} value={gender} onChange={(e) => setGender(e.target.value)}>
+                      <select
+                        style={styles.select}
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
@@ -331,10 +377,34 @@ useEffect(() => {
                   type={showPassword ? "text" : "password"}
                   autoComplete={mode === "register" ? "new-password" : "current-password"}
                 />
-                <button type="button" onClick={() => setShowPassword((v) => !v)} style={styles.showBtn}>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  style={styles.showBtn}
+                >
                   {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
+
+              {/* Password requirements */}
+              {showPwRules ? (
+                <div style={styles.pwCard}>
+                  <div style={styles.pwTitle}>Password requirements</div>
+                  <div style={styles.pwList}>
+                    {pwEval.results.map((r) => (
+                      <div key={r.key} style={styles.pwItem}>
+                        <span
+                          style={{
+                            ...styles.pwDot,
+                            background: r.ok ? "#2E7D32" : "rgba(0,0,0,0.15)",
+                          }}
+                        />
+                        <span style={{ opacity: r.ok ? 1 : 0.75 }}>{r.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
 
               {/* Confirm password */}
               {mode === "register" ? (
@@ -374,14 +444,22 @@ useEffect(() => {
               {mode === "register" ? (
                 <>
                   Already have an account?{" "}
-                  <button style={styles.linkInlineBtn} onClick={() => setMode("login")} type="button">
+                  <button
+                    style={styles.linkInlineBtn}
+                    onClick={() => setMode("login")}
+                    type="button"
+                  >
                     Login
                   </button>
                 </>
               ) : (
                 <>
                   New here?{" "}
-                  <button style={styles.linkInlineBtn} onClick={() => setMode("register")} type="button">
+                  <button
+                    style={styles.linkInlineBtn}
+                    onClick={() => setMode("register")}
+                    type="button"
+                  >
                     Create account
                   </button>
                 </>
@@ -392,21 +470,26 @@ useEffect(() => {
           </div>
         </div>
       ) : (
-          <>
+        <>
           {/* TOP BAR */}
           <div style={{ ...styles.toolbar, marginTop: 12 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={styles.logo}>🫀</div>
               <div>
                 <div style={styles.title}>ZoneWise</div>
-                <div style={{ ...styles.subtitle, lineHeight: 1.15 }}>Heart rate zones & daily physiology insights</div>
+                <div style={{ ...styles.subtitle, lineHeight: 1.15 }}>
+                  Heart rate zones & daily physiology insights
+                </div>
               </div>
             </div>
 
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
-              {/* NEW: zones window */}
               <div style={styles.control}>
-                <select value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} style={styles.select}>
+                <select
+                  value={minutes}
+                  onChange={(e) => setMinutes(Number(e.target.value))}
+                  style={styles.select}
+                >
                   <option value={30}>Last 30 min</option>
                   <option value={60}>Last 60 min</option>
                   <option value={90}>Last 90 min</option>
@@ -423,8 +506,6 @@ useEffect(() => {
           </div>
 
           {/* DASHBOARD */}
-          {/* NEW: Heart-rate zones bar chart (requires `zones` state fetched from /metrics/heart_zones/me) */}
-          {/* DASHBOARD */}
           <div style={styles.row2}>
             {/* left: chart */}
             {zones?.zones?.length ? (
@@ -432,8 +513,9 @@ useEffect(() => {
                 <div style={styles.cardHeader}>
                   <div style={styles.cardTitle}>Heart Rate Zones</div>
                   <div style={styles.cardHint}>
-                    Minutes in each zone ({zones.minutes_window === 0 ? "all time" : `last ${zones.minutes_window} min`}, max HR{" "}
-                    {zones.max_hr})
+                    Minutes in each zone (
+                    {zones.minutes_window === 0 ? "all time" : `last ${zones.minutes_window} min`}
+                    , max HR {zones.max_hr})
                   </div>
                 </div>
 
@@ -460,7 +542,6 @@ useEffect(() => {
             {/* right: chat */}
             <ZoneChat />
           </div>
-
         </>
       )}
     </div>
@@ -544,7 +625,6 @@ const styles = {
   },
 
   control: { minWidth: 180 },
-  label: { fontSize: 12, fontWeight: 800, opacity: 0.75, marginBottom: 6 },
 
   input: {
     width: "100%",
@@ -580,21 +660,7 @@ const styles = {
     fontWeight: 900,
     cursor: "pointer",
   },
-  kpiGrid: {
-    marginTop: 14,
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: 10,
-  },
-  kpiCard: {
-    border: "1px solid rgba(0,0,0,0.08)",
-    background: "rgba(255,255,255,0.95)",
-    borderRadius: 16,
-    padding: 12,
-    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-  },
-  kpiTitle: { fontSize: 12, fontWeight: 900, opacity: 0.65 },
-  kpiValue: { fontSize: 22, fontWeight: 900, marginTop: 8 },
+
   card: {
     marginTop: 14,
     border: "1px solid rgba(0,0,0,0.08)",
@@ -641,4 +707,16 @@ const styles = {
     cursor: "pointer",
     whiteSpace: "nowrap",
   },
+
+  pwCard: {
+    marginTop: 2,
+    padding: 10,
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.08)",
+    background: "rgba(242,246,234,0.6)",
+  },
+  pwTitle: { fontSize: 12, fontWeight: 900, marginBottom: 8, opacity: 0.8 },
+  pwList: { display: "grid", gap: 6 },
+  pwItem: { display: "flex", alignItems: "center", gap: 8, fontSize: 12 },
+  pwDot: { width: 10, height: 10, borderRadius: 999 },
 };

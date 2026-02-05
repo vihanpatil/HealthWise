@@ -6,11 +6,12 @@ import threading
 
 from app.logic.rag_service import RagService
 
+
 @dataclass
 class RagInstance:
     store_path: str
     _lock: threading.Lock = threading.Lock()
-    _svc: RagService = None  # type: ignore
+    _svc: RagService = None
 
     def __post_init__(self):
         self._svc = RagService(self.store_path)
@@ -31,8 +32,10 @@ class RagInstance:
         with self._lock:
             return self._svc.list_rag_files()
 
+
 # registry: one instance per store
 _INSTANCES: Dict[str, RagInstance] = {}
+
 
 def get_rag(store_path: str) -> RagInstance:
     inst = _INSTANCES.get(store_path)
