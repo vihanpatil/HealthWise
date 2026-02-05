@@ -8,23 +8,17 @@ import RagInputs from "../components/rootwise/RagInputs";
 export default function RootWise() {
   const [name, setName] = useState("");
   const [nameStatus, setNameStatus] = useState("");
-
   const [note, setNote] = useState("");
   const [noteStatus, setNoteStatus] = useState("");
-
   const [imgFile, setImgFile] = useState(null);
   const [detected, setDetected] = useState("");
   const [detectStatus, setDetectStatus] = useState("");
-
   const [files, setFiles] = useState([]);
   const [selected, setSelected] = useState("");
   const [previewText, setPreviewText] = useState("");
   const [previewImg, setPreviewImg] = useState("");
-
-  const [activeTab, setActiveTab] = useState("chat"); // "chat" | "tools"
-
-  // NEW: file viewer scope
-  const [fileScope, setFileScope] = useState("system"); // "system" | "user"
+  const [activeTab, setActiveTab] = useState("chat");
+  const [fileScope, setFileScope] = useState("system");
 
   const hasName = useMemo(() => name.trim().length > 0, [name]);
 
@@ -37,7 +31,6 @@ export default function RootWise() {
     refreshFiles().catch(() => {});
   }, []);
 
-  // NEW: refresh list when switching scope
   useEffect(() => {
     setSelected("");
     setPreviewText("");
@@ -428,8 +421,6 @@ const styles = {
     maxHeight: 340,
     overflow: "auto",
   },
-
-  // NEW styles for scope toggle
   scopePills: {
     display: "flex",
     gap: 8,

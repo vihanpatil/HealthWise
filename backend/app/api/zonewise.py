@@ -12,13 +12,12 @@ from app.db.models import User, Metric
 from app.logic.auth_deps import get_current_user_id
 from app.logic.zonewise import stream_zonewise_response
 
-
 router = APIRouter()
 
 
 @router.get("/metrics/heart_zones/me")
 def heart_zones_me(
-    minutes: int = Query(60, ge=0, le=1440),  # <-- allow 0
+    minutes: int = Query(60, ge=0, le=1440),
     metric_type: str = Query("heart_rate"),
     db: Session = Depends(get_db),
     user_id: str = Depends(get_current_user_id),
@@ -26,18 +25,14 @@ def heart_zones_me(
     user_uuid = UUID(user_id)
 
     u = db.query(User.age).filter(User.id == user_uuid).first()
-    age = int(u[0]) if u and u[0] is not None else 30  # fallback
+    age = int(u[0]) if u and u[0] is not None else 30
     max_hr = max(160, 220 - age)
 
-    q = (
-        db.query(Metric.value)
-        .filter(
-            Metric.user_id == user_uuid,
-            Metric.metric_type == metric_type,
-        )
+    q = db.query(Metric.value).filter(
+        Metric.user_id == user_uuid,
+        Metric.metric_type == metric_type,
     )
 
-    # only apply window if minutes > 0
     if minutes > 0:
         q = q.filter(Metric.ts >= func.now() - timedelta(minutes=minutes))
 
@@ -66,7 +61,7 @@ def heart_zones_me(
     return {
         "ok": True,
         "metric_type": metric_type,
-        "minutes_window": minutes,  # 0 means all-time
+        "minutes_window": minutes,
         "max_hr": max_hr,
         "zones": [
             {"zone": 0, "label": "Zone 0", "minutes": z0},
@@ -78,8 +73,10 @@ def heart_zones_me(
         ],
     }
 
+
 def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
 
 def normalize_history(history):
     out = []
@@ -90,8 +87,10 @@ def normalize_history(history):
             out.append([str(item), ""])
     return out
 
+
 def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
 
 @router.post("/chat/stream")
 async def chat_stream(payload: dict):
@@ -109,13 +108,14 @@ async def chat_stream(payload: dict):
 
     return StreamingResponse(gen(), media_type="text/event-stream")
 
+
 def heart_rate_series(db: Session, user_id, minutes=60):
     start = datetime.utcnow() - timedelta(minutes=minutes)
 
     return (
         db.query(
             func.date_trunc("minute", Metric.ts).label("ts"),
-            func.avg(Metric.value).label("bpm")
+            func.avg(Metric.value).label("bpm"),
         )
         .filter(
             Metric.user_id == user_id,
@@ -126,13 +126,13 @@ def heart_rate_series(db: Session, user_id, minutes=60):
         .order_by("ts")
         .all()
     )
-    
+
+
 @router.get("/metrics/heart_rate/me")
-def my_heart_rate(minutes: int = 60,
-                  db: Session = Depends(get_db),
-                  user_id = Depends(get_current_user_id)):
+def my_heart_rate(
+    minutes: int = 60,
+    db: Session = Depends(get_db),
+    user_id=Depends(get_current_user_id),
+):
     rows = heart_rate_series(db, user_id, minutes)
-    return [
-        {"ts": r.ts.isoformat(), "bpm": float(r.bpm)}
-        for r in rows
-    ]
+    return [{"ts": r.ts.isoformat(), "bpm": float(r.bpm)} for r in rows]

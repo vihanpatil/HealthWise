@@ -17,7 +17,9 @@ from app.logic.rag_instance import get_rag
 # ----------------------------
 # Globals
 # ----------------------------
-user_rag_file: Optional[str] = None  # stored as filename inside USER_STATE_DIR (e.g., "MahyarRAG.txt")
+user_rag_file: Optional[str] = (
+    None  # stored as filename inside USER_STATE_DIR (e.g., "MahyarRAG.txt")
+)
 rag_root = get_rag(str(ROOTWISE_DATA))
 
 SUPPORTED_EXTS = (".txt", ".pdf")
@@ -82,7 +84,7 @@ def detect_vegetables(image_path: str):
             [sys.executable, str(VIS_TRANSFORMER_PATH), image_path],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
         )
         lines = result.stdout.splitlines()
         vegs = ""
@@ -167,19 +169,27 @@ def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
         USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
 
         if season and season.strip():
-            (USER_STATE_DIR / "given_season.txt").write_text(f"Season: {season.strip()}\n")
+            (USER_STATE_DIR / "given_season.txt").write_text(
+                f"Season: {season.strip()}\n"
+            )
 
         if ingredients and ingredients.strip():
-            (USER_STATE_DIR / "given_ingredients.txt").write_text(f"Ingredients: {ingredients.strip()}\n")
+            (USER_STATE_DIR / "given_ingredients.txt").write_text(
+                f"Ingredients: {ingredients.strip()}\n"
+            )
 
         if restrictions and restrictions.strip():
-            (USER_STATE_DIR / "given_restrictions.txt").write_text(f"Dietary Restrictions: {restrictions.strip()}\n")
+            (USER_STATE_DIR / "given_restrictions.txt").write_text(
+                f"Dietary Restrictions: {restrictions.strip()}\n"
+            )
 
-        if not any([
-            season and season.strip(),
-            ingredients and ingredients.strip(),
-            restrictions and restrictions.strip()
-        ]):
+        if not any(
+            [
+                season and season.strip(),
+                ingredients and ingredients.strip(),
+                restrictions and restrictions.strip(),
+            ]
+        ):
             return "No new data provided."
 
         return "User state saved."
@@ -195,7 +205,7 @@ def call_nvidia_chat(messages, model: str = "meta/llama3-70b-instruct") -> str:
     url = "https://integrate.api.nvidia.com/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {os.getenv('NGC_API_KEY')}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
     payload = {"model": model, "messages": messages}
 
@@ -242,7 +252,6 @@ def stream_response(message: str, history):
     if history is None:
         history = []
 
-    # Ensure index is ready (instance-scoped)
     try:
         rag_root.ensure_ready()
     except Exception as e:
@@ -261,10 +270,15 @@ def stream_response(message: str, history):
 
         # Agentic step: if weak, reformulate once and retry
         if not _safe_has_good_hits(hits):
-            reformulated = call_nvidia_chat([
-                {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
-                {"role": "user", "content": message}
-            ])
+            reformulated = call_nvidia_chat(
+                [
+                    {
+                        "role": "system",
+                        "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation.",
+                    },
+                    {"role": "user", "content": message},
+                ]
+            )
             hits = rag_root.retrieve(reformulated, top_k=6)
             k = len(hits)
 
@@ -321,10 +335,12 @@ def stream_response(message: str, history):
             "- at most one gentle question at the end (optional)\n"
         )
 
-        assistant_text = call_nvidia_chat([
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ])
+        assistant_text = call_nvidia_chat(
+            [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ]
+        )
 
         updated_history = history + [(message, str(assistant_text))]
         yield updated_history

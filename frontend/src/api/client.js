@@ -1,6 +1,5 @@
 export const API_BASE = "http://127.0.0.1:8000";
 
-// JWT stored locally
 const LS_TOKEN_KEY = "zonewise_token";
 
 export function getToken() {
@@ -15,7 +14,6 @@ export function clearToken() {
   localStorage.removeItem(LS_TOKEN_KEY);
 }
 
-// Small helper to attach Authorization header if token exists
 function withAuthHeaders(headers = {}) {
   const token = getToken();
   if (!token) return headers;
@@ -23,7 +21,6 @@ function withAuthHeaders(headers = {}) {
 }
 
 async function parseError(res) {
-  // FastAPI often returns {"detail": "..."}; fallback to raw text
   const text = await res.text().catch(() => "");
   try {
     const j = text ? JSON.parse(text) : null;
@@ -34,7 +31,6 @@ async function parseError(res) {
   }
 }
 
-// JSON requests (auto auth)
 export async function apiJson(path, method = "GET", body) {
   const headers = body ? { "Content-Type": "application/json" } : undefined;
 
@@ -50,11 +46,10 @@ export async function apiJson(path, method = "GET", body) {
   return res.json();
 }
 
-// multipart/form-data requests (auto auth)
 export async function apiForm(path, formData, method = "POST") {
   const res = await fetch(`${API_BASE}${path}`, {
     method,
-    headers: withAuthHeaders(), // don't set Content-Type for FormData
+    headers: withAuthHeaders(),
     body: formData,
   });
 

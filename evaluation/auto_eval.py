@@ -8,8 +8,8 @@ import nltk
 import ssl
 
 ssl._create_default_https_context = ssl._create_unverified_context
-nltk.download('punkt')
-nltk.download('punkt_tab')
+nltk.download("punkt")
+nltk.download("punkt_tab")
 
 
 try:
@@ -21,7 +21,7 @@ except ImportError as e:
 
 
 smooth_fn = SmoothingFunction().method1
-embed_model = SentenceTransformer('all-MiniLM-L6-v2')
+embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 qg_pipeline = pipeline("text2text-generation", model="valhalla/t5-small-qg-prepend")
 qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
 
@@ -34,7 +34,9 @@ def compute_self_bleu(response: str) -> float:
     for i, hypo in enumerate(sentences):
         refs = [word_tokenize(s) for j, s in enumerate(sentences) if j != i]
         hypo_tokens = word_tokenize(hypo)
-        score = sentence_bleu(refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn)
+        score = sentence_bleu(
+            refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn
+        )
         scores.append(score)
     return round(sum(scores) / len(scores), 4)
 
@@ -47,7 +49,7 @@ def compute_relevance(query: str, response: str) -> float:
 def generate_questions(text: str):
     try:
         out = qg_pipeline(f"generate questions: {text}", max_length=64, do_sample=False)
-        return [o['generated_text'] for o in out]
+        return [o["generated_text"] for o in out]
     except Exception:
         return []
 
@@ -55,11 +57,11 @@ def generate_questions(text: str):
 def answer_question(question: str, context: str):
     try:
         result = qa_pipeline(question=question, context=context)
-        answer = result.get('answer', '')
-        score = result.get('score', 0.0)
-        return answer, round(score, 4), (answer == '' or score < 0.2)
+        answer = result.get("answer", "")
+        score = result.get("score", 0.0)
+        return answer, round(score, 4), (answer == "" or score < 0.2)
     except Exception:
-        return '', 0.0, True
+        return "", 0.0, True
 
 
 def groundedness_check(response: str, rag_excerpt: str):
@@ -105,16 +107,20 @@ def evaluate_json_file(json_path: str, output_csv: str, rag_excerpt_default: str
             relevance = compute_relevance(prompt, response)
             verifiable, grounded_score = groundedness_check(response, rag_excerpt)
 
-            output_rows.append({
-                "Prompt": prompt,
-                "Response": response,
-                "Self-BLEU": self_bleu,
-                "Relevance Score": relevance,
-                "Groundedness Score": grounded_score,
-                "Verifiable?": verifiable
-            })
+            output_rows.append(
+                {
+                    "Prompt": prompt,
+                    "Response": response,
+                    "Self-BLEU": self_bleu,
+                    "Relevance Score": relevance,
+                    "Groundedness Score": grounded_score,
+                    "Verifiable?": verifiable,
+                }
+            )
 
-            print(f"[{i+1}/{len(data)}] Done: BLEU={self_bleu}, Rel={relevance}, Gnd={grounded_score}")
+            print(
+                f"[{i+1}/{len(data)}] Done: BLEU={self_bleu}, Rel={relevance}, Gnd={grounded_score}"
+            )
 
         except Exception as e:
             print(f"[{i+1}] Error evaluating entry: {e}")
@@ -128,5 +134,5 @@ if __name__ == "__main__":
     evaluate_json_file(
         json_path="test_cases.json",
         output_csv="evaluation_results.csv",
-        rag_excerpt_default="Kale stems, squash skin, and citrus peels can be reused in broths, pestos, or fermented condiments. Avoid soy if allergic. Cooking seasonally helps hydration and nourishment."
+        rag_excerpt_default="Kale stems, squash skin, and citrus peels can be reused in broths, pestos, or fermented condiments. Avoid soy if allergic. Cooking seasonally helps hydration and nourishment.",
     )

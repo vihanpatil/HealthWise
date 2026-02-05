@@ -19,7 +19,6 @@ const COMMON_RESTRICTIONS = [
 ];
 
 function normalizeCommaList(s) {
-  // "a, b ,  c" -> "a, b, c" (dedupe, trim, keep order)
   const items = (s || "")
     .split(",")
     .map((x) => x.trim())
@@ -38,7 +37,7 @@ function normalizeCommaList(s) {
 
 export default function UserContextInputs({ onAdded }) {
   const [ingredients, setIngredients] = useState("");
-  const [season, setSeason] = useState(""); // must be one of SEASONS or ""
+  const [season, setSeason] = useState("");
   const [selectedRestrictions, setSelectedRestrictions] = useState([]);
   const [customRestriction, setCustomRestriction] = useState("");
   const [status, setStatus] = useState("");

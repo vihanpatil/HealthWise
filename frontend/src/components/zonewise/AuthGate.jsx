@@ -2,8 +2,30 @@ import React, { useEffect, useState } from "react";
 import { getToken } from "../../api/client";
 import { login, register, me, logout } from "../../api/auth";
 
+function prettyError(err) {
+  if (err instanceof Error && typeof err.message === "string") return err.message;
+  if (err && typeof err.message === "string") return err.message;
+
+  const detail = err?.detail ?? err?.response?.detail;
+
+  if (typeof detail === "string") return detail;
+
+  if (Array.isArray(detail)) {
+    const msgs = detail
+      .map((d) => d?.msg || d?.message || (typeof d === "string" ? d : null))
+      .filter(Boolean);
+    if (msgs.length) return msgs.join(" • ");
+  }
+
+  try {
+    return JSON.stringify(err);
+  } catch {
+    return "Request failed";
+  }
+}
+
 export default function AuthGate({ children }) {
-  const [mode, setMode] = useState("login"); // "login" | "register"
+  const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,7 +35,6 @@ export default function AuthGate({ children }) {
   const [authed, setAuthed] = useState(false);
   const [user, setUser] = useState(null);
 
-  // If token exists, verify it
   useEffect(() => {
     const token = getToken();
     if (!token) return;
@@ -26,7 +47,6 @@ export default function AuthGate({ children }) {
         setUser(u);
         setAuthed(true);
       } catch {
-        // token invalid
         if (!mounted) return;
         setAuthed(false);
         setUser(null);
@@ -54,7 +74,7 @@ export default function AuthGate({ children }) {
       setAuthed(true);
       setStatus("");
     } catch (err) {
-      setStatus(err.message || "Auth failed");
+      setStatus(prettyError(err) || "Auth failed");
       setAuthed(false);
       setUser(null);
     } finally {

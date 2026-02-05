@@ -4,7 +4,7 @@ from pathlib import Path
 
 from app.config import ZONEWISE_DATA
 from app.logic.rag_instance import get_rag
-from app.logic.rootwise import call_nvidia_chat  # reuse the NVIDIA chat helper
+from app.logic.rootwise import call_nvidia_chat
 
 rag_zone = get_rag(str(ZONEWISE_DATA))
 
@@ -14,7 +14,7 @@ def initialize_zonewise_rag() -> str:
     return rag_zone.build()
 
 
-# ---- local helpers (avoid importing private "_" helpers from rootwise.py) ----
+# TODO: uncomment this once we have better data
 # def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
 #     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
 #     return len(good) >= 2
@@ -49,13 +49,15 @@ def stream_zonewise_response(message: str, history):
     try:
         hits = rag_zone.retrieve(message, top_k=6)
     except Exception as e:
-        yield history + [(message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")]
+        yield history + [
+            (message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")
+        ]
         return
 
     k = len(hits)
 
     # TODO: uncomment these once we have better data, for now not having this shows the chatbot at least trying to answer prompts
-    
+
     # agentic retry if weak
     # if not _safe_has_good_hits(hits):
     #     reformulated = call_nvidia_chat([
@@ -76,11 +78,12 @@ def stream_zonewise_response(message: str, history):
 
     evidence = _format_evidence(hits)
 
-    # lightweight recent context (not evidence)
     truncated_history = ""
     if history:
         for user_msg, assistant_msg in history[-2:]:
-            truncated_history += f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
+            truncated_history += (
+                f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
+            )
 
     system_prompt = (
         "You are ZoneWise — a concise assistant for personal health analytics.\n\n"
@@ -101,9 +104,11 @@ def stream_zonewise_response(message: str, history):
         "Answer using ONLY the evidence. Keep it short and practical."
     )
 
-    assistant_text = call_nvidia_chat([
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt},
-    ])
+    assistant_text = call_nvidia_chat(
+        [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+    )
 
     yield history + [(message, str(assistant_text))]

@@ -11,6 +11,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parents[2]
 load_dotenv(BASE_DIR / ".env")
 
+
 def _get_database_url() -> str:
     url = os.getenv("DATABASE_URL")
     if not url:

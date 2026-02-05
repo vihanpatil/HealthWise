@@ -17,11 +17,13 @@ from app.logic.rootwise import (
 
 router = APIRouter()
 
+
 @router.post("/user/name")
 def set_name(payload: dict):
     name = payload.get("name", "")
     result = set_user_name(name)
     return {"ok": True, "name": result}
+
 
 @router.post("/notepad/append")
 def notepad_append(payload: dict):
@@ -29,12 +31,16 @@ def notepad_append(payload: dict):
     append_to_user_rag(text)
     return {"ok": True}
 
+
 @router.post("/veg/detect")
 async def veg_detect(image: UploadFile = File(...)):
-    # handle_image_upload expects filepath currently; easiest bridge:
-    # save temp file -> pass path -> delete
     import tempfile, os
-    suffix = "." + (image.filename.split(".")[-1] if image.filename and "." in image.filename else "png")
+
+    suffix = "." + (
+        image.filename.split(".")[-1]
+        if image.filename and "." in image.filename
+        else "png"
+    )
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(await image.read())
         tmp_path = tmp.name
@@ -42,8 +48,11 @@ async def veg_detect(image: UploadFile = File(...)):
         result = handle_image_upload(tmp_path)
         return {"ok": True, "detected": result}
     finally:
-        try: os.remove(tmp_path)
-        except: pass
+        try:
+            os.remove(tmp_path)
+        except:
+            pass
+
 
 @router.post("/veg/add")
 def veg_add(payload: dict):
@@ -70,6 +79,7 @@ def veg_add(payload: dict):
 
     return {"ok": True, "added": added}
 
+
 @router.post("/rag/add")
 def rag_add(payload: dict):
     add_to_rag(
@@ -79,14 +89,17 @@ def rag_add(payload: dict):
     )
     return {"ok": True}
 
+
 @router.post("/docs/load")
 async def docs_load(files: list[UploadFile] = File(...)):
-    # Save uploads to temp, call load_documents(paths)
     import tempfile, os
+
     paths = []
     try:
         for f in files:
-            suffix = "." + (f.filename.split(".")[-1] if f.filename and "." in f.filename else "dat")
+            suffix = "." + (
+                f.filename.split(".")[-1] if f.filename and "." in f.filename else "dat"
+            )
             with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                 tmp.write(await f.read())
                 paths.append(tmp.name)
@@ -94,8 +107,11 @@ async def docs_load(files: list[UploadFile] = File(...)):
         return {"ok": True, "status": status}
     finally:
         for p in paths:
-            try: os.remove(p)
-            except: pass
+            try:
+                os.remove(p)
+            except:
+                pass
+
 
 def _resolve_scope_dir(scope: str) -> Path:
     s = (scope or "system").strip().lower()
@@ -103,7 +119,9 @@ def _resolve_scope_dir(scope: str) -> Path:
         return ROOTWISE_DATA
     if s == "user":
         return USER_STATE_DIR
-    raise HTTPException(status_code=400, detail="Invalid scope. Use scope=system or scope=user.")
+    raise HTTPException(
+        status_code=400, detail="Invalid scope. Use scope=system or scope=user."
+    )
 
 
 @router.get("/system/files")
@@ -125,14 +143,12 @@ def system_file(name: str = Query(...), scope: str = Query("system")):
     base_dir = _resolve_scope_dir(scope)
     base_dir.mkdir(parents=True, exist_ok=True)
 
-    # Prevent path traversal
     safe_name = name.replace("\\", "/").split("/")[-1]
     target = base_dir / safe_name
 
     if not target.exists() or not target.is_file():
         raise HTTPException(status_code=404, detail="File not found.")
 
-    # TXT: return content
     if safe_name.endswith(".txt"):
         try:
             text = target.read_text(errors="ignore")
@@ -140,8 +156,6 @@ def system_file(name: str = Query(...), scope: str = Query("system")):
             text = target.read_bytes().decode("utf-8", errors="ignore")
         return {"ok": True, "text": text, "preview": ""}
 
-    # PDF: reuse your existing preview renderer but only for system scope if you want.
-    # Minimal: render first page preview for both scopes (same logic you already used)
     try:
         from pdf2image import convert_from_path
         import os
@@ -154,13 +168,16 @@ def system_file(name: str = Query(...), scope: str = Query("system")):
         img_path = f"temp_renders/{uuid.uuid4().hex}_page_0.png"
         img.save(img_path, "PNG")
 
-        return {"ok": True, "text": "PDF rendered preview available.", "preview": img_path}
+        return {
+            "ok": True,
+            "text": "PDF rendered preview available.",
+            "preview": img_path,
+        }
     except Exception as e:
         return {"ok": True, "text": f"Error rendering PDF: {str(e)}", "preview": ""}
 
 
 def normalize_history(history):
-    # Convert list of tuples -> list of 2-item lists (JSON friendly)
     out = []
     for item in history or []:
         if isinstance(item, (list, tuple)) and len(item) == 2:
@@ -169,8 +186,10 @@ def normalize_history(history):
             out.append([str(item), ""])
     return out
 
+
 def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
 
 @router.post("/chat/stream")
 async def chat_stream(payload: dict):
