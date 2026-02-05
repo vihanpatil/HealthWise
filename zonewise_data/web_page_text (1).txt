@@ -1,0 +1,144 @@
+Skip to main page content
+
+An official website of the United States government
+
+ Here's how you know 
+Log in
+Access keys
+NCBI Homepage
+MyNCBI Homepage
+Main Content
+Main Navigation
+Search:
+Search
+Advanced
+User Guide
+SaveEmailSend to
+Display options
+full text links
+actions
+Cite
+Collections
+Permalink
+page navigation
+Title & authors
+Abstract
+Conflict of interest statement
+Similar articles
+Cited by
+References
+Publication types
+Related information
+LinkOut - more resources
+Review 
+Am J Lifestyle Med
+. 2023 Oct 31;18(3):340-350. doi: 10.1177/15598276231211846. eCollection 2024 May-Jun.
+Sleep is Essential for Cardiovascular Health: An Analytic Review of the Relationship Between Sleep and Cardiovascular Mortality
+Yasmine M Eshera 1, Lyubov Gavrilova 1, Joel W Hughes 1
+Affiliations expand
+PMID: 38737888 PMCID: PMC11082862 DOI: 10.1177/15598276231211846
+Abstract
+
+The American Heart Association recently included sleep health as one of eight factors that define cardiovascular health. Restorative sleep is a pillar of lifestyle medicine influenced by sleep duration, quality, and disorders. Short and long sleep duration are associated with greater risk of cardiovascular disease. Short sleep appears causally related to cardiovascular risk. Long sleep is more strongly predictive of cardiovascular risk, which may be due to comorbidities and other risk factors. Good-quality sleep appears to protect against the increased risk and is independently associated with risk of cardiovascular disease (CVD). Insomnia, particularly difficulty falling asleep and non-restorative sleep, is associated with an increase in cardiac events. Obstructive sleep apnea (OSA) is associated with cardiac risk and outcomes, which is typically observed in the context of contributing comorbidities. However, treating OSA with continuous positive airway pressure (CPAP) may not improve prognosis. Further research is needed to understand the causal mechanisms connecting sleep health with CVD and whether modifying sleep can improve outcomes. Sleep health should be considered as part of a holistic approach to improving cardiovascular health, as reflected in the scoring of LE8 and as one of the interrelated components of lifestyle medicine.
+
+Keywords: insomnia; non-restorative sleep; sleep apnea; sleep duration; sleep quality.
+
+Copyright © 2023 The Author(s).
+
+PubMed Disclaimer
+
+Conflict of interest statement
+
+The author(s) declared no potential conflicts of interest with respect to the research, authorship, and/or publication of this article.
+
+Similar articles
+Polysomnography in patients with obstructive sleep apnea: an evidence-based analysis.
+Medical Advisory Secretariat.
+Ont Health Technol Assess Ser. 2006;6(13):1-38. Epub 2006 Jun 1.
+PMID: 23074483Free PMC article.
+Health-related impact of illness associated with excessive daytime sleepiness in patients with obstructive sleep apnea.
+Grandner MA, Min JS, Saad R, Leary EB, Eldemir L, Hyman D.
+Postgrad Med. 2023 Jun;135(5):501-510. doi: 10.1080/00325481.2023.2203623. Epub 2023 May 2.
+PMID: 37129416
+Pressure modification or humidification for improving usage of continuous positive airway pressure machines in adults with obstructive sleep apnoea.
+Kennedy B, Lasserson TJ, Wozniak DR, Smith I.
+Cochrane Database Syst Rev. 2019 Dec 2;12(12):CD003531. doi: 10.1002/14651858.CD003531.pub4.
+PMID: 31792939Free PMC article.
+[Expert consensus on the diagnosis and treatment of obstructive sleep apnea in women].
+Chinese Thoracic Society.
+Zhonghua Jie He He Hu Xi Za Zhi. 2024 Jun 12;47(6):509-528. doi: 10.3760/cma.j.cn112147-20240206-00072.
+PMID: 38858201Chinese.
+Adherence to continuous positive airway pressure reduces the risk of 30-day hospital readmission among older adults with comorbid obstructive sleep apnea and cardiovascular disease.
+Bailey MD, Wickwire EM, Somers VK, Albrecht JS.
+J Clin Sleep Med. 2022 Dec 1;18(12):2739-2744. doi: 10.5664/jcsm.10196.
+PMID: 35934923Free PMC article.
+See all similar articles
+Cited by
+Does a multimedia education program work as a remedy for stress and burden in family caregivers of elderly heart attack patients? A clinical trial study.
+Abbasi M, Kolbadinezhad N, Rostami S, Ahmadi M.
+BMC Nurs. 2025 Jan 6;24(1):7. doi: 10.1186/s12912-024-02567-8.
+PMID: 39762872Free PMC article.
+Health is beyond genetics: on the integration of lifestyle and environment in real-time for hyper-personalized medicine.
+Tan MJT, Kasireddy HR, Satriya AB, Abdul Karim H, AlDahoul N.
+Front Public Health. 2025 Jan 7;12:1522673. doi: 10.3389/fpubh.2024.1522673. eCollection 2024.
+PMID: 39839379Free PMC article.No abstract available.
+The 6 Pillars of Lifestyle Medicine and Prevalence of Cardiovascular and Cardiometabolic Diseases in Brazil: A Cross-Sectional, Population-Based Study Involving 88,531 Adults.
+de Oliveira AB, Mota J, Woldeamanuel YW, Pereira LK, Oliveira LAMES, Peres MFP, Goulart AC.
+Am J Lifestyle Med. 2025 Jun 5:15598276251348170. doi: 10.1177/15598276251348170. Online ahead of print.
+PMID: 40485745Free PMC article.
+Longitudinal Remote Sleep and Cognitive Research in Older Adults With Mild Cognitive Impairment and Dementia: Prospective Feasibility Cohort Study.
+Gabb VG, Blackman J, Morrison H, Li H, Kendrick A, Turner N, Greenwood R, Biswas B, Heslegrave A, Coulthard E.
+JMIR Aging. 2025 May 28;8:e72824. doi: 10.2196/72824.
+PMID: 40435500Free PMC article.
+Effect of tirzepatide treatment on patient-reported outcomes among SURMOUNT-OSA participants with obstructive sleep apnea and obesity.
+Kanu C, Shinde S, Chakladar S, Dennehy EB, Weaver TE, Poon JL, Malhotra A.
+Sleep Med. 2025 Oct;134:106719. doi: 10.1016/j.sleep.2025.106719. Epub 2025 Aug 6.
+PMID: 40774158Free PMC article.Clinical Trial.
+See all "Cited by" articles
+References
+Walker MP. Sleep essentialism. Brain. Mar. 2021;144(3):697-699. - PubMed
+Lloyd-Jones DM, Hong Y, Labarthe D, et al. Defining and setting national goals for cardiovascular health promotion and disease reduction: the American Heart Association’s strategic Impact Goal through 2020 and beyond. Circulation. 2010;121(4):586-613. doi: 10.1161/CIRCULATIONAHA.109.192703. - DOI - PubMed
+Angell SY, McConnell MV, Anderson CAM, et al. The American heart association 2030 impact goal: a presidential advisory from the American heart association. Circulation. 2020;141(9):e120-e138. doi: 10.1161/CIR.0000000000000758. - DOI - PMC - PubMed
+Lloyd-Jones DM, Allen NB, Anderson CAM, et al. Life’s essential 8: updating and enhancing the American heart Association’s construct of cardiovascular health: a presidential advisory from the American heart association. Circulation. 2022;146(5):e18-e43. doi: 10.1161/CIR.0000000000001078. - DOI - PMC - PubMed
+Quan SF. Sleep disturbances and their relationship to cardiovascular disease. Am J Lifestyle Med. 2009;3(1 Suppl):55s-59s. doi: 10.1177/1559827609331709. - DOI - PMC - PubMed
+Show all 83 references
+Publication types
+Review
+Related information
+MedGen
+LinkOut - more resources
+Full Text Sources
+PubMed Central
+
+NCBI Literature Resources
+
+ 
+
+MeSH PMC Bookshelf Disclaimer
+
+ 
+
+The PubMed wordmark and PubMed logo are registered trademarks of the U.S. Department of Health and Human Services (HHS). Unauthorized use of these marks is strictly prohibited.
+
+FOLLOW NCBI
+
+Connect with NLM
+
+  
+
+National Library of Medicine
+8600 Rockville Pike
+Bethesda, MD 20894
+
+Web Policies
+FOIA
+HHS Vulnerability Disclosure
+
+Help
+Accessibility
+Careers
+
+NLM
+NIH
+HHS
+USA.gov

@@ -2,7 +2,7 @@
 from typing import Any, Dict, List
 from pathlib import Path
 
-from app.config import ZONEWISE_DATA
+from app.config import ZONEWISE_DATA, ROOTWISE_DATA
 from app.logic.rag_instance import get_rag
 from app.logic.rootwise import call_nvidia_chat
 
@@ -15,9 +15,9 @@ def initialize_zonewise_rag() -> str:
 
 
 # TODO: uncomment this once we have better data
-# def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
-#     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
-#     return len(good) >= 2
+def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
+    good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
+    return len(good) >= 2
 
 
 def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
@@ -59,22 +59,22 @@ def stream_zonewise_response(message: str, history):
     # TODO: uncomment these once we have better data, for now not having this shows the chatbot at least trying to answer prompts
 
     # agentic retry if weak
-    # if not _safe_has_good_hits(hits):
-    #     reformulated = call_nvidia_chat([
-    #         {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
-    #         {"role": "user", "content": message},
-    #     ])
-    #     hits = rag_zone.retrieve(reformulated, top_k=6)
-    #     k = len(hits)
+    if not _safe_has_good_hits(hits):
+        reformulated = call_nvidia_chat([
+            {"role": "system", "content": "Rewrite the user's message into a short, keyword-heavy search query to retrieve relevant documentation."},
+            {"role": "user", "content": message},
+        ])
+        hits = rag_zone.retrieve(reformulated, top_k=6)
+        k = len(hits)
 
-    # # refuse to invent
-    # if not _safe_has_good_hits(hits):
-    #     assistant_text = (
-    #         "I can’t find strong support for that in the ZoneWise documents currently loaded.\n\n"
-    #         "If you add the relevant PDF/TXT to system_data/zonewise_data, I’ll answer using only that source."
-    #     )
-    #     yield history + [(message, assistant_text)]
-    #     return
+    # refuse to invent
+    if not _safe_has_good_hits(hits):
+        assistant_text = (
+            "I can’t find strong support for that in the ZoneWise documents currently loaded.\n\n"
+            "If you add the relevant PDF/TXT to system_data/zonewise_data, I’ll answer using only that source."
+        )
+        yield history + [(message, assistant_text)]
+        return
 
     evidence = _format_evidence(hits)
 

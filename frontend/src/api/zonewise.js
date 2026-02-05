@@ -11,7 +11,7 @@ export async function heartRateMe(minutes = 60) {
 
 
 export const zonewiseApi = {
-  streamChat: async ({ message, history, onMessage, onDone, onError }) => {
+  streamChat: async ({ message, history, minutes = 0, onMessage, onDone, onError }) => {
     try {
       const token = getToken();
 
@@ -21,7 +21,7 @@ export const zonewiseApi = {
           "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ message, history }),
+        body: JSON.stringify({ message, history, minutes }),
       });
 
       if (!res.ok) {
