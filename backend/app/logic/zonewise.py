@@ -7,7 +7,7 @@ import re
 from typing import Any, Dict, List, Tuple
 from pathlib import Path
 
-from app.config import ZONEWISE_DATA
+from app.config import ZONEWISE_DATA, ROOTWISE_DATA
 from app.logic.rag_instance import get_rag
 from app.logic.rootwise import call_nvidia_chat
 

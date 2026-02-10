@@ -1,0 +1,118 @@
+About us
+Download for iOS
+Back
+Bevel 101
+Fitness
+The Basics: Cardio Focus
+
+Optimize your training intensity with balanced aerobic effort.
+
+Your heart rate tells a story, and Cardio Focus helps you understand it. By analyzing the aerobic zones you’ve been training in, this metric helps you build a balanced routine that supports progress, recovery, and long-term cardiovascular fitness.
+
+What is Cardio Focus?
+
+
+Cardio Focus highlights the aerobic zones you've trained in over a select period of time. Bevel uses your VO₂ max and training intensity to estimate your training thresholds that accumulate over time.
+
+This means a short but intense interval session might weigh more in your anaerobic zone than a long, easy run would in your low aerobic zone.
+
+Tracking your Cardio Focus helps you stay balanced, avoid overtraining, and ensure your training aligns with your fitness goals.
+
+Why Cardio Focus Matters
+
+
+Each heart rate zone targets a different physiological adaptation. Without balance, you may stall your progress, fatigue too quickly, or miss opportunities for recovery.
+
+Cardio Focus ensures you're not just moving—but training with intention. Whether you're building endurance, boosting speed, or staying healthy, knowing where your effort is going helps you train smarter.
+
+What Influences Cardio Focus?
+
+
+Your Cardio Focus is broken down into three key zones:
+
+1. Low Aerobic
+
+Easy, steady-state efforts often done at a conversational pace with low heart rate. These workouts build aerobic capacity, support fat burning, and help with recovery.
+
+Examples: Long walks, easy jogs, steady-state cycling
+2. High Aerobic
+
+Sustained, higher-intensity efforts that significantly elevate your heart rate. These sessions improve VO₂ max, aerobic power, and muscular endurance.
+
+Examples: Threshold runs, tempo rides, strong hill efforts
+3. Anaerobic
+
+Short bursts of maximum effort that rapidly raise heart rate and stress your anaerobic system. These improve power, speed, and lactate tolerance—but also carry a high recovery cost.
+
+Examples: HIIT, sprints, VO₂ max intervals
+
+Since Bevel takes into account your VO₂ max and training intensity, Cardio Focus gives you a more accurate picture of your training impact—not just how long you spent in each zone.
+
+
+Interpreting the Chart
+
+
+The Cardio Focus chart shows your aerobic zone distribution over the set time period. You will see:
+
+Cardio Focus: Identifying where you are focusing your aerobic efforts: Low Aerobic, High Aerobic, or Anaerobic.
+Focus Percentage: The percentage of your Cardio Focus relative to other Focus states. This shows a focus of 73% in Low Aerobic.
+Cardio Points: A unit-less number representing your training thresholds. Think of this like your Strength Progression, but instead of weights it's based on your cardio intensity. You can compare these points over time and over different exercises.
+Cardio Focus Breakdown: Shows the distribution of your aerobic efforts in different periods.
+
+Use this chart to check whether you’re building a well-rounded foundation or leaning too heavily into one zone—especially high-intensity work that can increase strain.
+
+How to Use Cardio Focus Effectively
+
+
+Stay Balanced:
+
+If you're over-indexing on anaerobic or high aerobic efforts, your body may not be getting enough low-intensity work to recover and adapt. Look to maintain a healthy mix of all three zones.
+
+Tailor to Your Goals:
+
+Building endurance? Increase low aerobic volume.
+Prepping for a race? Strategically add high aerobic and anaerobic work.
+Feeling worn down? Shift back to low aerobic sessions.
+
+Adjust Weekly:
+
+Use the Breakdown to spot trends, course-correct, and find your optimal training rhythm over time.
+
+
+The Bottom Line
+
+
+Cardio Focus shows you more than just effort—it shows intent. By understanding where your cardiovascular load is going, you can fine-tune your training, prevent burnout, and ensure that every session moves you closer to your goals.
+
+Related articles
+Bevel 101
+Health
+The Basics: Resting Heart Rate
+
+Resting Heart Rate is a vital metric for assessing your cardiovascular health and fitness.
+
+Bevel 101
+Sleep
+The Basics: Sleep Needed
+
+Sleep Needed goes beyond a fixed, one-size-fits-all recommendation for daily sleep duration to help you plan for a better night’s rest.
+
+© Finerpoint, Inc. 2025
+Company
+About us
+Careers
+Blog
+Product
+Download App
+Getting started
+Release notes
+Roadmap
+Beta
+Resources
+FAQ
+Request a feature
+Report a bug
+Contact us
+Legal
+Terms of Service
+Privacy Policy

@@ -1,0 +1,1453 @@
+Skip to main content
+BMC journals have moved to Springer Nature Link. Learn more about website changes.
+Log in
+Find a journal
+Publish with us
+Track your research
+Search
+ Saved research
+ Cart
+Home  Systematic Reviews  Article
+Obstructive sleep apnea increases the risk of cardiovascular damage: a systematic review and meta-analysis of imaging studies
+Systematic review update
+Open access
+Published: 30 July 2021
+Volume 10, article number 212, (2021)
+Cite this article
+
+You have full access to this
+open access
+article
+
+Download PDF
+Save article
+Systematic Reviews
+Aims and scope
+Submit manuscript
+Mi Lu, Zhenjia Wang, Xiaojun Zhan & Yongxiang Wei 
+
+5685 Accesses
+
+36 Citations
+
+4 Altmetric
+
+Explore all metrics 
+
+Abstract
+Background
+
+We aimed to perform a systematic review and meta-analysis of the association between obstructive sleep apnea (OSA) and cardiac as well as coronary impairment evaluated using imaging modalities. Finding of this study will provide more robust evidence regarding OSA-induced cardiovascular damage.
+
+Methods
+
+We systematically searched through PubMed, EMBASE, and Cochrane library databases for relevant literatures on the association between OSA and cardiovascular damage evaluated using imaging modalities, and manually searched the references of selected articles for additional relevant articles. For each clinical parameter relevant to the meta-analysis, we first evaluated the methodological heterogeneity of the relevant studies and thereafter pooled the data together using fixed effect or random effect model. The difference in the relevant indices of cardiovascular damage between OSA patients and controls was evaluated using the standardized mean difference.
+
+Results
+
+Of the 82 articles included in the final systematic analysis, 20 studies explored the association between OSA and coronary atherosclerosis. OSA patients had higher rate of coronary atherosclerosis assessed by coronary artery calcification score and plaque volume. Moreover, the severity of OSA and coronary atherosclerosis displayed a positive correlation. The rest of the studies (n = 62) evaluated cardiac alterations in OSA patients. According to the inclusion and exclusion criteria, 46 studies yielding 3082 OSA patients and 1774 controls were pooled for the meta-analysis. For left cardiac structure and function, OSA patients exhibited significantly wider left atrial diameter; higher left atrium volume index; wider left ventricular end-systolic diameter, left ventricular end-diastolic diameter, and left ventricular mass; higher left ventricular mass index; wider interventricular septum diameter and posterior wall diameter; and higher left ventricular myocardial performance index (all p < 0.05). In addition, compared with controls, left ventricular ejection fraction was significantly decreased in OSA patients (p = 0.001). For right cardiac structure and function, OSA patients displayed a significant increase in right ventricular diameter and right ventricular myocardial performance index (both p < 0.001). Finally, compared with controls, OSA patients displayed significant decrease in tricuspid annular plane systolic excursion and RV fractional area change (p = 0.001).
+
+Conclusion
+
+Overall, this systematic review and meta-analysis provides imaging evidence in support that OSA patients are at a higher risk of developing coronary atherosclerosis and display cardiac remodeling and dysfunction.
+
+ View this article's peer review reports
+Similar content being viewed by others
+Obstructive sleep apnea and cardiac mechanics: how strain could help us?
+Article 03 February 2020
+Obstructive sleep apnea increases the risk of cardiac events after percutaneous coronary intervention: a meta-analysis of prospective cohort studies
+Article 18 April 2017
+Sleep Apnea and Cardiovascular Morbidity—a Perspective
+Article 22 February 2018
+Explore related subjects
+Discover the latest articles, books and news in related subjects, suggested using machine learning.
+Atherosclerosis
+Cardiac hypertrophy
+Cardiovascular Diseases
+Cardiography
+Cardiovascular Genetics
+Cardiology
+Background
+
+Obstructive sleep apnea (OSA) is a common disorder that affects nearly 1 billion adults worldwide [1]. Compared to general population, OSA is more prevalent in patients with cardiovascular disease, with a reported prevalence of 38 to 65% in coronary artery disease (CAD) patients and 12 to 55% in heart failure patients [2]. Substantial evidence summarizes that OSA can cause acute and long-term adverse implication for heart and vasculature by inducing intermittent hypoxia (IH), abrupt drop in intrathoracic pressure, sympathetic activation, and inflammatory disturbances [2,3,4,5]. Although apneic episode only occurs during sleep, pathophysiological perturbations induced by repeated apnea do not subside after waking up [5]. Thus, cardiovascular events can accumulate long after the cessation of apnea.
+
+Cardiac imaging modalities can provide accurate assessment for coronary atherosclerosis and cardiac abnormalities. Early identification and evaluation of cardiovascular alterations in OSA patients may impact the risk stratification. Currently, evidence from the perspective of imaging is accumulating for exploring the relationship between OSA and cardiovascular damage [6,7,8,9,10]. These studies can be broadly divided into two categories, including OSA and coronary atherosclerosis, and OSA and cardiac alterations. However, these studies had a relatively small sample size and focused on specific populations (i.e., Turk, American, and Chinese). In addition, to the best of our knowledge, there is no systematic review and meta-analysis on the relationship between OSA and cardiac as well as coronary impairment. We aimed to summarize the association between OSA and cardiovascular damage assessed by imaging modalities. Findings of this study will provide more robust evidence regarding OSA-induced cardiovascular damage.
+
+Methods
+
+This study was conducted in accordance with the Preferred Reporting Items for Systematic Review and Meta-Analysis (PRISMA) guidelines [11].
+
+Search strategies
+
+We systematically searched through PubMed, EMBASE, and Cochrane library databases for relevant literatures on the association between OSA and cardiovascular damage evaluated by imaging modalities. Only articles written in English and published between January 1st, 2005, and June 30th, 2020 were considered. The following terms were used to search eligible articles: “sleep apnea, obstructive”, “sleep-disordered breathing”, “coronary atherosclerosis”, “coronary artery calcification”, “coronary artery calcium”, “coronary plaque”, “cardiac remodeling”, “ventricular function, left”, “ventricular dysfunction, left”, “left ventricular hypertrophy”, “ventricular function, right”, “ventricular dysfunction, right”, “computed tomography”, computed tomographic angiography”, “intravascular ultrasound”, “optical frequency domain imaging”, “echocardiography”, and “cardiac magnetic resonance imaging”. In addition, we manually searched the references of the selected studies to find other potential sources. An example of search strategy is provided in Supplementary materials.
+
+Study selection
+
+Two investigators (Mi Lu and Zhenjia Wang) independently reviewed the titles and abstracts to identify relevant articles. A further screening was based on full-text articles to see whether they were eligible for inclusion. Any disagreement was resolved by discussion.
+
+The inclusion criteria were as follows: (1) enrolled participants were adults; (2) all participants underwent polysomnography (PSG) or portable sleep monitoring; (3) English-language articles. In addition, articles that conducted meta-analysis must also meet the following criteria: (1) the study must include at least two separate groups, OSA group and non-OSA group; (2) non-OSA was defined as apnea hypopnea index (AHI) < 5; (3) the study must have reported values of the corresponding parameters in mean with standard deviation or median with range. The exclusion criteria were as follows: (1) duplicate reports; (2) reviews, case reports, or animal experiments; (3) patients with other sleep disorders, such as central sleep apnea, obesity hypoventilation syndrome, and periodic limb movement disorder; (4) patients who received or are receiving OSA treatment; (5) participants with major comorbidities, such as structural heart disease, cardiomyopathy, pulmonary hypertension, and chronic obstructive pulmonary disease.
+
+Data extraction
+
+The search and retrieval of relevant articles was performed independently by two researchers (Mi Lu and Zhenjia Wang). For each included study, details of the first author, year of publication, country, sample size, participants’ age, gender, body mass index (BMI), mean AHI, OSA diagnostic method and criteria, history of hypertension, diabetes, hyperlipidemia, etc. were extracted. For articles included in meta-analysis, parameters reflecting cardiac morphology and function were also extracted. Any disagreements were resolved by consensus.
+
+Quality assessment
+
+The Newcastle–Ottawa Scale (NOS) was used to assess the quality of included studies due to their case–control study design. The studies were assessed for the following criteria: selection (scale 0–4), comparability (scale 0–2), and exposure (scale 0–3). The quality score ranges from 0 to 9.
+
+Statistical analysis
+
+A meta-analysis will be carried out if included studies are sufficiently homogeneous. Standardized mean difference (SMD) with 95% confidence intervals (CI) will be used to determine the difference in the relevant indices of cardiovascular damage between OSA patients and controls. Some studies stratified patients according to OSA severity (mild, moderate, or severe) and thus reported the corresponding data within each stratum. Two formulae were used to combine subgroups and calculate the overall means and standard deviations (see Supplementary materials). Heterogeneity was assessed using the I2 and chi-square tests, where I2 > 50% and a chi-square p < 0.05 indicated significant heterogeneity between studies. In such cases, the random effects model was used to generate pooled effects. By contrast, the fixed-effects model was instead used when there was an acceptable heterogeneity. We conducted subgroup analyses based on the age of 50 years and BMI of 30 kg/m2 when significant heterogeneity existed. Sensitivity analyses were conducted to test the robustness of the overall results using the leave-one-out method. Publication bias was assessed using a funnel plot. We used Egger tests to assess the asymmetry of the funnel plot. The trim-and-fill computation was used to estimate the effect of publication bias on the interpretation of the results. All analyses were performed using Stata/SE version 14.0 (StataCorp, College Station, Texas). Statistical significance was set at p < 0.05.
+
+Finally, the Grading of Recommendations Assessment, Development, and Evaluation (GRADE) system was used to assess the quality of evidence for each outcome presented in the systematic review [12]. We recorded the overall quality of evidence as high, moderate, low, or very low.
+
+Results
+
+The literature search yielded 366 citations. After removing duplicates, screening titles and abstracts, and reading the full text, only 82 articles were included in the final systematic review (Fig. 1). Of these, 20 studies explored the relationship between OSA and coronary atherosclerosis, assessed by coronary artery calcification (CAC) score, the presence and volume of coronary plaque. The rest 62 studies focused on cardiac abnormalities and myocardial injury in OSA patients. The certainty of evidence is shown in the Supplementary materials. The overall quality of evidence in this systematic review and meta-analysis is from very low to moderate due to risk of reporting bias and substantial heterogeneity.
+
+Fig. 1
+
+Flow diagram
+
+Full size image
+Obstructive sleep apnea and coronary artery calcification score
+
+In this review, twelve articles evaluated the association between OSA and CAC score. The characteristics of the articles are shown in Table 1. All subjects included were free of overt cardiovascular diseases. Of these, 10 studies found that OSA was associated with CAC in basic models [13,14,15,16,17,18,19,20,21,22]; however, in some instances, the association was modestly attenuated and no longer significant after adjustment for confounding variables [15, 21, 22]. Another two studies by Kim et al. [14] and Luyster et al. [18] showed no significant relationship between OSA and CAC score after additional adjustment for BMI. In addition, Lutsey et al. [19] and Medeiros et al. [20] both demonstrated that the independent relationship between OSA and CAC score was only present in moderate-severe or severe OSA patients, while Bikov et al. [7] and Hamaoka et al. [8] found no correlation was observed between OSA and CAC score.
+
+Table 1 Characteristics of the included studies on OSA and coronary artery calcification
+Full size table
+Obstructive sleep apnea and coronary plaque burden
+
+A total of 9 studies explored the relationship between OSA and coronary plaque characteristics by using invasive (n = 4) and non-invasive (n = 5) imaging modalities. The characteristics of the studies are summarized in Table 2. In a Canadian study of 19 patients who underwent intravenous ultrasound, Turmel et al. [23] reported that the coronary plaque volume was significantly larger in patients with moderate to severe OSA than those with no or mild OSA. Similar finding has been observed in a larger sample cohort. In this latter study, Tan et al. [24] found there was a significantly independent relationship between moderate to severe OSA and coronary plaque volume in the target coronary artery. Wada et al. [25] assessed plaque characteristics of the culprit lesion by intravenous ultrasound and found that sleep-disordered breathing was associated with larger plaque volume and greater ultrasound attenuation. Another Japanese cohort of 50 patients who underwent PSG and optical frequency-domain imaging again found that OSA patients had significantly larger lipid burden, thinner fibrous cap, greater macrophage accumulation, and more microchannels than those without OSA [9].
+
+Table 2 Characteristics of the included studies on OSA and coronary plaque
+Full size table
+
+Sharma et al. [26] and Umut et al. [27] both qualitatively assessed plaque burden using coronary computed tomography (CT) and found that the presence of non-calcified/mixed plaques was significantly higher in OSA patients compared to those without OSA. In addition, Kent et al. [28] found a positive relationship between OSA severity and total coronary plaque volume. Hamaoka et al. [8] furtherly reported a detailed association between OSA and coronary plaque volume with each CT value. They found that AHI was significantly correlated with low-attenuation plaque volume. In a recent study, Mo et al. [29] found that AHI and 3% oxygen desaturation index were both associated with significant coronary plaque burden.
+
+Obstructive sleep apnea and cardiac structure and function
+
+A total of 60 studies explored the relationship between OSA and cardiac structure as well as function. Of these, 58 studies analyzed cardiac structure and function using echocardiography [30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87]. Cardiac magnetic resonance (CMR) [88] and single-photon emission computed tomography were used in 1 study each [89]. The main characteristics of the studies are shown in Table 3.
+
+Table 3 Characteristics of the included studies on OSA and cardiac impairment
+Full size table
+
+We furtherly performed a meta-analysis for studies in cardiac structure and function which was assessed by echocardiography. According to the inclusion and exclusion criteria detailed earlier, 46 studies yielding 3082 OSA patients and 1774 controls were pooled for the meta-analysis. These pooled findings and subgroup analyses are summarized in Tables 4 and 5, respectively. Comprehensive details are shown in the Supplementary materials. Additionally, sensitivity analyses showed that no significant change occurred when an independent study was omitted, confirming that the results of our meta-analyses were stable.
+
+Table 4 Results of the meta-analysis comparing OSA patients and controls
+Full size table
+Table 5 Subgroup analysis
+Full size table
+OSA and left cardiac structure and function
+
+The parameters of left atrial diameter (LAD) and left atrium volume index (LAVI) were used to assess LA remodeling. The relationship between OSA and LAD was reported in 13 studies involving 1107 OSA patients and 317 controls. This meta-analysis revealed that compared to controls, OSA patients displayed significantly wider LAD (SMD [95% CI] 0.385 [0.252, 0.518]; p < 0.001), with non-significant heterogeneity. No significant publication bias (p = 0.757) was found among the studies. Differences in LAVI were reported in 6 studies involving 238 OSA patients and 163 controls. This meta-analysis found that LAVI in OSA patients was significantly higher than that in controls (SMD [95% CI] 0.307 [0.096, 0.518]; p = 0.004), with statistically significant heterogeneity. The subgroup analysis indicated that heterogeneity in OSA patients with age ≥ 50 years or BMI < 30 kg/m2 was significantly decreased. In this analysis, there was publication bias on Egger test (p = 0.036).
+
+LV remodeling was assessed based on left ventricular (LV) end-systolic diameter (LVESD), LV end-diastolic diameter (LVEDD), LV mass (LVM), LV mass index (LVMI), interventricular septum diameter (IVSD), and posterior wall diameter (PWD). Differences in LVESD were reported in 24 studies involving 1526 OSA patients and 620 controls. This meta-analysis found that compared to controls, the OSA patients had significantly wider LVESD (SMD [95% CI] 0.323 [0.223, 0.422]; p < 0.001), with non-significant heterogeneity. No significant publication bias (p = 0.646) was found among the studies. LVEDD was assessed in 18 studies involving 918 OSA patients and 406 controls. This meta-analysis found that compared to controls, OSA patients displayed significantly wider LVEDD (SMD [95% CI] 0.126 [0.003, 0.249]; p = 0.669), with non-significant heterogeneity. No significant publication bias was found among the studies (p = 0.638). Differences in LVM were reported in 7 studies involving 708 OSA patients and 612 controls. Our analysis revealed that compared to controls, LVM was substantially higher in OSA patients (SMD [95% CI] 0.558 [0.403, 0.712]; p < 0.001), with statistically significant heterogeneity. Further subgroup analysis showed that heterogeneity in OSA patients with age < 50 years or BMI < 30 kg/m2 was significantly decreased. No significant publication bias was found among the studies (p = 0.807). Differences in LVMI were reported in 23 studies involving 1515 OSA patients and 641 controls. Compared to controls, OSA patients exhibited significantly higher LVMI (SMD [95% CI] 0.478 [0.242, 0.714]; p < 0.001), with statistically significant heterogeneity. No significant publication bias was found among the studies (p = 0.562). Differences in IVSD were reported in 24 studies involving 1375 OSA patients and 808 controls. We found that compared with controls, OSA patients have significantly wider IVSD (SMD [95% CIs] 0.471 [0.195, 0.747]; p = 0.001), with statistically significant heterogeneity. And Egger test revealed a significant publication bias among the studies (p = 0.021). Differences in PWD were reported in 22 studies involving 1348 OSA patients and 1047 controls. The meta-analysis showed that OSA patients exhibited significantly wider PWD than that in controls (SMD [95% CIs] 0.602 [0.328, 0.875]; p < 0.001), with statistically significant heterogeneity. No significant publication bias was found among the studies (p = 0.087). There was no apparent change in the heterogeneity of LVMI, IVSD, and PWD when the subgroups were performed using the age of 50 years or the BMI of 30 kg/m2 as the threshold.
+
+LV dysfunction was diagnosed based on LV ejection fraction (LVEF) and LV myocardial performance index (LV MPI). Differences in LVEF were reported in 39 studies involving 2552 OSA patients and 1737 controls. This meta-analysis found that compared with controls, LVEF was significantly lower in OSA patients (SMD [95% CI] − 0.238 [− 0.379, − 0.097]; p = 0.001), with statistically significant heterogeneity. There was non-significant publication bias (p = 0.465). Differences in LV MPI were reported in 8 studies involving 512 OSA patients and 385 controls. This meta-analysis found that compared to controls, OSA patients displayed significantly higher LV MPI (SMD [95% CI] 0.687 [0.371, 1.004]; p < 0.001) with statistically significant heterogeneity. Non-significant publication bias was found among these studies (p = 0.915). Additionally, there was no apparent change in the heterogeneity of LVEF and LV MPI when subgroup analyses were performed using the age of 50 years or the BMI of 30 kg/m2 as the threshold.
+
+OSA and right cardiac structure and function
+
+Right atrial diameter (RAD) was used in three studies to assess the RA remodeling. Of these, only Sun et al. [68] found that RAD in OSA group was significantly higher than that in the control group.
+
+RV remodeling was evaluated based on the right ventricular (RV) diameter (RVD) and RV free-wall thickness (RV FWT). Differences in RVD were reported in 15 studies involving 845 OSA patients and 470 controls. The meta-analysis found that compared to controls, OSA patients exhibited significantly higher RVD (SMD [95% CI] 0.725 [0.605, 0.845]; p < 0.001), with statistically significant heterogeneity, while no apparent change in the heterogeneity when the subgroups were performed using the age of 50 years or the BMI of 30 kg/m2 as the threshold. No significant publication bias was detected among the studies (p = 0.184). Three studies used RV FWT to assess right ventricular remodeling. However, only one study found that there was significant difference in terms of RV FWT between severe OSA patients and controls [80].
+
+Assessment of RV dysfunction was based on RV MPI, tricuspid annular plane systolic excursion (TAPSE), and RV fractional area change (RV FAC). Differences in RV MPI were reported in 8 studies involving 303 OSA patients and 346 controls. This meta-analysis found that OSA patients displayed significantly higher RV MPI than the controls (SMD [95% CI] 0.881 [0.487, 1.274]; p < 0.001), with statistically significant heterogeneity. Subgroup analysis showed that heterogeneity in OSA patients with BMI < 30 kg/m2 was significantly decreased. No significant publication bias was found among the studies (p = 0.052). Differences in TAPSE were reported in 10 studies involving 435 OSA patients and 419 controls. Herein, TAPSE was found to be significantly lower in OSA patients than controls (SMD [95% CI] − 0.481 [− 0.810, − 0.152]; p = 0.004), with statistically significant heterogeneity. There was no apparent change in the heterogeneity when the subgroups were performed using the age of 50 years or the BMI of 30 kg/m2 as the threshold. No significant publication bias was found among the studies (p = 0.12). Differences in RV FAC were reported in 5 studies involving 294 OSA patients and 158 controls. In this meta-analysis, we found that compared to controls, OSA patients displayed a significantly lower RV FAC (SMD [95% CI] − 0.399 [− 0.553, − 0.246]; p < 0.001), with non-significant heterogeneity. No significant publication bias was found among the studies (p = 0.222).
+
+Obstructive sleep apnea and myocardial injury
+
+In a community-based cohort, Shah et al. [90] found that LV scar measured using CMR with LGE was more prevalent in patients with OSA than those without OSA. After multivariable adjustment, OSA is still associated with over a two-fold increase in the odds of LV scar presence, a majority of which were atypical and clinically unrecognized. In another study, Okuda et al. [91] demonstrated that moderate to severe OSA patients had less myocardial contractile reserve than those with less severe OSA. In addition, the severity of hypoxic events during sleep was also independently associated with myocardial contractile reserve.
+
+Discussion
+Main finding
+
+Overall, this systematic review and meta-analysis summarized findings on the association between OSA and cardiovascular abnormalities diagnosed using imaging techniques in 82 studies published in the last 15 years. The major findings were as follows: (1) OSA increases the risk of developing coronary atherosclerosis. (2) There were significant alterations in patients with OSA regarding the parameters of cardiac remodeling and dysfunction, which illustrated that atrial enlargement, ventricular hypertrophy, and cardiac dysfunction were more common among OSA patients. (3) OSA is associated with subclinical myocardial injury.
+
+OSA and coronary artery calcification score
+
+Numerous studies included in this review reported OSA was associated with CAC score. However, in some instances, the association was no longer significant after adjustment for traditional risk factors such as BMI. While in the real-world study, several of these risk factors were shared by patients with OSA and coronary atherosclerosis, which illustrates the complexity of the interaction between OSA and CAC score. In addition, the same CAC score may represent two different types of lesions. One type is spotty calcification, which is a mixed plaque with small punctate calcification, and another one is pure small calcified plaque lesion [92]. However, the risk degree of the two lesions is markedly different. Histological investigations demonstrated that spotty calcification appears frequently in unstable plaques [92]. However, there is no relevant research on OSA and spotty calcifications. One possible explanation is that spotty calcification is a relatively subjective assessment index. Moreover, the low resolution of smooth convolution kernel, the conventional image reconstruction mode in coronary CTA, affects the measurement of diameters for spotty calcified lesions [93].
+
+OSA and coronary plaque burden
+
+All included studies demonstrated that OSA increases the risk of developing coronary plaque burden. Qualitative analysis showed that non-calcified and mixed plaque was more likely to present in OSA patients. Quantitative analysis showed that plaque volume was higher in patients with OSA than those without. However, there were inconsistent findings on the features of vulnerable plaque. Kent et al. [28] found no significant difference in the number of soft plaques between low-AHI group and high-AHI group, while Hamaoka et al. [8] recently reported that coronary low-attenuation plaque volume was associated with AHI. The potential reason may be the low-attenuation plaque volume not only existed in soft plaque, but existed in partially calcified plaque. In addition, the latter study used 320-slice CT to quantitatively evaluate coronary plaque burden and PSG to evaluate the severity of OSA, as opposed to the 64-slice CT and polygraphy used in the former. The more advanced technologies used in the latter study may have revealed more reliable findings. Of the invasive studies which assessed the association between OSA and plaque vulnerability, only one study [24], of 93 patients pre-treated with statin before recruitment, found no significant differences regarding the tissue composition of plaques and prevalence of thin cap fibroatheroma between OSA patients and controls. It was believed that the composition of tissue plaques and the incidence of thin cap fibroatheroma may have been influenced by statins [24, 94].
+
+The linking of OSA to increased coronary plaque burden has been established. OSA and related intermittent hypoxia induces endothelial dysfunction mainly by activating numerous inflammatory responses, which will further accelerate coronary atherosclerosis. Indeed, OSA patients display increased secretion of circulating proinflammatory cytokines, chemokines, and adhesion molecules [95,96,97]. Our recent meta-analysis revealed that adiponectin levels, which are an anti-inflammatory and anti-atherosclerosis molecule, were significantly lower in patients with OSA than that in controls [98]. And continuous positive airway pressure can effectively reverse inflammatory cytokine levels [96]. However, there is no evidence on whether continuous positive airway pressure can ameliorate coronary plaque formation. Therefore, the future perspective in this domain is to elucidate the effect of OSA treatment on coronary plaques.
+
+OSA and cardiac remodeling and dysfunction
+
+This meta-analysis summarized the relationship between OSA and cardiac structure and function, as assessed by echocardiography. We found OSA patients exhibit significant alterations in several parameters of cardiac structure (wider LAD, LVESD, LVEDD, LVM IVSD, and PWD RVD and higher LAVI and LVMI) and function (increase in LV MPI and RV MPI and decrease in LVEF, TAPSE, and RV FAC). In addition, one CMR study also showed that individuals with severe OSA were more likely to have lower LVEF, and higher AHI levels are strongly associated with higher LVM. Even though there were publication biases regarding LAVI and IVSD findings, trim-and-fill test revealed the bias did not impact on the estimates of LAVI (i.e., no trimming performed because data was unchanged). Additionally, in some instance, the heterogeneity in OSA patients was significantly decreased when the subgroups were performed using the age of 50 years or the BMI of 30 kg/m2 as the threshold, suggesting that age and BMI may be potential sources of heterogeneity.
+
+Several mechanisms other than intermittent hypoxia might also be implicated for cardiac remodeling and dysfunction in patients with OSA. For instance, the negative intrathoracic pressure increases transmural pressure of the atria, ventricles, and aorta. Meanwhile, arousals during apneic and hypopnea episodes activate sympathetic pathway and increase the blood pressure. Over time, these events increase the LV and RV afterload and induce ventricular hypertrophy, cardiac diastolic and systolic dysfunction, and heart failure [4].
+
+OSA and myocardial injury
+
+OSA-related myocardial injury is increasingly well understood. In a rat model, Chen et al. found that IH-induced increased the expression of myocardial transforming growth factor-beta and oxidative stress concomitant with lower levels of tissue-inhibitor of metalloproteinase-1 and higher levels of collagen-1 mRNA and fibronectin mRNA. Taken together, these findings suggest that IH promotes cardiac fibrosis [99]. Our recent review also concluded that IH appears to have a direct effect on myocardial extracellular matrix [100]. In current review, two studies evaluated myocardial injury in patients with OSA using myocardial contractile reserve and LV scar, respectively. Both studies revealed that OSA is associated with subclinical myocardial injury. However, none of the studies quantified the impact of OSA on myocardial tissue damage. T1-mapping CMR is an emerging quantitative technique for the assessment of myocardial injury [101]. Native (non-contrast) T1 values reflect several alterations in myocardial tissue composition, such as edema, necrosis, and fibrosis [102,103,104]. Combining native and post contrast T1 assessment allows for quantification of the extracellular volume fraction, which provides further information about intercellular matrix, extracellular matrix remodeling, and extent of myocardial injury [105].
+
+Study limitations
+
+Firstly, web of science, google scholar, and Scopus databases were not searched, so we cannot claim to have been exhaustive in retrieving all studies. Secondly, no subgroup analysis of OSA stratification was performed because of the limited number of studies with AHI < 15 or AHI > 30 events/h. Finally, all included studies were cross-sectional studies and thus a causal relationship cannot be determined.
+
+Conclusions
+
+OSA patients have an increased risk of developing coronary atherosclerosis and subclinical myocardial injury. In addition, OSA patients are more likely to have cardiac remodeling and dysfunction, such as atrial enlargement, ventricular hypertrophy, and cardiac dysfunction, than controls.
+
+Availability of data and materials
+
+Please contact author for data requests.
+
+Abbreviations
+AHI:
+
+Apnea hypopnea index
+
+BMI:
+
+Body mass index
+
+CAC:
+
+Coronary artery calcification
+
+CAD:
+
+Coronary artery disease
+
+CMR:
+
+Cardiac magnetic resonance
+
+CT:
+
+Computed tomography
+
+CTA:
+
+Computed tomography angiography
+
+IH:
+
+Intermittent hypoxia
+
+IVSD:
+
+Interventricular septum diameter
+
+LAD:
+
+Left atrial diameter
+
+LAVI:
+
+Left atrium volume index
+
+LVEDD:
+
+Left ventricular end-diastolic diameter
+
+LVESD:
+
+Left ventricular end-systolic diameter
+
+LVM:
+
+Left ventricular mass
+
+LVMI:
+
+Left ventricular mass index
+
+LV MPI:
+
+Left ventricular myocardial performance index
+
+LVEF:
+
+Left ventricular ejection fraction
+
+NOS:
+
+Newcastle–Ottawa scale
+
+OSA:
+
+Obstructive sleep apnea
+
+PWD:
+
+Posterior wall diameter
+
+PSG:
+
+Polysomnography
+
+SMD:
+
+Standardized mean difference
+
+RVD:
+
+Right ventricular diameter
+
+RV FAC:
+
+Right ventricular fractional area change
+
+RV FWT:
+
+Right ventricular free wall thickness
+
+TAPSE:
+
+Tricuspid annular plane systolic excursion
+
+References
+
+Benjafield AV, Ayas NT, Eastwood PR, et al. Estimation of the global prevalence and burden of obstructive sleep apnoea: a literature-based analysis. Lancet Respir Med. 2019;7(8):687–98.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Javaheri S, Barbe F, Campos-Rodriguez F, et al. Sleep apnea: types, mechanisms, and clinical cardiovascular consequences. J Am Coll Cardiol. 2017;69(7):841–58.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Dredla BK, Castillo PR. Cardiovascular consequences of obstructive sleep apnea. Curr Cardiol Rep. 2019;21(11):137.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tadic M, Cuspidi C, Grassi G, Mancia G. Obstructive sleep apnea and cardiac mechanics: how strain could help us. Heart Fail Rev. 2021;26(4): 937–45.
+
+Floras JS. Sleep apnea and cardiovascular disease: an enigmatic risk factor. Circ Res. 2018;122(12):1741–64.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Ali SS, Oni ET, Warraich HJ, et al. Systematic review on noninvasive assessment of subclinical cardiovascular disease in obstructive sleep apnea: new kid on the block. Sleep Med Rev. 2014;18(5):379–91.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Bikov A, Kolossváry M, Jermendy AL, et al. Comprehensive coronary plaque assessment in patients with obstructive sleep apnea. J Sleep Res. 2019;28(5):e12828.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Hamaoka T, Murai H, Kaneko S, et al. Significant association between coronary artery low-attenuation plaque volume and apnea-hypopnea index, but not muscle sympathetic nerve activity, in patients with obstructive sleep apnea syndrome. Circ J. 2018;82(11):2852–60.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Konishi T, Kashiwagi Y, Funayama N, et al. Obstructive sleep apnea is associated with increased coronary plaque instability: an optical frequency domain imaging study. Heart Vessels. 2019;34(8):1266–79.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Sascău R, Zota IM, Stătescu C, et al. Review of echocardiographic findings in patients with obstructive sleep apnea. Can Respir J. 2018;2018:1206217.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Moher D, Liberati A, Tetzlaff J, Altman DG, PRISMA Group. Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement. BMJ. 2009;339:b2535.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Guyatt GH, Oxman AD, Vist GE, et al. GRADE: an emerging consensus on rating quality of evidence and strength of recommendations. BMJ. 2008;336(7650):924–6.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Sorajja D, Gami AS, Somers VK, Behrenbeck TR, Garcia-Touchard A, Lopez-Jimenez F. Independent association between obstructive sleep apnea and subclinical coronary artery disease. Chest. 2008;133(4):927–33.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Kim SH, Cho GY, Baik I, et al. Association of coronary artery calcification with obstructive sleep apnea and obesity in middle-aged men. Nutr Metab Cardiovasc Dis. 2010;20(8):575–82.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Kepez A, Niksarlıoğlu EY, Hazırolan T, et al. Evaluation of association between obstructive sleep apnea and coronary risk scores predicted by tomographic coronary calcium scoring in asymptomatic patients. Anadolu Kardiyol Derg. 2011;11(5):428–35.
+
+PubMed
+ 
+Google Scholar
+ 
+
+Arik B, Inci MF, Gumus C, et al. Advanced age and apnea-hypopnea index predict subclinical atherosclerosis in patients with obstructive sleep apnea syndrome. Multidiscip Respir Med. 2013;8(1):9.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Weinreich G, Wessendorf TE, Erdmann T, et al. Association of obstructive sleep apnoea with subclinical coronary atherosclerosis. Atherosclerosis. 2013;231(2):191–7.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Luyster FS, Kip KE, Aiyer AN, Reis SE, Strollo PJ Jr. Relation of obstructive sleep apnea to coronary artery calcium in non-obese versus obese men and women aged 45–75 years. Am J Cardiol. 2014;114(11):1690–4.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Lutsey PL, McClelland RL, Duprez D, et al. Objectively measured sleep characteristics and prevalence of coronary artery calcification: the Multi-Ethnic Study of Atherosclerosis Sleep study. Thorax. 2015;70(9):880–7.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Medeiros AK, Coutinho RQ, Barros IM, et al. Obstructive sleep apnea is independently associated with subclinical coronary atherosclerosis among middle-aged women. Sleep Breath. 2017;21(1):77–83.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Seo MY, Lee JY, Hahn JY, et al. Association of obstructive sleep apnea with subclinical cardiovascular disease predicted by coronary artery calcium score in asymptomatic subjects. Am J Cardiol. 2017;120(4):577–81.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Shpilsky D, Erqou S, Patel SR, et al. Association of obstructive sleep apnea with microvascular endothelial dysfunction and subclinical coronary artery disease in a community-based population. Vasc Med. 2018;23(4):331–9.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Turmel J, Sériès F, Boulet LP, et al. Relationship between atherosclerosis and the sleep apnea syndrome: an intravascular ultrasound study. Int J Cardiol. 2009;132(2):203–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tan A, Hau W, Ho HH, et al. OSA and coronary plaque characteristics. Chest. 2014;145(2):322–30.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Wada H, Dohi T, Kasai T, et al. Culprit plaque characteristics in patients with sleep-disordered breathing undergoing percutaneous coronary intervention: an intravascular ultrasound study. J Am Heart Assoc. 2018;7(19):e009826.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Sharma S, Gebregziabher M, Parker AT, Abro JA, Armstrong AM, Schoepf UJ. Independent association between obstructive sleep apnea and noncalcified coronary plaque demonstrated by noninvasive coronary computed tomography angiography. Clin Cardiol. 2012;35(10):641–5.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Umut SM, Bulut U, Karakurt H, Utkusavas A, Akbay E, Kartal KF. The relationship between obstructive sleep apnea and coronary plaque: a coronary computed tomographic angiography study. Acta Cardiol Sin. 2019;35(3):325–34.
+
+Google Scholar
+ 
+
+Kent BD, Garvey JF, Ryan S, Nolan G, Dodd JD, McNicholas WT. Severity of obstructive sleep apnoea predicts coronary artery plaque burden: a coronary computed tomographic angiography study. Eur Respir J. 2013;42(5):1263–70.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Mo L, Gupta V, Modi R, et al. Severe obstructive sleep apnea is associated with significant coronary artery plaque burden independent of traditional cardiovascular risk factors. Int J Cardiovasc Imaging. 2020;36(2):347–55.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Arias MA, García-Río F, Alonso-Fernández A, Mediano O, Martínez I, Villamor J. Obstructive sleep apnea syndrome affects left ventricular diastolic function: effects of nasal continuous positive airway pressure in men. Circulation. 2005;112(3):375–83.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Dursunoğlu N, Dursunoğlu D, Kiliç M. Impact of obstructive sleep apnea on right ventricular global function: sleep apnea and myocardial performance index. Respiration. 2005;72(3):278–84.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Dursunoglu D, Dursunoglu N, Evrengül H, et al. Impact of obstructive sleep apnoea on left ventricular mass and global function. Eur Respir J. 2005;26(2):283–8.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Kasikcioglu HA, Karasulu L, Durgun E, Oflaz H, Kasikcioglu E, Cuhadaroglu C. Aortic elastic properties and left ventricular diastolic dysfunction in patients with obstructive sleep apnea. Heart Vessels. 2005;20(6):239–44.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tanriverdi H, Evrengul H, Kaftan A, et al. Effect of obstructive sleep apnea on aortic elastic parameters: relationship to left ventricular mass and function. Circ J. 2006;70(6):737–43.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Kasikcioglu HA, Karasulu L, Tartan Z, Kasikcioglu E, Cuhadaroglu C, Cam N. Occult cardiac dysfunction in patients with obstructive sleep apnea syndrome revealed by tissue Doppler imaging. Int J Cardiol. 2007;118(2):203–5.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Otto ME, Belohlavek M, Romero-Corral A, et al. Comparison of cardiac structural and functional changes in obese otherwise healthy adults with versus without obstructive sleep apnea. Am J Cardiol. 2007;99(9):1298–302.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tavil Y, Kanbay A, Sen N, et al. Comparison of right ventricular functions by tissue Doppler imaging in patients with obstructive sleep apnea syndrome with or without hypertension. Int J Cardiovasc Imaging. 2007;23(4):469–77.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Bayram NA, Ciftci B, Bayram H, et al. Effects of continuous positive airway pressure therapy on right ventricular function assessment by tissue Doppler imaging in patients with obstructive sleep apnea syndrome. Echocardiography. 2008;25(10):1071–8.
+
+PubMed
+ 
+Google Scholar
+ 
+
+Kim SH, Cho GY, Shin C, et al. Impact of obstructive sleep apnea on left ventricular diastolic function. Am J Cardiol. 2008;101(11):1663–8.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Oliveira W, Campos O, Bezerra Lira-Filho E, et al. Left atrial volume and function in patients with obstructive sleep apnea assessed by real-time three-dimensional echocardiography. J Am Soc Echocardiogr. 2008;21(12):1355–61.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+AkarBayram N, Ciftci B, Durmaz T, et al. Effects of continuous positive airway pressure therapy on left ventricular function assessed by tissue Doppler imaging in patients with obstructive sleep apnoea syndrome. Eur J Echocardiogr. 2009;10(3):376–82.
+
+Article
+ 
+Google Scholar
+ 
+
+Baguet JP, Nadra M, Barone-Rochette G, Ormezzano O, Pierre H, Pépin JL. Early cardiovascular abnormalities in newly diagnosed obstructive sleep apnea. Vasc Health Risk Manag. 2009;5:1063–73.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Haruki N, Takeuchi M, Nakai H, et al. Overnight sleeping induced daily repetitive left ventricular systolic and diastolic dysfunction in obstructive sleep apnoea: quantitative assessment using tissue Doppler imaging. Eur J Echocardiogr. 2009;10(6):769–75.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Kepez A, Niksarlioglu EY, Hazirolan T, et al. Early myocardial functional alterations in patients with obstructive sleep apnea syndrome. Echocardiography. 2009;26(4):388–96.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Ching-Chih Lee CC. The impact of sleep apnea on conventional Doppler indices. Tzu Chi Medical Journal. 2009;21(3):210–7.
+
+Article
+ 
+Google Scholar
+ 
+
+Tugcu A, Guzel D, Yildirimturk O, Aytekin S. Evaluation of right ventricular systolic and diastolic function in patients with newly diagnosed obstructive sleep apnea syndrome without hypertension. Cardiology. 2009;113(3):184–92.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tomiyama H, Takata Y, Shiina K, et al. Concomitant existence and interaction of cardiovascular abnormalities in obstructive sleep apnea subjects with normal clinic blood pressure. Hypertens Res. 2009;32(3):201–6.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Cioffi G, Russo TE, Stefenelli C, et al. Severe obstructive sleep apnea elicits concentric left ventricular geometry. J Hypertens. 2010;28(5):1074–82.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Tugcu A, Yildirimtürk O, Tayyareci Y, Demiroglu C, Aytekin S. Evaluation of subclinical right ventricular dysfunction in obstructive sleep apnea patients using velocity vector imaging. Circ J. 2010;74(2):312–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Varol E, Akcay S, Ozaydin M, Ozturk O, Cerci SS, Sahin U. Influence of obstructive sleep apnea on left ventricular mass and global function: sleep apnea and myocardial performance index. Heart Vessels. 2010;25(5):400–4.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Cicek D, Lakadamyali H, Yağbasan BD, Sapmaz I, Müderrisoğlu H. Obstructive sleep apnoea and its association with left ventricular function and aortic root parameters in newly diagnosed, untreated patients: a prospective study. J Int Med Res. 2011;39(6):2228–38.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Altintas N, Aslan E, Helvaci A, Malhotra A. Relationship between obstructive sleep apnea severity index and left ventricular function and volume. Ann Saudi Med. 2012;32(4):384–90.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Balci MM, Arslan U, Firat H, et al. Serum levels of adipocyte fatty acid-binding protein are independently associated with left ventricular mass and myocardial performance index in obstructive sleep apnea syndrome. J Investig Med. 2012;60(7):1020–6.
+
+Article
+ 
+PubMed
+ 
+CAS
+ 
+Google Scholar
+ 
+
+Butt M, Dwivedi G, Shantsila A, Khair OA, Lip GY. Left ventricular systolic and diastolic function in obstructive sleep apnea: impact of continuous positive airway pressure therapy. Circ Heart Fail. 2012;5(2):226–33.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Cho KI, Kwon JH, Kim SM, Park TJ, Lee HG, Kim TI. Impact of obstructive sleep apnea on the global myocardial performance beyond obesity. Echocardiography. 2012;29(9):1071–80.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Hammerstingl C, Schueler R, Wiesen M, et al. Impact of untreated obstructive sleep apnea on left and right ventricular myocardial function and effects of CPAP therapy. PLoS One. 2013;8(10):e76352.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Kim SM, Cho KI, Kwon JH, Lee HG, Kim TI. Impact of obstructive sleep apnea on left atrial functional and structural remodeling beyond obesity. J Cardiol. 2012;60(6):475–83.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Oliveira W, Poyares D, Cintra F, et al. Impact of continuous positive airway pressure treatment on right ventricle performance in patients with obstructive sleep apnoea, assessed by three-dimensional echocardiography. Sleep Med. 2012;13(5):510–6.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Pressman GS, Figueredo VM, Romero-Corral A, Murali G, Kotler MN. Effect of obstructive sleep apnea on mitral valve tenting. Am J Cardiol. 2012;109(7):1055–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Yang SQ, Han LL, Dong XL, et al. Mal-effects of obstructive sleep apnea on the heart. Sleep Breath. 2012;16(3):717–22.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Aslan K, Deniz A, Cayli M, Bozdemir H, Sarica Y, Seydaoglu G. Early left ventricular functional alterations in patients with obstructive sleep apnea syndrome. Cardiol J. 2013;20(5):519–25.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Hammerstingl C, Schueler R, Wiesen M, et al. Effects of untreated obstructive sleep apnea on left and right ventricular myocardial function. Int J Cardiol. 2012;155(3):465–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Usui Y, Takata Y, Inoue Y, et al. Severe obstructive sleep apnea impairs left ventricular diastolic function in non-obese men. Sleep Med. 2013;14(2):155–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Vitarelli A, D’Orazio S, Caranci F, et al. Left ventricular torsion abnormalities in patients with obstructive sleep apnea syndrome: an early sign of subclinical dysfunction. Int J Cardiol. 2013;165(3):512–8.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Araz Ö, Yilmazel Uçar E, Değırmencı H, et al. The correlation of ECHO findings of right cardiac pathologies with BNP, uric acid, and CRP in OSAS. Turk J Med Sci. 2014;44(5):832–8.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Chen YL, Su MC, Liu WH, Wang CC, Lin MC, Chen MC. Influence and predicting variables of obstructive sleep apnea on cardiac function and remodeling in patients without congestive heart failure. J Clin Sleep Med. 2014;10(1):57–64.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Danica LP, Krotin M, Zdravkovic M, et al. Early left ventricular systolic and diastolic dysfunction in patients with newly diagnosed obstructive sleep apnoea and normal left ventricular ejection fraction. Scientific World J. 2014;2014:898746.
+
+Article
+ 
+Google Scholar
+ 
+
+Sun Y, Yuan H, Zhao MQ, Wang Y, Xia M, Li YZ. Cardiac structural and functional changes in old elderly patients with obstructive sleep apnoea-hypopnoea syndrome. J Int Med Res. 2014;42(2):395–404.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+CemÇil TK, İshak Özel Tekin MRS, NaileErişGüdül RA, Aydın M. Left and right ventricle functions in patients obstructive sleep apnea and their relationship with apelin levels. Eur J Gen Med. 2015;12(4):344–9.
+
+Google Scholar
+ 
+
+Imai Y, Tanaka N, Usui Y, et al. Severe obstructive sleep apnea increases left atrial volume independently of left ventricular diastolic impairment. Sleep Breath. 2015;19(4):1249–55.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Sforza E, Sabri M, DaCosta A, Isaaz K, Barthélémy JC, Roche F. Echocardiographic findings in healthy elderly people with unrecognized sleep disordered breathing. J Clin Sleep Med. 2015;11(9):975–80.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Wang D, Ma GS, Wang XY, Lu QQ, Wang Y, Liu NF. Left ventricular subclinical dysfunction associated with myocardial deformation changes in obstructive sleep apnea patients estimated by real-time 3D speckle-tracking echocardiography. Sleep Breath. 2016;20(1):135–44.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Akyol S, Cortuk M, Baykan AO, et al. Biventricular myocardial performance is impaired in proportion to severity of obstructive sleep apnea. Tex Heart Inst J. 2016;43(2):119–25.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Altıparmak IH, Erkus ME, Polat M, et al. Evaluation of pulmonary artery stiffness in patients with obstructive sleep apnea syndrome. Echocardiography. 2016;33(3):362–71.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Altıparmak İH, Erkuş ME, Polat M, et al. Relation of elastic properties of pulmonary artery with left ventricular abnormalities and aortic stiffness in patients with moderate to severe obstructive sleep apnea: a cross-sectional echocardiographic study. Turk Kardiyol Dern Ars. 2016;44(4):289–99.
+
+PubMed
+ 
+Google Scholar
+ 
+
+Güvenç TS, Hüseyinoğlu N, Özben S, et al. Right ventricular geometry and mechanics in patients with obstructive sleep apnea living at high altitude. Sleep Breath. 2016;20(1):5–13.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Korcarz CE, Peppard PE, Young TB, et al. Effects of obstructive sleep apnea and obesity on cardiac remodeling: the Wisconsin Sleep Cohort Study. Sleep. 2016;39(6):1187–95.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Li J, Wang Z, Li Y, et al. Assessment of regional right ventricular systolic function in patients with obstructive sleep apnea syndrome using velocity vector imaging. Medicine (Baltimore). 2016;95(37):e4788.
+
+Article
+ 
+Google Scholar
+ 
+
+Ozkececi G, Ulasli SS, Akci O, et al. Assessment of pulmonary arterial stiffness in obstructive sleep apnea. Int J Cardiovasc Imaging. 2016;32(5):799–805.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Vitarelli A, Terzano C, Saponara M, et al. Assessment of right ventricular function in obstructive sleep apnea syndrome and effects of continuous positive airway pressure therapy: a pilot study. Can J Cardiol. 2015;31(7):823–31.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Vural MG, Çetin S, Gündüz H, et al. Assessment of left atrial appendage function during sinus rhythm in patients with obstructive sleep apnea. Anatol J Cardiol. 2016;16(1):34–41.
+
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Zhou NW, Shu XH, Liu YL, et al. A novel method for sensitive determination of subclinical left-ventricular systolic dysfunction in subjects with obstructive sleep apnea. Respir Care. 2016;61(3):366–75.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Buonauro A, Galderisi M, Santoro C, et al. Obstructive sleep apnoea and right ventricular function: a combined assessment by speckle tracking and three-dimensional echocardiography. Int J Cardiol. 2017;243:544–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Vural MG, Çetin S, Keser N, Firat H, Akdemir R, Gunduz H. Left ventricular torsion in patients with obstructive sleep apnoea before and after continuous positive airway pressure therapy: assessment by two-dimensional speckle tracking echocardiography. Acta Cardiol. 2017;72(6):638–47.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Zhou NW, Pan CZ, Kong DH, et al. A novel method for sensitive determination of subclinical right ventricular systolic dysfunction in patients with obstructive sleep apnea. Clin Respir J. 2017;11(6):951–9.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Çetin S, Vural M, Akdemir R, Fırat H. Left atrial remodelling may predict exercise capacity in obstructive sleep apnoea patients. Acta Cardiol. 2018;73(5):471–8.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Li J, Lu C, Wang W, Gong K, Zhao L, Wang Z. Assessment of right atrium dysfunction in patients with obstructive sleep apnea syndrome using velocity vector imaging. Cardiovasc Ultrasound. 2018;16(1):32.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Javaheri S, Sharma RK, Wang R, et al. Association between obstructive sleep apnea and left ventricular structure by age and gender: the Multi-Ethnic Study of Atherosclerosis. Sleep. 2016;39(3):523–9.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Wang B, Liu ZL, Niu B, Liang HW, Qiao RL. Use of SPECT to detect changes in diastolic and coronary reserve in patients with obstructive sleep apnea. Sleep Breath. 2013;17(2):525–31.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Shah NA, Reid M, Kizer JR, et al. Sleep-disordered breathing and left ventricular scar on cardiac magnetic resonance: results of the Multi-Ethnic Study of Atherosclerosis. J Clin Sleep Med. 2020;16(6):855–62.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Okuda N, Ito T, Emura N, et al. Depressed myocardial contractile reserve in patients with obstructive sleep apnea assessed by tissue Doppler imaging with dobutamine stress echocardiography. Chest. 2007;131(4):1082–9.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Weigold WG, Abbara S, Achenbach S, et al. Standardized medical terminology for cardiac computed tomography: a report of the Society of Cardiovascular Computed Tomography. J Cardiovasc Comput Tomogr. 2011;5(3):136–44.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Zhou Q, Jiang B, Dong F, Huang P, Liu H, Zhang M. Computed tomography coronary stent imaging with iterative reconstruction: a trade-off study between medium kernel and sharp kernel. J Comput Assist Tomogr. 2014;38(4):604–12.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Nasu K, Tsuchikane E, Katoh O, et al. Effect of fluvastatin on progression of coronary atherosclerotic plaque evaluated by virtual histology intravascular ultrasound. JACC Cardiovasc Interv. 2009;2(7):689–96.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Sun H, Zhang H, Li K, et al. ESM-1 promotes adhesion between monocytes and endothelial cells under intermittent hypoxia. J Cell Physiol. 2019;234(2):1512–21.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Yokoe T, Minoguchi K, Matsuo H, et al. Elevated levels of C-reactive protein and interleukin-6 in patients with obstructive sleep apnea syndrome are decreased by nasal continuous positive airway pressure. Circulation. 2003;107(8):1129–34.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Imani MM, Sadeghi M, Khazaie H, Emami M, SadeghiBahmani D, Brand S. Evaluation of serum and plasma interleukin-6 levels in obstructive sleep apnea syndrome: a meta-analysis and meta-regression. Front Immunol. 2020;11:1343.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Lu M, Fang F, Wang Z, Wei P, Hu C, Wei Y. Association between serum/plasma levels of adiponectin and obstructive sleep apnea hypopnea syndrome: a meta-analysis. Lipids Health Dis. 2019;18(1):30.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Chen TI, Tu WC. Exercise attenuates intermittent hypoxia-induced cardiac fibrosis associated with sodium-hydrogen exchanger-1 in rats. Front Physiol. 2016;7:462.
+
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Sanderson JE, Fang F, Lu M, Ma CY, Wei YX. Obstructive sleep apnoea, intermittent hypoxia and heart failure with a preserved ejection fraction. Heart. 2021;107(3):190-194.
+
+Radunski UK, Lund GK, Säring D, et al. T1 and T2 mapping cardiovascular magnetic resonance imaging techniques reveal unapparent myocardial injury in patients with myocarditis. Clin Res Cardiol. 2017;106(1):10–7.
+
+Article
+ 
+CAS
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Ferreira VM, Piechnik SK, Dall’Armellina E, et al. Non-contrast T1-mapping detects acute myocardial edema with high diagnostic accuracy: a comparison to T2-weighted cardiovascular magnetic resonance. J Cardiovasc Magn Reson. 2012;14:42.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Dall’Armellina E, Piechnik SK, Ferreira VM, et al. Cardiovascular magnetic resonance by non contrast T1-mapping allows assessment of severity of injury in acute myocardial infarction. J Cardiovasc Magn Reson. 2012;14:15.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Iles L, Pfluger H, Phrommintikul A, et al. Evaluation of diffuse myocardial fibrosis in heart failure with cardiac magnetic resonance contrast-enhanced T1 mapping. J Am Coll Cardiol. 2008;52(19):1574–80.
+
+Article
+ 
+PubMed
+ 
+Google Scholar
+ 
+
+Ferreira VM, Piechnik SK, Robson MD, Neubauer S, Karamitsos TD. Myocardial tissue characterization by magnetic resonance imaging: novel applications of T1 and T2 mapping. J Thorac Imaging. 2014;29(3):147–54.
+
+Article
+ 
+PubMed
+ 
+PubMed Central
+ 
+Google Scholar
+ 
+
+Download references
+
+Acknowledgements
+
+Not applicable.
+
+Funding
+
+This study was supported by the National Natural Science Foundation of China (No. 81870335, 81670903), Beijing Hospitals Authority’ Mission Plan (SML20190601), Beijing Scholars Program (NO.051), Capital Health Research and Development of Special Fund (2018–2-2065), and National Key R&D Program of China (NO.2019YFE0116000).
+
+Author information
+Author notes
+
+Mi Lu and Zhenjia Wang contributed equally to this work.
+
+Authors and Affiliations
+
+Department of Otolaryngology Head & Neck Surgery, Beijing Anzhen Hospital, Capital Medical University, No.2 Anzhen Road, Beijing, 100029, China
+
+Mi Lu, Xiaojun Zhan & Yongxiang Wei
+
+The Key Laboratory of Upper Airway Dysfunction-Related Cardiovascular Diseases, Beijing Institute of Heart, Lung and Blood Vessel Diseases, No.2 Anzhen Road, Beijing, 100029, China
+
+Mi Lu, Xiaojun Zhan & Yongxiang Wei
+
+Department of Radiology, Beijing Hospital of Traditional Chinese Medicine, Capital Medical University, No. 23 Back Road of Art Gallery, Beijing, 100010, China
+
+Zhenjia Wang
+
+Department of Otorhinolaryngology Head and Neck Surgery, Capital Institute of Pediatrics, No.2 Yabao Road, Beijing, 100020, China
+
+Yongxiang Wei
+
+Contributions
+
+Conception and design: LM, WZJ and WYX. Collection and assembly of data: LM, WZJ and ZXJ. Data analysis and interpretation: LM andWZJ. Manuscript writing: LM. Revised the language/article: All authors. Final approval of manuscript: All authors.
+
+Corresponding author
+
+Correspondence to Yongxiang Wei.
+
+Ethics declarations
+Ethics approval and consent to participate
+
+Not applicable.
+
+Consent for publication
+
+Not applicable.
+
+Competing interests
+
+The authors declare that they have no competing interests.
+
+Additional information
+Publisher's Note
+
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+
+Supplementary Information
+Additional file 1: Table S1
+
+A example of search strategies. Table S2 Equations. Table S3 Certainty of evidence. Figure S1 Forest plot. Figure S2 Funnel plot. Figure S3 Sensitivity plot.
+
+Rights and permissions
+
+Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article's Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article's Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/. The Creative Commons Public Domain Dedication waiver (http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated in a credit line to the data.
+
+Reprints and permissions
+
+About this article
+Cite this article
+
+Lu, M., Wang, Z., Zhan, X. et al. Obstructive sleep apnea increases the risk of cardiovascular damage: a systematic review and meta-analysis of imaging studies. Syst Rev 10, 212 (2021). https://doi.org/10.1186/s13643-021-01759-6
+
+Download citation
+
+Received
+11 January 2021
+
+Accepted
+08 July 2021
+
+Published
+30 July 2021
+
+Version of record
+30 July 2021
+
+DOI
+https://doi.org/10.1186/s13643-021-01759-6
+
+Share this article
+
+Anyone you share the following link with will be able to read this content:
+
+Get shareable link
+
+Provided by the Springer Nature SharedIt content-sharing initiative
+
+Keywords
+Obstructive sleep apnea
+Atherosclerosis
+Coronary artery calcium
+Coronary plaque
+Cardiac remodeling
+Cardiac dysfunction
+Sections
+Figures
+References
+Abstract
+Background
+Methods
+Results
+Discussion
+Conclusions
+Availability of data and materials
+Abbreviations
+References
+Acknowledgements
+Funding
+Author information
+Ethics declarations
+Additional information
+Supplementary Information
+Rights and permissions
+About this article
+Discover content
+Journals A-Z
+Books A-Z
+Publish with us
+Journal finder
+Publish your research
+Language editing
+Open access publishing
+Products and services
+Our products
+Librarians
+Societies
+Partners and advertisers
+Our brands
+Springer
+Nature Portfolio
+BMC
+Palgrave Macmillan
+Apress
+Discover
+Your privacy choices/Manage cookies Your US state privacy rights Accessibility statement Terms and conditions Privacy policy Help and support Legal notice Cancel contracts here
+
+76.132.73.231
+
+Not affiliated
+
+© 2026 Springer Nature

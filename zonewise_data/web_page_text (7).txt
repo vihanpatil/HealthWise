@@ -1,0 +1,512 @@
+Skip to main content
+Intended for healthcare professionals
+Skip to main content
+Search this journal
+Enter search terms...
+Search
+Advanced search
+Access/Profile
+Cart
+Browse by discipline
+Information for
+American Journal of Lifestyle Medicine
+Impact Factor: 1.3 / 5-Year Impact Factor: 2.7
+Journal Homepage
+Submission Guidelines
+Restricted access
+Review article
+First published online October 31, 2023
+Request permissions
+Sleep is Essential for Cardiovascular Health: An Analytic Review of the Relationship Between Sleep and Cardiovascular Mortality
+Yasmine M. Eshera, MS, Lyubov Gavrilova, BS, and Joel W. Hughes, PhD https://orcid.org/0000-0002-6476-6588 jhughes@kent.eduView all authors and affiliations
+Volume 18, Issue 3
+https://doi.org/10.1177/15598276231211846
+Contents
+Get access
+Cite
+Share options
+Information, rights and permissions
+Metrics and citations
+Abstract
+The American Heart Association recently included sleep health as one of eight factors that define cardiovascular health. Restorative sleep is a pillar of lifestyle medicine influenced by sleep duration, quality, and disorders. Short and long sleep duration are associated with greater risk of cardiovascular disease. Short sleep appears causally related to cardiovascular risk. Long sleep is more strongly predictive of cardiovascular risk, which may be due to comorbidities and other risk factors. Good-quality sleep appears to protect against the increased risk and is independently associated with risk of cardiovascular disease (CVD). Insomnia, particularly difficulty falling asleep and non-restorative sleep, is associated with an increase in cardiac events. Obstructive sleep apnea (OSA) is associated with cardiac risk and outcomes, which is typically observed in the context of contributing comorbidities. However, treating OSA with continuous positive airway pressure (CPAP) may not improve prognosis. Further research is needed to understand the causal mechanisms connecting sleep health with CVD and whether modifying sleep can improve outcomes. Sleep health should be considered as part of a holistic approach to improving cardiovascular health, as reflected in the scoring of LE8 and as one of the interrelated components of lifestyle medicine.
+Get full access to this article
+
+View all access and purchase options for this article.
+
+Get Access
+References
+1. Walker MP. Sleep essentialism. Brain. Mar. 2021;144(3):697-699.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+2. Lloyd-Jones DM, Hong Y, Labarthe D, et al. Defining and setting national goals for cardiovascular health promotion and disease reduction: the American Heart Association’s strategic Impact Goal through 2020 and beyond. Circulation. 2010;121(4):586-613.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+3. Angell SY, McConnell MV, Anderson CAM, et al. The American heart association 2030 impact goal: a presidential advisory from the American heart association. Circulation. 2020;141(9):e120-e138.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+4. Lloyd-Jones DM, Allen NB, Anderson CAM, et al. Life’s essential 8: updating and enhancing the American heart Association’s construct of cardiovascular health: a presidential advisory from the American heart association. Circulation. 2022;146(5):e18-e43.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+5. Quan SF. Sleep disturbances and their relationship to cardiovascular disease. Am J Lifestyle Med. 2009;3(1 Suppl):55s-59s.
+Crossref
+PubMed
+Google Scholar
+6. Hirshkowitz M, Whiton K, Albert SM, et al. National Sleep Foundation’s updated sleep duration recommendations: final report. Sleep health. 2015;1(4):233-243.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+7. Liu Y, Wheaton AG, Chapman DP, Cunningham TJ, Lu H, Croft JB. Prevalence of healthy sleep duration among adults--United States, 2014. MMWR Morbidity and mortality weekly report. 2016;65(6):137-141.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+8. Lianov LS, Adamson K, Kelly JH, Matthews S, Palma M, Rea BL. Lifestyle medicine core competencies: 2022 update. Am J Lifestyle Med. 2022;16(6):734-739.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+9. Rippe JM, ed. Lifestyle Medicine. Boca Raton, FL: CRC Press; 2019 Apr 17.
+Crossref
+Google Scholar
+10. Rippe JM. Lifestyle medicine: the health promoting power of daily habits and practices. Am J Lifestyle Med. 2018;12(6):499-512.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+11. Rippe JM. Manual of Lifestyle Medicine. Boca Raton, FL: CRC Press; 2021.
+Crossref
+Google Scholar
+12. Dedhia P, Maurer R. Sleep and health-A lifestyle medicine approach. J Fam Pract. 2022;71(Suppl 1 Lifestyle):S30-S34.
+Crossref
+PubMed
+Google Scholar
+13. Watson NF. Sleep duration: a consensus conference. J Clin Sleep Med. 2015;11(1):7-8.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+14. Cappuccio FP, D’Elia L, Strazzullo P, Miller MA. Sleep duration and all-cause mortality: a systematic review and meta-analysis of prospective studies. Sleep. 2010;33(5):585-592.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+15. Krittanawong C, Tunhasiriwet A, Wang Z, et al. Association between short and long sleep durations and cardiovascular outcomes: a systematic review and meta-analysis. Eur Heart J Acute Cardiovasc Care. 2019;8(8):762-770.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+16. Kwok CS, Kontopantelis E, Kuligowski G, et al. Self-reported sleep duration and quality and cardiovascular disease and mortality: a dose-response meta-analysis. J Am Heart Assoc. 2018;7(15):e008552.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+17. Pienaar PR, Kolbe-Alexander TL, van Mechelen W, et al. Associations between self-reported sleep duration and mortality in employed individuals: systematic review and meta-analysis. Am J Health Promot. 2021;35(6):853-865.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+18. Wang S, Li Z, Wang X, et al. Associations between sleep duration and cardiovascular diseases: a meta-review and meta-analysis of observational and Mendelian randomization studies. Frontiers in cardiovascular medicine. 2022;9:930000.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+19. Yang X, Chen H, Li S, Pan L, Jia C. Association of sleep duration with the morbidity and mortality of coronary artery disease: a meta-analysis of prospective studies. Heart Lung Circ. 2015;24(12):1180-1190.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+20. Yin J, Jin X, Shan Z, et al. Relationship of sleep duration with all-cause mortality and cardiovascular events: a systematic review and dose-response meta-analysis of prospective cohort studies. J Am Heart Assoc. 2017;6(9).
+Crossref
+Web of Science
+Google Scholar
+21. Grover S, Del Greco MF, Stein CM, Ziegler A. Mendelian Randomization. Methods in molecular biology (Clifton, NJ). 2017;1666:581-628.
+Crossref
+PubMed
+Google Scholar
+22. Grandner MA, Drummond SPA. Who are the long sleepers? Towards an understanding of the mortality relationship. Sleep Med Rev. 2007;11(5):341-360.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+23. Havranek EP, Mujahid MS, Barr DA, et al. Social determinants of risk and outcomes for cardiovascular disease: a scientific statement from the American heart association. Circulation. 2015;132(9):873-898.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+24. Tubbs AS, Ghani SB, Valencia D, et al. Racial/ethnic minorities have greater declines in sleep duration with higher risk of cardiometabolic disease: an analysis of the U.S. National health interview survey. Sleep Epidemiol. 2022;2(100022):100022.
+Crossref
+Google Scholar
+25. Wolk R, Gami AS, Garcia-Touchard A, Somers VK. Sleep and cardiovascular disease. Curr Probl Cardiol. 2005;30(12):625-662.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+26. Zeng R, Jiang Y, Chen T, Guo D, Li R. Longitudinal associations of sleep duration and sleep quality with coronary heart disease risk among adult population: classical meta-analysis and Bayesian network meta-analysis. Sleep Biol Rhythm. 2021;19(3):265-276.
+Crossref
+Web of Science
+Google Scholar
+27. Buysse DJ, Reynolds CF, Monk TH, Berman SR, Kupfer DJ. The Pittsburgh Sleep Quality Index: a new instrument for psychiatric practice and research. Psychiatr Res. 1989;28(2):193-213.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+28. Carpenter JS, Andrykowski MA. Psychometric evaluation of the Pittsburgh sleep quality index. J Psychosom Res. 1998;45(1):5-13.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+29. Hall MH, Smagula SF, Boudreau RM, et al. Association between sleep duration and mortality is mediated by markers of inflammation and health in older adults: the health, aging and body composition study. Sleep. 2015;38(2):189-195.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+30. Kryger MH, Roth T, Dement WC. Principles and practice of sleep medicine. In: Kryger MH, Roth T, Dement WC, eds. Depress Anxiety. Hoboken, NJ: Wiley-Blackwell. 2001, 13(3):157.
+Crossref
+Google Scholar
+32. Makarem N, Castro-Diehl C, St-Onge MP, et al. Redefining cardiovascular health to include sleep: prospective associations with cardiovascular disease in the MESA sleep study. J Am Heart Assoc. 2022;11(21):e025252.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+33. Ford ES, Cunningham TJ, Giles WH, Croft JB. Trends in insomnia and excessive daytime sleepiness among US adults from 2002 to 2012. Sleep Med. 2015;16(3):372-378.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+34. Ohayon MM. Epidemiology of insomnia: what we know and what we still need to learn. Sleep Med Rev. 2002;6(2):97-111.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+35. Morin CM, Benca R. Chronic insomnia. Lancet (London, England). 2012;379(9821):1129-1141.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+36. Morin CM, Bélanger L, LeBlanc M, et al. The natural history of insomnia: a population-based 3-year longitudinal study. Arch Intern Med. 2009;169(5):447-453.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+37. Morphy H, Dunn KM, Lewis M, Boardman HF, Croft PR. Epidemiology of insomnia: a longitudinal study in a UK population. Sleep: Journal of Sleep and Sleep Disorders Research. 2007;30(3):274-280.
+Google Scholar
+38. Cunnington D, Junge MF, Fernando AT. Insomnia: prevalence, consequences and effective treatment. The Medical journal of Australia. 2013;199(8):S36-S40.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+39. Baglioni C, Battagliese G, Feige B, et al. Insomnia as a predictor of depression: a meta-analytic evaluation of longitudinal epidemiological studies. J Affect Disord. 2011;135(1-3):10-19.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+40. Lett HS, Blumenthal JA, Babyak MA, et al. Depression as a risk factor for coronary artery disease: evidence, mechanisms, and treatment. Psychosom Med. 2004;66(3):305-315.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+41. Barth J, Schumacher M, Herrmann-Lingen C. Depression as a risk factor for mortality in patients with coronary heart disease: a meta-analysis. Psychosom Med. 2004;66(6):802-813.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+42. Joynt KE, Whellan DJ, O’Connor CM. Depression and cardiovascular disease: mechanisms of interaction. Biol Psychiatr. 2003;54(3):248-261.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+43. Hare DL, Toukhsati SR, Johansson P, Jaarsma T. Depression and cardiovascular disease: a clinical review. Eur Heart J. 2014;35(21):1365-1372.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+44. Harshfield EL, Pennells L, Schwartz JE, et al. Association between depressive symptoms and incident cardiovascular diseases. JAMA. 2020;324(23):2396-2405.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+45. Hughes J, Ede D. Psychosocial risk factors as modulators of cardiovascular outcomes in secondary prevention. In: Rippe J, ed. Lifestyle Medicine. 3rd ed. Boca Raton: Taylor & Francis; 2019.
+Google Scholar
+46. Bonnet MH, Arand DL. Cardiovascular implications of poor sleep. Sleep Medicine Clinics. 2007;2(4):529-538.
+Crossref
+Google Scholar
+47. Sofi F, Cesari F, Casini A, Macchi C, Abbate R, Gensini GF. Insomnia and risk of cardiovascular disease: a meta-analysis. European journal of preventive cardiology. 2014;21(1):57-64.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+48. Li M, Zhang X-W, Hou W-S, Tang Z-Y. Insomnia and risk of cardiovascular disease: a meta-analysis of cohort studies. Int J Cardiol. 2014;176(3):1044-1047.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+49. Ge L, Guyatt G, Tian J, et al. Insomnia and risk of mortality from all-cause, cardiovascular disease, and cancer: systematic review and meta-analysis of prospective cohort studies. Sleep Med Rev. 2019;48:101215.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+50. Lovato N, Lack L. Insomnia and mortality: a meta-analysis. Sleep Med Rev. 2019;43:71-83.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+51. Gamaldo AA, Beydoun MA, Beydoun HA, et al. Sleep disturbances among older adults in the United States, 2002-2012: nationwide inpatient rates, predictors, and outcomes. Front Aging Neurosci. 2016;8:266.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+52. Quan SF. Sleep disturbances and their relationship to cardiovascular disease. Am J Lifestyle Med. 2009;3(1 Suppl):55s-59s.
+Crossref
+PubMed
+Google Scholar
+53. Yuan S, Mason AM, Burgess S, Larsson SC. Genetic liability to insomnia in relation to cardiovascular diseases: a Mendelian randomisation study. European journal of epidemiology. 2021;36(4):393-400.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+54. Benjafield AV, Ayas NT, Eastwood PR, et al. Estimation of the global prevalence and burden of obstructive sleep apnoea: a literature-based analysis. Lancet Respir Med. 2019;7(8):687-698.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+55. Rippe JM. Integrating Lifestyle Medicine in Cardiovascular Health and Disease Prevention. Boca Raton, FL: CRC Press; 2023:105-111.
+Google Scholar
+56. Guilleminault C, Partinen M, Quera-Salva MA, Hayes B, Dement WC, Nino-Murcia G. Determinants of daytime sleepiness in obstructive sleep apnea. Chest. 1988;94(1):32-37.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+57. Gottlieb DJ, Punjabi NM. Diagnosis and management of obstructive sleep apnea: a review. JAMA. 2020;323(14):1389-1400.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+58. Golbin JM, Somers VK, Caples SM. Obstructive sleep apnea, cardiovascular disease, and pulmonary hypertension. Annals of the American Thoracic Society. 2008;5(2):200-206.
+Crossref
+Google Scholar
+59. Somers VK, White DP, Amin R, et al. Sleep apnea and cardiovascular disease: an American heart association/american college of cardiology foundation scientific statement from the American heart association Council for high blood pressure research professional education committee, Council on clinical cardiology, stroke Council, and Council on cardiovascular nursing. In collaboration with the national heart, lung, and blood institute national center on sleep disorders research (national institutes of health). Circulation. 2008;118(10):1080-1111.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+60. Ge X, Han F, Huang Y, et al. Is obstructive sleep apnea associated with cardiovascular and all-cause mortality? PLoS One. 2013;8(7):e69432.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+61. Pan L, Xie X, Liu D, Ren D, Guo Y. Obstructive sleep apnoea and risks of all-cause mortality: preliminary evidence from prospective cohort studies. Sleep & breathing = Schlaf & Atmung. 2016;20(1):345-353.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+62. Dong J-Y, Zhang Y-H, Qin L-Q. Obstructive sleep apnea and cardiovascular risk: meta-analysis of prospective cohort studies. Atherosclerosis. 2013;229(2):489-495.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+63. Henst RHP, Pienaar PR, Roden LC, Rae DE. The effects of sleep extension on cardiometabolic risk factors: a systematic review. Journal of Sleep Research. 2019;28(6).
+Crossref
+PubMed
+Web of Science
+Google Scholar
+64. Johann AF, Hertenstein E, Feige B, et al. Cognitive behavioural therapy for insomnia does not appear to have a substantial impact on early markers of cardiovascular disease: a preliminary randomized controlled trial. Journal of Sleep Research. 2020;29(5).
+Crossref
+Web of Science
+Google Scholar
+65. Savin KL, Clark TL, Perez-Ramirez P, Allen TS, Tristão Parra M, Gallo LC. The effect of cognitive behavioral therapy for insomnia (CBT-I) on cardiometabolic health biomarkers: a systematic review of randomized controlled trials. Behav Sleep Med. 2022;21:1-24.
+PubMed
+Web of Science
+Google Scholar
+66. Heenan A, Pipe A, Lemay K, Davidson JR, Tulloch H. Cognitive-behavioral therapy for insomnia tailored to patients with cardiovascular disease: a pre-post study. Behav Sleep Med. 2020;18(3):372-385.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+67. Conley S, Redeker NS. Cognitive behavioral therapy for insomnia in the context of cardiovascular conditions. Current sleep medicine reports. 2015;1(3):157-165.
+Crossref
+PubMed
+Google Scholar
+68. Kaar JL, Luberto CM, Campbell KA, Huffman JC. Sleep, health behaviors, and behavioral interventions: reducing the risk of cardiovascular disease in adults. World J Cardiol. 2017;9(5):396-406.
+Crossref
+PubMed
+Google Scholar
+69. Redeker NS, Conley S, Anderson G, et al. Effects of cognitive behavioral therapy for insomnia on sleep, symptoms, stress, and autonomic function among patients with heart failure. Behav Sleep Med. 2020;18(2):190-202.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+70. Redeker NS, Yaggi HK, Jacoby D, et al. Cognitive behavioral therapy for insomnia has sustained effects on insomnia, fatigue, and function among people with chronic heart failure and insomnia: the HeartSleep Study. Sleep: Journal of Sleep and Sleep Disorders Research. 2022;45(1):1-15.
+Crossref
+Web of Science
+Google Scholar
+71. Carneiro-Barrera A, Díaz-Román A, Guillén-Riquelme A, Buela-Casal G. Weight loss and lifestyle interventions for obstructive sleep apnoea in adults: systematic review and meta-analysis. Obes Rev: An Official Journal of the International Association for the Study of Obesity. 2019;20(5):750-762.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+72. Jehan S, Zizi F, Pandi-Perumal SR, et al. Obstructive sleep apnea and obesity: implications for public health. Sleep Med Disord. 2017;1(4):00019.
+PubMed
+Google Scholar
+73. Marin JM, Carrizo SJ, Vicente E, Agusti AGN. Long-term cardiovascular outcomes in men with obstructive sleep apnoea-hypopnoea with or without treatment with continuous positive airway pressure: an observational study. Lancet. 2005;365(9464):1046-1053.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+74. Bartlett D, Wong K, Richards D, et al. Increasing adherence to obstructive sleep apnea treatment with a group social cognitive therapy treatment intervention: a randomized trial. Sleep. 2013;36:1647-1654.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+75. Weaver TE, Sawyer A. Management of obstructive sleep apnea by continuous positive airway pressure. Oral Maxillofac Surg Clin. 2009;21:403-412.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+76. Dong J-Y, Zhang Y-H, Qin L-Q. Obstructive sleep apnea and cardiovascular risk: meta-analysis of prospective cohort studies. Atherosclerosis. 2013;229(2):489-495.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+77. Guo J, Sun Y, Xue L-J, et al. Effect of CPAP therapy on cardiovascular events and mortality in patients with obstructive sleep apnea: a meta-analysis. Sleep & breathing = Schlaf & Atmung. 2016;20(3):965-974.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+78. Qiu Z-H, Luo Y-M, McEvoy RD. The Sleep Apnea Cardiovascular Endpoints (SAVE) study: implications for health services and sleep research in China and elsewhere. J Thorac Dis. 2017;9(8):2217-2220.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+79. Pack AI, Magalang UJ, Singh B, Kuna ST, Keenan BT, Maislin G. Randomized clinical trials of cardiovascular disease in obstructive sleep apnea: understanding and overcoming bias. Sleep. 2021;44(2).
+Crossref
+Web of Science
+Google Scholar
+80. McEvoy RD, Antic NA, Heeley E, et al. CPAP for prevention of cardiovascular events in obstructive sleep apnea. N Engl J Med. 2016;375(10):919-931.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+81. Peker Y, Glantz H, Eulenburg C, Wegscheider K, Herlitz J, Thunström E. Effect of positive airway pressure on cardiovascular outcomes in coronary artery disease patients with nonsleepy obstructive sleep apnea. The RICCADSA randomized controlled trial. Am J Respir Crit Care Med. 2016;194(5):613-620.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+82. Smith LA, Vennelle M, Gardner RS, et al. Auto-titrating continuous positive airway pressure therapy in patients with chronic heart failure and obstructive sleep apnoea: a randomized placebo-controlled trial. Eur Heart J. 2007;28(10):1221-1227.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+83. Lattimore J-DL, Celermajer DS, Wilcox I. Obstructive sleep apnea and cardiovascular disease. J Am Coll Cardiol. 2003;41(9):1429-1437.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+84. Dobrosielski DA, Papandreou C, Patil SP, Salas-Salvadó J. Diet and exercise in the management of obstructive sleep apnoea and cardiovascular disease risk. Eur Respir Rev: An Official Journal of the European Respiratory Society. 2017;26(144):160110.
+Crossref
+PubMed
+Web of Science
+Google Scholar
+Supplementary Material
+
+Please find the following supplemental material available below.
+
+For Open Access articles published under a Creative Commons License, all supplemental material carries the same license as the article it is associated with.
+
+For non-Open Access articles published, all supplemental material carries a non-exclusive license, and permission requests for re-use of supplemental material or any part of supplemental material shall be sent directly to the copyright owner as specified in the copyright notice associated with the article.
+
+sj-pdf-1-ajl-10.1177_15598276231211846.pdf
+357.93 KB
+Articles In the Same Collection(s):
+Collection: Lifestyle Medicine Pillar: Nutrition
+Restricted access
+The Opportunity to Place Type 2 Diabetes in Remission
+Show Details
+Open Access
+Lifestyle Behavior Patterns and Socio-Demographic Predictors Among US ...
+Show Details
+Restricted access
+Women Managing Heart Disease: Involvement of Spouse and Non-Spouse Car...
+Show Details
+Similar articles:
+Free access
+Sleep Disturbances and Their Relationship to Cardiovascular Disease
+Show Details
+Open Access
+Elucidating the Relationship Between Insomnia, Sex, and Cardiovascular Disease
+Show Details
+Open Access
+Sleep disorders as both risk factors for, and a consequence of, stroke: A narrative review
+Show Details
+View More
+Sage recommends:
+SAGE Knowledge
+Entry
+Sleep Disorders
+Show Details
+SAGE Research Methods
+Entry
+Sleep Disorders
+Show Details
+SAGE Knowledge
+Entry
+Sleep Disorders: Behavioral Treatment
+Show Details
+View More
+
+You currently have no access to this content. Visit the access options page to authenticate.
+
+View full text|Download PDF
+Also from Sage
+CQ LibraryElevating debate
+opens in new tab
+Sage DataUncovering insight
+opens in new tab
+Sage Business CasesShaping futures
+opens in new tab
+Sage CampusUnleashing potential
+opens in new tab
+Sage KnowledgeMultimedia learning resources
+opens in new tab
+Sage Research MethodsSupercharging research
+opens in new tab
+Sage VideoStreaming knowledge
+opens in new tab
+Technology from SageLibrary digital services
+opens in new tab
+About
+About Sage Journals
+Accessibility guide
+Historical content
+Advertising disclaimer
+Permissions
+Terms of use
+Sage discipline hubs
+Sage microsites
+Information for
+Authors
+Editors
+Librarians
+Researchers
+Reviewers
+Societies & Partners
+Advertising & Promotion
+FAQs
+American Journal of Lifestyle Medicine
+ISSN: 1559-8276
+Online ISSN: 1559-8284
+About SageContact usCCPA - Do not sell my personal informationCCPA
+Privacy Policy
+
+Copyright © 2026 by SAGE Publications
+
+PDF
+Help
