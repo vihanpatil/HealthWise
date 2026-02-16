@@ -14,7 +14,6 @@ def initialize_zonewise_rag() -> str:
     return rag_zone.build()
 
 
-# TODO: uncomment this once we have better data
 def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
     return len(good) >= 2
@@ -65,7 +64,6 @@ def stream_zonewise_response(
 
     k = len(hits)
 
-    # agentic retry if weak
     if not _safe_has_good_hits(hits):
         reformulated = call_nvidia_chat(
             [
@@ -79,7 +77,6 @@ def stream_zonewise_response(
         hits = rag_zone.retrieve(reformulated, top_k=6)
         k = len(hits)
 
-    # refuse to invent (about the docs)
     if not _safe_has_good_hits(hits):
         assistant_text = (
             "I can’t find strong support for that in the ZoneWise documents currently loaded.\n\n"

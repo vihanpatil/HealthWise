@@ -27,7 +27,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
-    gender = Column(String, nullable=False)  # "male" | "female"
-    weight_kg = Column(Float, nullable=False)  # store kg
-    height_cm = Column(Float, nullable=False)  # store cm
+    gender = Column(String, nullable=False)
+    weight_kg = Column(Float, nullable=False)
+    height_cm = Column(Float, nullable=False)
     age = Column(Integer, nullable=False)

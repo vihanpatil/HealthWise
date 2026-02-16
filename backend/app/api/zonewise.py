@@ -179,7 +179,9 @@ def format_hr_context_block(
     """
     lines = []
     lines.append("USER_METRIC_CONTEXT:")
-    lines.append(f"- active_window: {'all_time' if active_minutes == 0 else str(active_minutes) + 'm'}")
+    lines.append(
+        f"- active_window: {'all_time' if active_minutes == 0 else str(active_minutes) + 'm'}"
+    )
     lines.append("- metric: heart_rate")
     lines.append("- windows:")
 
@@ -193,7 +195,6 @@ def format_hr_context_block(
             lines.append(f"  - {w}: no_samples")
             continue
 
-        # zones summary
         zbits = []
         for zone in z.get("zones", []) or []:
             zbits.append(f"Z{zone['zone']}={zone['minutes']}")
@@ -220,10 +221,9 @@ async def chat_stream(
 ):
     message = payload.get("message", "")
     history = payload.get("history", [])
-    minutes = int(payload.get("minutes", 0) or 0)  # active dashboard window
+    minutes = int(payload.get("minutes", 0) or 0)
     user_uuid = UUID(user_id)
 
-    # Build context for 30/60/90/all-time every request
     window_minutes = [30, 60, 90, 0]
     windows: Dict[str, Dict[str, Any]] = {}
 

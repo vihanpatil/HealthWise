@@ -61,7 +61,6 @@ class RagService:
 
     def _load_all_documents(self) -> list:
         self.ensure_store_exists()
-        # directory-based loading is more reliable than per-file for .txt
         reader = SimpleDirectoryReader(
             input_dir=self.store_path,
             recursive=False,
