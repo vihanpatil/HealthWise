@@ -4,6 +4,8 @@ from fastapi.responses import StreamingResponse
 from pathlib import Path
 import json
 import asyncio
+import errno
+
 
 from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic.rootwise import (
@@ -34,12 +36,11 @@ def notepad_append(payload: dict):
 
 @router.post("/veg/detect")
 async def veg_detect(image: UploadFile = File(...)):
-    import tempfile, os
+    import tempfile
+    import os
 
     suffix = "." + (
-        image.filename.split(".")[-1]
-        if image.filename and "." in image.filename
-        else "png"
+        image.filename.split(".")[-1] if image.filename and "." in image.filename else "png"
     )
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(await image.read())
@@ -50,8 +51,9 @@ async def veg_detect(image: UploadFile = File(...)):
     finally:
         try:
             os.remove(tmp_path)
-        except:
-            pass
+        except OSError as e:
+            if e.errno != errno.ENOENT:
+                raise
 
 
 @router.post("/veg/add")
@@ -92,7 +94,8 @@ def rag_add(payload: dict):
 
 @router.post("/docs/load")
 async def docs_load(files: list[UploadFile] = File(...)):
-    import tempfile, os
+    import tempfile
+    import os
 
     paths = []
     try:
@@ -109,8 +112,9 @@ async def docs_load(files: list[UploadFile] = File(...)):
         for p in paths:
             try:
                 os.remove(p)
-            except:
-                pass
+            except OSError as e:
+                if e.errno != errno.ENOENT:
+                    raise
 
 
 def _resolve_scope_dir(scope: str) -> Path:
@@ -119,9 +123,7 @@ def _resolve_scope_dir(scope: str) -> Path:
         return ROOTWISE_DATA
     if s == "user":
         return USER_STATE_DIR
-    raise HTTPException(
-        status_code=400, detail="Invalid scope. Use scope=system or scope=user."
-    )
+    raise HTTPException(status_code=400, detail="Invalid scope. Use scope=system or scope=user.")
 
 
 @router.get("/system/files")

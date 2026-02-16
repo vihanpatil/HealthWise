@@ -51,8 +51,7 @@ class RagService:
         return [
             f
             for f in os.listdir(self.store_path)
-            if f.endswith(SUPPORTED_EXTS)
-            and os.path.isfile(os.path.join(self.store_path, f))
+            if f.endswith(SUPPORTED_EXTS) and os.path.isfile(os.path.join(self.store_path, f))
         ]
 
     # --- indexing ---
@@ -75,9 +74,7 @@ class RagService:
             if not docs:
                 self._index = None
                 self._query_engine = None
-                return (
-                    f"Error: No valid .txt/.pdf documents found in {self.store_path}."
-                )
+                return f"Error: No valid .txt/.pdf documents found in {self.store_path}."
 
             dim = self._get_embed_dim()
             vector_store = FaissVectorStore(faiss_index=faiss.IndexFlatL2(dim))

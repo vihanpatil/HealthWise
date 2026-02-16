@@ -5,8 +5,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
-import json, asyncio
-from typing import Any, Optional, Dict, List, Tuple
+import json
+import asyncio
+from typing import Any, Dict
 
 from app.db.session import get_db
 from app.db.models import User, Metric

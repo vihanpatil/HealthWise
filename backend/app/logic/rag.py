@@ -89,7 +89,6 @@ def _load_all_documents() -> list:
     ensure_store_exists()
     documents = []
     for fname in os.listdir(_rag_store):
-
         if not fname.endswith(SUPPORTED_EXTS):
             continue
         full_path = os.path.join(_rag_store, fname)
@@ -196,9 +195,7 @@ def retrieve(text: str, top_k: int = 5) -> List[Dict[str, Any]]:
                 or meta.get("filename")
                 or meta.get("source")
                 or meta.get("file_path"),
-                "page": meta.get("page_label")
-                or meta.get("page")
-                or meta.get("page_number"),
+                "page": meta.get("page_label") or meta.get("page") or meta.get("page_number"),
             }
         )
     return out

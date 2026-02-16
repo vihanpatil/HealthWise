@@ -169,9 +169,7 @@ def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
         USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
 
         if season and season.strip():
-            (USER_STATE_DIR / "given_season.txt").write_text(
-                f"Season: {season.strip()}\n"
-            )
+            (USER_STATE_DIR / "given_season.txt").write_text(f"Season: {season.strip()}\n")
 
         if ingredients and ingredients.strip():
             (USER_STATE_DIR / "given_ingredients.txt").write_text(
@@ -239,7 +237,7 @@ def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900)
         src = h.get("file") or "unknown"
         page = h.get("page")
         page_str = str(page) if page is not None else "?"
-        blocks.append(f"[{i+1}] (source: {src}, page: {page_str})\n{txt}")
+        blocks.append(f"[{i + 1}] (source: {src}, page: {page_str})\n{txt}")
     return "\n\n".join(blocks)
 
 
@@ -297,7 +295,9 @@ def stream_response(message: str, history):
         truncated_history = ""
         if history:
             for user_msg, assistant_msg in history[-2:]:
-                truncated_history += f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
+                truncated_history += (
+                    f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
+                )
 
         system_prompt = (
             "You are RootWise — calm, respectful, and deeply knowledgeable about sustainability, food wisdom, and functional medicine.\n\n"

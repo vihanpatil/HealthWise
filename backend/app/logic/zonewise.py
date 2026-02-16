@@ -1,8 +1,7 @@
 # backend/app/logic/zonewise_chat.py
 from typing import Any, Dict, List, Optional
-from pathlib import Path
 
-from app.config import ZONEWISE_DATA, ROOTWISE_DATA
+from app.config import ZONEWISE_DATA
 from app.logic.rag_instance import get_rag
 from app.logic.rootwise import call_nvidia_chat
 
@@ -31,7 +30,7 @@ def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900)
         src = h.get("file") or "unknown"
         page = h.get("page")
         page_str = str(page) if page is not None else "?"
-        blocks.append(f"[{i+1}] (source: {src}, page: {page_str})\n{txt}")
+        blocks.append(f"[{i + 1}] (source: {src}, page: {page_str})\n{txt}")
     return "\n\n".join(blocks)
 
 
@@ -57,9 +56,7 @@ def stream_zonewise_response(
     try:
         hits = rag_zone.retrieve(message, top_k=6)
     except Exception as e:
-        yield history + [
-            (message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")
-        ]
+        yield history + [(message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")]
         return
 
     k = len(hits)
