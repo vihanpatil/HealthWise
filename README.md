@@ -1,13 +1,38 @@
+<img src="images/project.png" alt="Alt text" />
+
 ## Some Background
-RootWise is a project that explores how AI can make food systems more accessible, sustainable, and human-centered. The goal is to experiment with traceable, transparent, and user-focused RAG AI that uses functional medicine to connect food choices with well-being, while supporting zero-waste habits and local food knowledge.
+RootWise, inspired and pioneered by [Lily Faris](https://lilymfaris.com/), is a project that explores how AI can make food systems more accessible, sustainable, and human-centered. The goal is to experiment with traceable, transparent, and user-focused RAG AI that uses functional medicine to connect food choices with well-being, while supporting zero-waste habits and local food knowledge.
+
+ZoneWise is the latest developed feature, a comprehensive health analytics dashboard that ingests physiological metrics—such as heart rate zones—and delivers real-time insights through interactive visualizations and chat-based exploration. Similar to RootWise, ZoneWise is personalized to each user’s records, enabling tailored insights, feedback, and context-aware assistance through the integrated chatbot. 
+
+While the broader initiative has been a collaborative effort with Vihan Patil and Johnathan Harding, [Mahyar Vahabi](https://mvahabi.github.io/portfolio/) independently led the development of the ZoneWise system architecture and implementation. 
+
 
 ## Setup
+
+### 0. Gathering API Tokens
+
+1. **NGC API Key (NVIDIA GPU Cloud)**  
+   1. Sign in at: https://ngc.nvidia.com  
+   2. Click your user icon (top right).  
+   3. Navigate to **Setup → API Key**.  
+   4. Click **Generate Key** and copy the key securely.  
+   5. Embedding model endpoint: https://build.nvidia.com/nvidia/nv-embedqa-e5-v5  
+
+2. **OpenAI API Key**  
+   1. Go to: https://platform.openai.com/api-keys  
+   2. Sign in to your account.  
+   3. Click **Create new secret key**.  
+   4. Copy and store the key securely. 
+   5. Make sure it has access to at least "gpt3.5 Turbo"
+
 ### 1. Evironmental Variables
 First create a .env file in your root directory
 ```
 NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
 DATABASE_URL={CONTACT MAHYAR VAHABI FOR THIS INFO}
+JWT_SECRET="something_extremely_secret_and_long"
 JWT_ALG=HS256
 JWT_EXPIRE_HOURS=1
 ```

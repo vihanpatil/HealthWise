@@ -3,16 +3,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from dotenv import load_dotenv
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-load_dotenv(BASE_DIR / ".env")
-
 from app.api.rootwise import router as rootwise_router
 from app.api.zonewise import router as zonewise_router
 from app.api.auth import router as auth_router
 from app.api.health import router as health_router
 from app.logic.rootwise import initialize_rootwise_rag
 from app.logic.zonewise import initialize_zonewise_rag
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+load_dotenv(BASE_DIR / ".env")
 
 app = FastAPI(title="RootWise API")
 

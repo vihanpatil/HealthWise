@@ -1,10 +1,8 @@
-import os
 import json
 import nltk
 import pandas as pd
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
-import nltk
 import ssl
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -34,9 +32,7 @@ def compute_self_bleu(response: str) -> float:
     for i, hypo in enumerate(sentences):
         refs = [word_tokenize(s) for j, s in enumerate(sentences) if j != i]
         hypo_tokens = word_tokenize(hypo)
-        score = sentence_bleu(
-            refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn
-        )
+        score = sentence_bleu(refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn)
         scores.append(score)
     return round(sum(scores) / len(scores), 4)
 
@@ -119,11 +115,11 @@ def evaluate_json_file(json_path: str, output_csv: str, rag_excerpt_default: str
             )
 
             print(
-                f"[{i+1}/{len(data)}] Done: BLEU={self_bleu}, Rel={relevance}, Gnd={grounded_score}"
+                f"[{i + 1}/{len(data)}] Done: BLEU={self_bleu}, Rel={relevance}, Gnd={grounded_score}"
             )
 
         except Exception as e:
-            print(f"[{i+1}] Error evaluating entry: {e}")
+            print(f"[{i + 1}] Error evaluating entry: {e}")
             continue
 
     pd.DataFrame(output_rows).to_csv(output_csv, index=False)

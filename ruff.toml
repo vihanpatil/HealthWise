@@ -1,0 +1,19 @@
+# ruff.toml
+target-version = "py39"
+line-length = 100
+
+[lint]
+# Start reasonable: core Ruff rules + import sorting + bugbear + comprehension + pyupgrade
+select = ["E", "F", "I", "B", "C4", "UP"]
+ignore = ["E501", "B008"]
+
+[lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+known-first-party = ["app"]
+split-on-trailing-comma = true
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

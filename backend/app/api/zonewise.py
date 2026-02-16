@@ -5,8 +5,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
-import json, asyncio
-from typing import Any, Optional, Dict
+import json
+import asyncio
+from typing import Any, Dict
 
 from app.db.session import get_db
 from app.db.models import User, Metric
@@ -14,6 +15,11 @@ from app.logic.auth_deps import get_current_user_id
 from app.logic.zonewise import stream_zonewise_response
 
 router = APIRouter()
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
 
 def compute_heart_zones(
     db: Session,
@@ -33,15 +39,18 @@ def compute_heart_zones(
     )
 
     if minutes > 0:
-        cutoff = datetime.now(timezone.utc) - timedelta(minutes=minutes)
+        cutoff = _utcnow() - timedelta(minutes=minutes)
         q = q.filter(Metric.ts >= cutoff)
 
     rows = q.all()
 
     z0 = z1 = z2 = z3 = z4 = z5 = 0
+    samples = 0
+
     for (val,) in rows:
         if val is None:
             continue
+        samples += 1
         hr = float(val)
         pct = hr / float(max_hr)
 
@@ -63,6 +72,7 @@ def compute_heart_zones(
         "metric_type": metric_type,
         "minutes_window": minutes,
         "max_hr": max_hr,
+        "samples": samples,
         "zones": [
             {"zone": 0, "label": "Zone 0", "minutes": z0},
             {"zone": 1, "label": "Zone 1", "minutes": z1},
@@ -72,6 +82,7 @@ def compute_heart_zones(
             {"zone": 5, "label": "Zone 5", "minutes": z5},
         ],
     }
+
 
 @router.get("/metrics/heart_zones/me")
 def get_heart_zones_me(
@@ -97,13 +108,36 @@ def normalize_history(history):
     return out
 
 
+def heart_rate_series(db: Session, user_id, minutes=60):
+    start = _utcnow() - timedelta(minutes=minutes)
+
+    return (
+        db.query(
+            func.date_trunc("minute", Metric.ts).label("ts"),
+            func.avg(Metric.value).label("bpm"),
+        )
+        .filter(
+            Metric.user_id == user_id,
+            Metric.metric_type == "heart_rate",
+            Metric.ts >= start,
+        )
+        .group_by("ts")
+        .order_by("ts")
+        .all()
+    )
+
+
 def summarize_hr_window(db: Session, user_uuid: UUID, minutes: int):
-    # Reuse your series (minute-bucketed averages)
-    rows = heart_rate_series(db, user_uuid, minutes if minutes > 0 else 60 * 24 * 365 * 10)
+    """
+    Summarize heart rate using the minute-bucketed series for the requested window.
+    For all-time, we use a large minutes span (10 years) to avoid a new query path.
+    """
+    span = minutes if minutes > 0 else 60 * 24 * 365 * 10
+    rows = heart_rate_series(db, user_uuid, span)
 
     points = [(r.ts, float(r.bpm)) for r in rows if r.bpm is not None]
     if not points:
-        return {"ok": True, "minutes": minutes, "empty": True}
+        return {"ok": True, "minutes": minutes, "empty": True, "samples": 0}
 
     bpms = [b for _, b in points]
     bpms_sorted = sorted(bpms)
@@ -133,32 +167,56 @@ def summarize_hr_window(db: Session, user_uuid: UUID, minutes: int):
     }
 
 
-def format_hr_context(hr_summary: dict, zones_payload: Optional[dict]) -> str:
-    minutes = zones_payload.get("minutes_window", 0)
-    window = "all time" if minutes == 0 else f"last {minutes} min"
+def _window_label(minutes: int) -> str:
+    return "all_time" if minutes == 0 else f"{minutes}m"
 
-    if not zones_payload or zones_payload.get("samples", 0) == 0:
-        return (
-            f"USER_HEART_RATE_CONTEXT ({window}): "
-            f"No heart-rate samples were recorded in this window. "
-            f"The user may be inactive or not wearing the device."
+
+def format_hr_context_block(
+    active_minutes: int,
+    windows: Dict[str, Dict[str, Any]],
+) -> str:
+    """
+    windows[label] = { "hr": hr_summary, "zones": zones_payload }
+    """
+    lines = []
+    lines.append("USER_METRIC_CONTEXT:")
+    lines.append(
+        f"- active_window: {'all_time' if active_minutes == 0 else str(active_minutes) + 'm'}"
+    )
+    lines.append("- metric: heart_rate")
+    lines.append("- windows:")
+
+    order = ["30m", "60m", "90m", "all_time"]
+    for w in order:
+        payload = windows.get(w) or {}
+        hr = payload.get("hr") or {}
+        z = payload.get("zones") or {}
+
+        if hr.get("empty") or hr.get("samples", 0) == 0:
+            lines.append(f"  - {w}: no_samples")
+            continue
+
+        zbits = []
+        for zone in z.get("zones", []) or []:
+            zbits.append(f"Z{zone['zone']}={zone['minutes']}")
+
+        lines.append(
+            f"  - {w}: "
+            f"samples={hr.get('samples')}, "
+            f"min={hr.get('min'):.1f}, avg={hr.get('avg'):.1f}, max={hr.get('max'):.1f}, "
+            f"p95={hr.get('p95'):.1f} "
+            f"trend={hr.get('trend_bpm'):.1f}bpm, "
+            f"latest={hr.get('last', {}).get('bpm'):.1f} @ {hr.get('last', {}).get('ts')}, "
+            f"max_hr={z.get('max_hr')}, "
+            f"zones({', '.join(zbits)})"
         )
 
-    zbits = []
-    for z in zones_payload["zones"]:
-        zbits.append(f"Z{z['zone']}={z['minutes']}min")
-
-    return (
-        f"USER_HEART_RATE_CONTEXT ({window}): "
-        f"samples={zones_payload['samples']}, "
-        f"max_hr={zones_payload['max_hr']} bpm, "
-        f"zones: " + ", ".join(zbits)
-    )
-
+    return "\n".join(lines)
 
 
 @router.post("/chat/stream")
-async def chat_stream(payload: dict,
+async def chat_stream(
+    payload: dict,
     db: Session = Depends(get_db),
     user_id: str = Depends(get_current_user_id),
 ):
@@ -166,16 +224,25 @@ async def chat_stream(payload: dict,
     history = payload.get("history", [])
     minutes = int(payload.get("minutes", 0) or 0)
     user_uuid = UUID(user_id)
-    
-    hr_summary = summarize_hr_window(db, user_uuid, minutes)
-    zones_payload = compute_heart_zones(db, UUID(user_id), minutes, "heart_rate")
-    context_str = format_hr_context(hr_summary, zones_payload)
 
-    message_with_context = f"{context_str}\n\nUSER_MESSAGE: {message}"
+    window_minutes = [30, 60, 90, 0]
+    windows: Dict[str, Dict[str, Any]] = {}
+
+    for m in window_minutes:
+        label = _window_label(m)
+        hr_summary = summarize_hr_window(db, user_uuid, m)
+        zones_payload = compute_heart_zones(db, user_uuid, m, "heart_rate")
+        windows[label] = {"hr": hr_summary, "zones": zones_payload}
+
+    metric_context = format_hr_context_block(minutes, windows)
 
     async def gen():
         try:
-            for updated_history in stream_zonewise_response(message_with_context, history):
+            for updated_history in stream_zonewise_response(
+                message=message,
+                history=history,
+                metric_context=metric_context,
+            ):
                 yield sse("message", {"history": normalize_history(updated_history)})
                 await asyncio.sleep(0)
             yield sse("done", {"ok": True})
@@ -183,25 +250,6 @@ async def chat_stream(payload: dict,
             yield sse("error", {"error": str(e)})
 
     return StreamingResponse(gen(), media_type="text/event-stream")
-
-
-def heart_rate_series(db: Session, user_id, minutes=60):
-    start = datetime.utcnow() - timedelta(minutes=minutes)
-
-    return (
-        db.query(
-            func.date_trunc("minute", Metric.ts).label("ts"),
-            func.avg(Metric.value).label("bpm"),
-        )
-        .filter(
-            Metric.user_id == user_id,
-            Metric.metric_type == "heart_rate",
-            Metric.ts >= start,
-        )
-        .group_by("ts")
-        .order_by("ts")
-        .all()
-    )
 
 
 @router.get("/metrics/heart_rate/me")
