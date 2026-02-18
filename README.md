@@ -54,13 +54,13 @@ python -m pip install -U pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-## 3. Run the backend (Terminal 1):
+### 3. Run the backend (Terminal 1):
 ```
 cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-## 4. Run the frontend (Terminal 2):
+### 4. Run the frontend (Terminal 2):
 ```
 cd frontend
 npm ci
