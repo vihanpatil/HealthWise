@@ -79,7 +79,6 @@ export default function ZoneWise() {
   const [zones, setZones] = useState(null);
 
   const RANK_COLORS = {
-    0: "#099c38",
     1: "#4CAF50",
     2: "#8BC34A",
     3: "#FFC107",
@@ -528,7 +527,7 @@ export default function ZoneWise() {
                       <Tooltip />
                       <Bar dataKey="minutes" radius={[10, 10, 0, 0]}>
                         {orderedZones.map((d, i) => (
-                          <Cell key={`cell-${i}`} fill={zoneFillByRank[Number(d.zone)] || "#999"} />
+                          <Cell key={`cell-${i}`} fill={zoneFillByRank[Number(d.zone)] || "#0a9115"} />
                         ))}
                       </Bar>
                     </BarChart>

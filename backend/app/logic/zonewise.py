@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Optional
 
 from app.config import ZONEWISE_DATA
 from app.logic.rag_instance import get_rag
-from app.logic.rootwise import call_nvidia_chat
 
 rag_zone = get_rag(str(ZONEWISE_DATA))
 
@@ -56,13 +55,15 @@ def stream_zonewise_response(
     try:
         hits = rag_zone.retrieve(message, top_k=6)
     except Exception as e:
-        yield history + [(message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")]
+        yield history + [
+            (message, f"ZoneWise RAG query failed. {init_msg}. Error: {str(e)}")
+        ]
         return
 
     k = len(hits)
 
     if not _safe_has_good_hits(hits):
-        reformulated = call_nvidia_chat(
+        reformulated = rag_zone.call_chat(
             [
                 {
                     "role": "system",
@@ -100,7 +101,7 @@ def stream_zonewise_response(
         "GROUNDING RULES:\n"
         "1) ZoneWise DOCUMENT claims MUST be grounded in EVIDENCE chunks and cited.\n"
         "   - If you make a claim about what ZoneWise docs say, you MUST cite like [1][2].\n"
-        "   - You may ONLY cite sources in the range [1] to [{k}].\n"
+        f"   - You may ONLY cite sources in the range [1] to [{k}].\n"
         "   - Each doc-backed factual sentence should end with at least one citation.\n"
         "2) USER_METRIC_CONTEXT is user-specific data (not from documents).\n"
         "   - You MAY use it to personalize feedback and reference trends/baselines.\n"
@@ -108,7 +109,7 @@ def stream_zonewise_response(
         "   - If metric context is empty, say you don't have enough user data.\n"
         "3) Do NOT add general medical claims beyond what documents support.\n"
         "   - If a recommendation requires medical knowledge not present in evidence, say so.\n"
-    ).format(k=k)
+    )
 
     user_prompt = (
         f"RECENT CHAT (context only):\n{truncated_history or '(none)'}\n\n"
@@ -121,7 +122,7 @@ def stream_zonewise_response(
         "- Keep it short and practical."
     )
 
-    assistant_text = call_nvidia_chat(
+    assistant_text = rag_zone.call_chat(
         [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},

@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.db.models import Metric
 from app.db.health import HeartRateIngestIn
+from app.db.models import Metric
+from app.db.session import get_db
 from app.logic.auth_deps import get_current_user_id
 
 router = APIRouter()

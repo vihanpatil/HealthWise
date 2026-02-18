@@ -1,16 +1,17 @@
 # backend/app/api/zonewise.py
-from fastapi import APIRouter, Query, Depends
-from fastapi.responses import StreamingResponse
-from sqlalchemy.orm import Session
-from sqlalchemy import func
-from datetime import datetime, timedelta, timezone
-from uuid import UUID
-import json
 import asyncio
+from datetime import datetime, timedelta, timezone
+import json
 from typing import Any, Dict
+from uuid import UUID
 
+from fastapi import APIRouter, Depends, Query
+from fastapi.responses import StreamingResponse
+from sqlalchemy import func
+from sqlalchemy.orm import Session
+
+from app.db.models import Metric, User
 from app.db.session import get_db
-from app.db.models import User, Metric
 from app.logic.auth_deps import get_current_user_id
 from app.logic.zonewise import stream_zonewise_response
 
@@ -44,7 +45,7 @@ def compute_heart_zones(
 
     rows = q.all()
 
-    z0 = z1 = z2 = z3 = z4 = z5 = 0
+    z1 = z2 = z3 = z4 = z5 = 0
     samples = 0
 
     for (val,) in rows:
@@ -62,10 +63,8 @@ def compute_heart_zones(
             z3 += 1
         elif pct >= 0.60:
             z2 += 1
-        elif pct >= 0.50:
-            z1 += 1
         else:
-            z0 += 1
+            z1 += 1
 
     return {
         "ok": True,
@@ -74,7 +73,6 @@ def compute_heart_zones(
         "max_hr": max_hr,
         "samples": samples,
         "zones": [
-            {"zone": 0, "label": "Zone 0", "minutes": z0},
             {"zone": 1, "label": "Zone 1", "minutes": z1},
             {"zone": 2, "label": "Zone 2", "minutes": z2},
             {"zone": 3, "label": "Zone 3", "minutes": z3},

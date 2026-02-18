@@ -38,7 +38,7 @@ JWT_EXPIRE_HOURS=1
 ```
 
 ### 2. Creating Virtual Environment
-First, ensure python version is 3.9.6
+Ensure python version is 3.9.6 and install NPM on your device
 ```
 python3 -m venv venv
 source venv/bin/activate

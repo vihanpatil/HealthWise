@@ -1,5 +1,5 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 
 # Load the CSV data
@@ -65,7 +65,9 @@ verifiability_counts = df["Verifiable?"].value_counts()
 sns.set_style("whitegrid")
 
 # Create a figure and a set of subplots
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))  # Increased figure size for better readability
+fig, axes = plt.subplots(
+    1, 3, figsize=(18, 6)
+)  # Increased figure size for better readability
 
 # Define metrics and their more descriptive titles
 metrics_to_plot = {
@@ -104,7 +106,9 @@ for i, (metric_col, plot_title) in enumerate(metrics_to_plot.items()):
     ax.grid(axis="y", linestyle="--", alpha=0.7)
 
 # Adjust layout to prevent overlapping titles and labels
-plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust rect to make space for a potential super title
+plt.tight_layout(
+    rect=[0, 0.03, 1, 0.95]
+)  # Adjust rect to make space for a potential super title
 
 # Add a overall title for the figure
 fig.suptitle(

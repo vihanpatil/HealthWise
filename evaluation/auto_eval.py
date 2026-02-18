@@ -1,9 +1,10 @@
 import json
-import nltk
-import pandas as pd
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 import ssl
+
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
+import pandas as pd
 
 ssl._create_default_https_context = ssl._create_unverified_context
 nltk.download("punkt")
@@ -32,7 +33,9 @@ def compute_self_bleu(response: str) -> float:
     for i, hypo in enumerate(sentences):
         refs = [word_tokenize(s) for j, s in enumerate(sentences) if j != i]
         hypo_tokens = word_tokenize(hypo)
-        score = sentence_bleu(refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn)
+        score = sentence_bleu(
+            refs, hypo_tokens, weights=(0.2,) * 5, smoothing_function=smooth_fn
+        )
         scores.append(score)
     return round(sum(scores) / len(scores), 4)
 
@@ -86,7 +89,7 @@ def groundedness_check(response: str, rag_excerpt: str):
 
 def evaluate_json_file(json_path: str, output_csv: str, rag_excerpt_default: str = ""):
     try:
-        with open(json_path, "r") as f:
+        with open(json_path) as f:
             data = json.load(f)
     except Exception as e:
         print(f"Failed to load JSON: {e}")

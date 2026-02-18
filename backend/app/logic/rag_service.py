@@ -1,14 +1,20 @@
 # backend/app/logic/rag_service.py
 import os
+from pathlib import Path
 import threading
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
+from dotenv import load_dotenv
 import faiss
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
-from llama_index.vector_stores.faiss import FaissVectorStore
 from llama_index.core.node_parser import SentenceSplitter
-from llama_index.readers.file import PDFReader
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
+from llama_index.readers.file import PDFReader
+from llama_index.vector_stores.faiss import FaissVectorStore
+from openai import OpenAI
+
+BASE_DIR = Path(__file__).resolve().parents[3]
+load_dotenv(BASE_DIR / ".env")
 
 
 SUPPORTED_EXTS = (".txt", ".pdf")
@@ -25,6 +31,8 @@ class RagService:
 
         self._index: Optional[VectorStoreIndex] = None
         self._query_engine = None
+
+        self._openai_client = None
 
     # --- embeddings ---
     def _get_embed_model(self) -> NVIDIAEmbedding:
@@ -51,7 +59,8 @@ class RagService:
         return [
             f
             for f in os.listdir(self.store_path)
-            if f.endswith(SUPPORTED_EXTS) and os.path.isfile(os.path.join(self.store_path, f))
+            if f.endswith(SUPPORTED_EXTS)
+            and os.path.isfile(os.path.join(self.store_path, f))
         ]
 
     # --- indexing ---
@@ -74,7 +83,9 @@ class RagService:
             if not docs:
                 self._index = None
                 self._query_engine = None
-                return f"Error: No valid .txt/.pdf documents found in {self.store_path}."
+                return (
+                    f"Error: No valid .txt/.pdf documents found in {self.store_path}."
+                )
 
             dim = self._get_embed_dim()
             vector_store = FaissVectorStore(faiss_index=faiss.IndexFlatL2(dim))
@@ -128,3 +139,23 @@ class RagService:
                     }
                 )
             return out
+
+    # --- OpenAPI for external use ---
+    def _get_openai_client(self) -> OpenAI:
+        if self._openai_client is None:
+            self._openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        return self._openai_client
+
+    def call_chat(self, messages: List[Dict[str, str]], model: str = None) -> str:
+        """
+        messages: [{"role": "system"|"user"|"assistant", "content": "..."}]
+        """
+        client = self._get_openai_client()
+        use_model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-5.2")
+
+        resp = client.chat.completions.create(
+            model=use_model,
+            messages=messages,
+            temperature=0.2,
+        )
+        return resp.choices[0].message.content or ""
