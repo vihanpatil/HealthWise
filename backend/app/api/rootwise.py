@@ -1,19 +1,19 @@
 # backend/app/api/rootwise.py
-from fastapi import APIRouter, UploadFile, File, Query, HTTPException
-from fastapi.responses import StreamingResponse
-from pathlib import Path
-import json
 import asyncio
 import errno
+import json
+from pathlib import Path
 
+from fastapi import APIRouter, File, HTTPException, Query, UploadFile
+from fastapi.responses import StreamingResponse
 
 from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic.rootwise import (
-    set_user_name,
+    add_to_rag,
     append_to_user_rag,
     handle_image_upload,
-    add_to_rag,
     load_documents,
+    set_user_name,
     stream_response,
 )
 
@@ -36,11 +36,13 @@ def notepad_append(payload: dict):
 
 @router.post("/veg/detect")
 async def veg_detect(image: UploadFile = File(...)):
-    import tempfile
     import os
+    import tempfile
 
     suffix = "." + (
-        image.filename.split(".")[-1] if image.filename and "." in image.filename else "png"
+        image.filename.split(".")[-1]
+        if image.filename and "." in image.filename
+        else "png"
     )
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(await image.read())
@@ -94,8 +96,8 @@ def rag_add(payload: dict):
 
 @router.post("/docs/load")
 async def docs_load(files: list[UploadFile] = File(...)):
-    import tempfile
     import os
+    import tempfile
 
     paths = []
     try:
@@ -123,7 +125,9 @@ def _resolve_scope_dir(scope: str) -> Path:
         return ROOTWISE_DATA
     if s == "user":
         return USER_STATE_DIR
-    raise HTTPException(status_code=400, detail="Invalid scope. Use scope=system or scope=user.")
+    raise HTTPException(
+        status_code=400, detail="Invalid scope. Use scope=system or scope=user."
+    )
 
 
 @router.get("/system/files")
@@ -159,9 +163,10 @@ def system_file(name: str = Query(...), scope: str = Query("system")):
         return {"ok": True, "text": text, "preview": ""}
 
     try:
-        from pdf2image import convert_from_path
         import os
         import uuid
+
+        from pdf2image import convert_from_path
 
         images = convert_from_path(str(target), dpi=100)
         os.makedirs("temp_renders", exist_ok=True)

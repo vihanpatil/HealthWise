@@ -24,21 +24,29 @@ While the broader initiative has been a collaborative effort with Vihan Patil an
    2. Sign in to your account.  
    3. Click **Create new secret key**.  
    4. Copy and store the key securely. 
-   5. Make sure it has access to at least "gpt3.5 Turbo"
+   5. Ensure your account/org has access to the chat model you set in OPENAI_CHAT_MODEL.
 
 ### 1. Evironmental Variables
 First create a .env file in your root directory
-```
+```bash
+# API Tokens
 NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
-DATABASE_URL={CONTACT MAHYAR VAHABI FOR THIS INFO}
+
+# Database
+DATABASE_URL="{CONTACT MAHYAR VAHABI FOR THIS INFO}"
+
+# Chat model (must match an actual OpenAI model ID your account can use)
+OPENAI_CHAT_MODEL="gpt-4.1-mini"
+
+# Auth
 JWT_SECRET="something_extremely_secret_and_long"
-JWT_ALG=HS256
-JWT_EXPIRE_HOURS=1
+JWT_ALG="HS256"
+JWT_EXPIRE_HOURS="1"
 ```
 
 ### 2. Creating Virtual Environment
-First, ensure python version is 3.9.6
+Ensure python version is 3.9.6 and install NPM on your device
 ```
 python3 -m venv venv
 source venv/bin/activate
@@ -46,13 +54,13 @@ python -m pip install -U pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-## 3. Run the backend (Terminal 1):
+### 3. Run the backend (Terminal 1):
 ```
 cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-## 4. Run the frontend (Terminal 2):
+### 4. Run the frontend (Terminal 2):
 ```
 cd frontend
 npm ci

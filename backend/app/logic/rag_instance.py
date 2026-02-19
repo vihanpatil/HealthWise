@@ -1,8 +1,9 @@
 # backend/app/logic/rag_instance.py
 from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Dict, Any, List
 import threading
+from typing import Any, Dict, List
 
 from app.logic.rag_service import RagService
 
@@ -31,6 +32,10 @@ class RagInstance:
     def list_files(self) -> List[str]:
         with self._lock:
             return self._svc.list_rag_files()
+
+    def call_chat(self, messages: List[Dict[str, str]], model: str = None) -> str:
+        with self._lock:
+            return self._svc.call_chat(messages, model=model)
 
 
 # registry: one instance per store

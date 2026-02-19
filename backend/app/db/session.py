@@ -1,12 +1,11 @@
 # backend/app/db/session.py
+from collections.abc import Generator
 import os
-from typing import Generator
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from pathlib import Path
 
 from dotenv import load_dotenv
-from pathlib import Path
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 BASE_DIR = Path(__file__).resolve().parents[3]
 load_dotenv(BASE_DIR / ".env")

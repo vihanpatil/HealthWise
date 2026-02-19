@@ -1,5 +1,5 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 traceability_data = {
     "Sample Output": [f"Sample {i + 1}" for i in range(10)],

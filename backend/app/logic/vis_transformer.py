@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -21,10 +22,14 @@ img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 results = model(img, imgsz=1280)
 
 class_indices = (
-    results[0].boxes.cls.cpu().numpy() if results[0].boxes.cls is not None else np.array([])
+    results[0].boxes.cls.cpu().numpy()
+    if results[0].boxes.cls is not None
+    else np.array([])
 )
 confidence_scores = (
-    results[0].boxes.conf.cpu().numpy() if results[0].boxes.conf is not None else np.array([])
+    results[0].boxes.conf.cpu().numpy()
+    if results[0].boxes.conf is not None
+    else np.array([])
 )
 
 if class_indices.size > 0:

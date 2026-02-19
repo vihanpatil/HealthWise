@@ -1,18 +1,16 @@
 # backend/app/logic/rootwise.py
 import os
-import sys
+from pathlib import Path
 import shutil
 import subprocess
+import sys
+from typing import Any, Dict, List, Optional, Tuple
 import uuid
-from pathlib import Path
-from typing import List, Optional, Tuple, Any, Dict
 
-import requests
 from pdf2image import convert_from_path
 
 from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic.rag_instance import get_rag
-
 
 # ----------------------------
 # Globals
@@ -169,7 +167,9 @@ def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
         USER_STATE_DIR.mkdir(parents=True, exist_ok=True)
 
         if season and season.strip():
-            (USER_STATE_DIR / "given_season.txt").write_text(f"Season: {season.strip()}\n")
+            (USER_STATE_DIR / "given_season.txt").write_text(
+                f"Season: {season.strip()}\n"
+            )
 
         if ingredients and ingredients.strip():
             (USER_STATE_DIR / "given_ingredients.txt").write_text(
@@ -194,23 +194,6 @@ def add_to_rag(season: str, ingredients: str, restrictions: str) -> str:
 
     except Exception as e:
         return f"Error updating user state: {str(e)}"
-
-
-# ----------------------------
-# NVIDIA chat helper (unchanged)
-# ----------------------------
-def call_nvidia_chat(messages, model: str = "meta/llama3-70b-instruct") -> str:
-    url = "https://integrate.api.nvidia.com/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {os.getenv('NGC_API_KEY')}",
-        "Content-Type": "application/json",
-    }
-    payload = {"model": model, "messages": messages}
-
-    response = requests.post(url, headers=headers, json=payload)
-    if response.status_code != 200:
-        raise Exception(f"Error: {response.status_code} - {response.json()}")
-    return response.json()["choices"][0]["message"]["content"].strip()
 
 
 # ----------------------------
@@ -268,7 +251,7 @@ def stream_response(message: str, history):
 
         # Agentic step: if weak, reformulate once and retry
         if not _safe_has_good_hits(hits):
-            reformulated = call_nvidia_chat(
+            reformulated = rag_root.call_chat(
                 [
                     {
                         "role": "system",
@@ -295,9 +278,7 @@ def stream_response(message: str, history):
         truncated_history = ""
         if history:
             for user_msg, assistant_msg in history[-2:]:
-                truncated_history += (
-                    f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
-                )
+                truncated_history += f"User: {str(user_msg)[:300]}\nAssistant: {str(assistant_msg)[:300]}\n"
 
         system_prompt = (
             "You are RootWise — calm, respectful, and deeply knowledgeable about sustainability, food wisdom, and functional medicine.\n\n"
@@ -335,7 +316,7 @@ def stream_response(message: str, history):
             "- at most one gentle question at the end (optional)\n"
         )
 
-        assistant_text = call_nvidia_chat(
+        assistant_text = rag_root.call_chat(
             [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
