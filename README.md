@@ -32,6 +32,7 @@ First create a .env file in your root directory
 # API Tokens
 NGC_API_KEY="your-ngc-api-key"
 OPENAI_API_KEY="your-openai-api-key"
+<<<<<<< Updated upstream
 
 # Database
 DATABASE_URL="{CONTACT MAHYAR VAHABI FOR THIS INFO}"
@@ -43,6 +44,12 @@ OPENAI_CHAT_MODEL="gpt-4.1-mini"
 JWT_SECRET="something_extremely_secret_and_long"
 JWT_ALG="HS256"
 JWT_EXPIRE_HOURS="1"
+=======
+DATABASE_URL={CONTACT MAHYAR VAHABI FOR THIS INFO}
+JWT_SECRET="something_extremely_secret_and_long_for_production"
+JWT_ALG=HS256
+JWT_EXPIRE_HOURS=1
+>>>>>>> Stashed changes
 ```
 
 ### 2. Creating Virtual Environment

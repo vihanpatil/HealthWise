@@ -32,7 +32,8 @@ WITH gen AS (
     FROM target t
   )
   SELECT
-    '1e35311e-5277-471c-80c2-5f0aea256af0'::uuid AS user_id,
+  -- This is the line which references Mahyar's user in the DB to upload, which you can find in PGAdmin --
+    '1e35311e-5277-471c-80c2-5f0aea256af0'::uuid AS user_id, 
     'heart_rate'::text AS metric_type,
     ts,
     bpm AS value,
