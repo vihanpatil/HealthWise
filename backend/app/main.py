@@ -26,7 +26,7 @@ app.add_middleware(
 @app.on_event("startup")
 def startup():
     print("Initializing RAG...")
-    # print("RootWise:", initialize_rootwise_rag())
+    print("RootWise:", initialize_rootwise_rag())
     print("ZoneWise:", initialize_zonewise_rag())
     print("Startup complete.")
 
