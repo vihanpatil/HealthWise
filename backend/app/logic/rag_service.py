@@ -38,8 +38,8 @@ class RagService:
     def _get_embed_model(self) -> NVIDIAEmbedding:
         if self._embed_model is None:
             self._embed_model = NVIDIAEmbedding(
-                model="nvidia/nv-embedqa-e5-v5",
-                api_key=os.getenv("NGC_API_KEY"),
+                model="nvidia/nv-embedqa-e5-v5",                
+                api_key=os.getenv("NGC_API_KEY")
             )
         return self._embed_model
 

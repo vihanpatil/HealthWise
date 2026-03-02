@@ -37,7 +37,7 @@ OPENAI_API_KEY="your-openai-api-key"
 DATABASE_URL="{CONTACT MAHYAR VAHABI FOR THIS INFO}"
 
 # Chat model (must match an actual OpenAI model ID your account can use)
-OPENAI_CHAT_MODEL="gpt-4.1-mini"
+OPENAI_CHAT_MODEL="gpt-5.2"
 
 # Auth
 JWT_SECRET="something_extremely_secret_and_long"
