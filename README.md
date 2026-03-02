@@ -46,20 +46,30 @@ JWT_EXPIRE_HOURS="1"
 ```
 
 ### 2. Creating Virtual Environment
-Ensure python>=3.9.6 and NPM are installed on your device. There are two ways to install dependencies, faster/safter is option A.
+Before starting, ensure the following are installed:
 
-```bash
-# Option A:
-Open random python file from the backend module
-Bottom right of your VsCode click on the Python Interpreter
-Click on "+ Create Virtual Environment..."
-Click on "Venv Creates a '.venv' ... "
-Choose a higher Python Version, ideally 3.11 and above
-Let it build the installations, once completed go to step 3
-```
+- **Python ≥ 3.9.6** (⚠️ Recommended: Python 3.11+)
+- **Node.js + npm**
 
+There are two ways to install backend dependencies:
+#### ✅ Option A — VSCode (Recommended)
+
+1. Open any Python file inside the `backend` folder.
+
+2. In VSCode, click the **Python Interpreter** (bottom-right corner).
+
+3. Select **"+ Create Virtual Environment…"**
+
+4. Choose:
+   - **Venv**
+   - A **Python 3.11+ interpreter**
+
+5. Wait for VSCode to create `.venv` and install dependencies.
+
+6. Continue to **Step 3**.
+
+#### Option B — Manual Setup (Terminal)
 ```bash
-# Option B:
 python3 -m venv venv
 source venv/bin/activate
 python -m pip install -U pip setuptools wheel
@@ -68,14 +78,24 @@ pip install -r requirements.txt
 
 ### 3. Run the backend (Terminal 1):
 ```bash
+# if installations via Option A: 
 source .venv/bin/activate
+
+# if installations via Option B: 
+source venv/bin/activate 
+
 cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ### 4. Run the frontend (Terminal 2):
 ```bash
+# if installations via Option A: 
 source .venv/bin/activate
+
+# if installations via Option B: 
+source venv/bin/activate 
+
 cd frontend
 npm ci
 npm run dev
