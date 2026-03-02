@@ -37,7 +37,7 @@ OPENAI_API_KEY="your-openai-api-key"
 DATABASE_URL="{CONTACT MAHYAR VAHABI FOR THIS INFO}"
 
 # Chat model (must match an actual OpenAI model ID your account can use)
-OPENAI_CHAT_MODEL="gpt-5.2"
+OPENAI_CHAT_MODEL="gpt-4.1-mini"
 
 # Auth
 JWT_SECRET="something_extremely_secret_and_long"
@@ -46,8 +46,20 @@ JWT_EXPIRE_HOURS="1"
 ```
 
 ### 2. Creating Virtual Environment
-Ensure python version is 3.9.6 and install NPM on your device
+Ensure python>=3.9.6 and NPM are installed on your device. There are two ways to install dependencies, faster/safter is option A.
+
+```bash
+# Option A:
+Open random python file from the backend module
+Bottom right of your VsCode click on the Python Interpreter
+Click on "+ Create Virtual Environment..."
+Click on "Venv Creates a '.venv' ... "
+Choose a higher Python Version, ideally 3.11 and above
+Let it build the installations, once completed go to step 3
 ```
+
+```bash
+# Option B:
 python3 -m venv venv
 source venv/bin/activate
 python -m pip install -U pip setuptools wheel
@@ -55,13 +67,15 @@ pip install -r requirements.txt
 ```
 
 ### 3. Run the backend (Terminal 1):
-```
+```bash
+source .venv/bin/activate
 cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ### 4. Run the frontend (Terminal 2):
-```
+```bash
+source .venv/bin/activate
 cd frontend
 npm ci
 npm run dev
