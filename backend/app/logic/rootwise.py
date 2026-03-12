@@ -203,6 +203,15 @@ def _read_text_if_exists(path: Path) -> str:
     return path.read_text().strip() if path.exists() else ""
 
 
+def get_user_constraints_snapshot() -> Dict[str, str]:
+    return {
+        "season": _read_text_if_exists(USER_STATE_DIR / "given_season.txt"),
+        "ingredients": _read_text_if_exists(USER_STATE_DIR / "given_ingredients.txt"),
+        "restrictions": _read_text_if_exists(USER_STATE_DIR / "given_restrictions.txt"),
+        "user_rag_file": user_rag_file or "",
+    }
+
+
 def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
     return len(good) >= 2

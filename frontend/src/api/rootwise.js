@@ -27,12 +27,12 @@ export const rootwiseApi = {
   readFile: (name, scope = "system") =>
     apiJson(`/api/rootwise/system/file?scope=${encodeURIComponent(scope)}&name=${encodeURIComponent(name)}`),
 
-  streamChat: async ({ message, history, onMessage, onDone, onError }) => {
+  streamChat: async ({ message, history, mode = "classic", debug = false, onMessage, onTrace, onDone, onError }) => {
     try {
       const res = await fetch(`${API_BASE}/api/rootwise/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, history }),
+        body: JSON.stringify({ message, history, mode, debug }),
       });
 
       if (!res.ok) {
@@ -64,6 +64,7 @@ export const rootwiseApi = {
         }
 
         if (eventName === "message") onMessage?.(payload);
+        if (eventName === "trace") onTrace?.(payload);
         if (eventName === "done") onDone?.(payload);
       };
 

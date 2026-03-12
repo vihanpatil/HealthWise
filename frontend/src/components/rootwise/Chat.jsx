@@ -50,6 +50,9 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [mode, setMode] = useState("classic");
+  const [showTrace, setShowTrace] = useState(false);
+  const [traceSteps, setTraceSteps] = useState([]);
 
   const scrollRef = useRef(null);
 
@@ -72,14 +75,17 @@ export default function Chat() {
     if (!msg || isStreaming) return;
 
     setInput("");
-    setStatus("Streaming...");
+    setStatus(mode === "agentic" ? "Running agentic workflow..." : "Streaming...");
     setIsStreaming(true);
+    setTraceSteps([]);
 
     setMessages((prev) => [...prev, { role: "user", text: msg }, { role: "assistant", text: "" }]);
 
     await rootwiseApi.streamChat({
       message: msg,
       history: historyTuples,
+      mode,
+      debug: mode === "agentic" && showTrace,
       onMessage: (payload) => {
         const h = payload?.history;
         if (!Array.isArray(h) || h.length === 0) return;
@@ -93,6 +99,10 @@ export default function Chat() {
           copy[copy.length - 1] = { role: "assistant", text: assistantText };
           return copy;
         });
+      },
+      onTrace: (payload) => {
+        if (!payload?.label || !payload?.detail) return;
+        setTraceSteps((prev) => [...prev, { label: payload.label, detail: payload.detail }]);
       },
       onDone: () => {
         setStatus("");
@@ -119,6 +129,7 @@ export default function Chat() {
     if (isStreaming) return;
     setMessages([]);
     setStatus("");
+    setTraceSteps([]);
   };
 
   return (
@@ -130,10 +141,41 @@ export default function Chat() {
             Ask for zero-waste recipes and functional-medicine tips grounded in your rootwise_data.
           </div>
         </div>
-        <button onClick={clear} style={{ ...styles.clearBtn, ...(isStreaming ? styles.btnDisabled : {}) }} disabled={isStreaming}>
-          Clear
-        </button>
+        <div style={styles.headerActions}>
+          <div style={styles.modeSwitch}>
+            <button
+              onClick={() => setMode("classic")}
+              style={{ ...styles.modeBtn, ...(mode === "classic" ? styles.modeBtnActive : {}) }}
+              disabled={isStreaming}
+            >
+              Classic
+            </button>
+            <button
+              onClick={() => setMode("agentic")}
+              style={{ ...styles.modeBtn, ...(mode === "agentic" ? styles.modeBtnActive : {}) }}
+              disabled={isStreaming}
+            >
+              Agentic
+            </button>
+          </div>
+          <button
+            onClick={() => setShowTrace((prev) => !prev)}
+            style={{ ...styles.traceBtn, ...(mode !== "agentic" ? styles.btnDisabled : {}) }}
+            disabled={isStreaming || mode !== "agentic"}
+          >
+            {showTrace ? "Hide Trace" : "Show Trace"}
+          </button>
+          <button onClick={clear} style={{ ...styles.clearBtn, ...(isStreaming ? styles.btnDisabled : {}) }} disabled={isStreaming}>
+            Clear
+          </button>
+        </div>
       </div>
+
+      {mode === "agentic" ? (
+        <div style={styles.modeHint}>
+          Agentic mode runs a retrieval-planning workflow before answering. Higher latency is expected.
+        </div>
+      ) : null}
 
       <div style={styles.chatBox}>
         {messages.length === 0 ? (
@@ -170,6 +212,17 @@ export default function Chat() {
         )}
 
         {status ? <div style={styles.status}>{status}</div> : null}
+        {mode === "agentic" && showTrace && traceSteps.length > 0 ? (
+          <div style={styles.tracePanel}>
+            <div style={styles.traceTitle}>Workflow Trace</div>
+            {traceSteps.map((step, idx) => (
+              <div key={`${step.label}-${idx}`} style={styles.traceItem}>
+                <span style={styles.traceLabel}>{step.label}</span>
+                <span style={styles.traceDetail}>{step.detail}</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
         <div ref={scrollRef} />
       </div>
 
@@ -216,8 +269,50 @@ const styles = {
     gap: 10,
     marginBottom: 10,
   },
+  headerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+  },
   title: { fontSize: 14, fontWeight: 900 },
   hint: { fontSize: 12, opacity: 0.75, marginTop: 2 },
+  modeHint: {
+    marginBottom: 10,
+    padding: "8px 10px",
+    borderRadius: 12,
+    background: "rgba(233, 241, 220, 0.9)",
+    border: "1px solid rgba(0,0,0,0.08)",
+    fontSize: 12,
+  },
+  modeSwitch: {
+    display: "flex",
+    gap: 6,
+    padding: 4,
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.08)",
+    background: "rgba(255,255,255,0.9)",
+  },
+  modeBtn: {
+    padding: "8px 10px",
+    borderRadius: 10,
+    border: "1px solid rgba(0,0,0,0.10)",
+    background: "white",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
+  modeBtnActive: {
+    background: "#E6F0D7",
+  },
+  traceBtn: {
+    padding: "8px 10px",
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.12)",
+    background: "rgba(255,255,255,0.9)",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
   clearBtn: {
     padding: "8px 10px",
     borderRadius: 12,
@@ -247,6 +342,34 @@ const styles = {
   userBubble: { background: "#E6F0D7" },
   assistantBubble: { background: "#FFFFFF" },
   status: { marginTop: 8, fontSize: 12, opacity: 0.7 },
+  tracePanel: {
+    marginTop: 12,
+    padding: 12,
+    borderRadius: 12,
+    border: "1px solid rgba(0,0,0,0.08)",
+    background: "rgba(248,250,244,0.95)",
+  },
+  traceTitle: {
+    fontWeight: 900,
+    fontSize: 12,
+    marginBottom: 8,
+    letterSpacing: 0.2,
+  },
+  traceItem: {
+    display: "grid",
+    gridTemplateColumns: "88px 1fr",
+    gap: 10,
+    fontSize: 12,
+    padding: "6px 0",
+    borderTop: "1px solid rgba(0,0,0,0.05)",
+  },
+  traceLabel: {
+    fontWeight: 800,
+    color: "#2D3A2E",
+  },
+  traceDetail: {
+    opacity: 0.85,
+  },
   composer: { display: "flex", gap: 8, marginTop: 10 },
   input: {
     flex: 1,

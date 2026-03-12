@@ -45,7 +45,7 @@ export default function RootWise() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={styles.logo}>🌱</div>
           <div>
-            <div style={styles.title}>RootWise</div>
+            <div style={styles.title}>RootWise 2.1</div>
             <div style={styles.subtitle}>Sustainability + functional medicine, powered by your knowledge base</div>
           </div>
         </div>
