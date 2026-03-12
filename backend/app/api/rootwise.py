@@ -11,11 +11,14 @@ from app.config import ROOTWISE_DATA, USER_STATE_DIR
 from app.logic.rootwise import (
     add_to_rag,
     append_to_user_rag,
+    get_user_constraints_snapshot,
     handle_image_upload,
     load_documents,
+    rag_root,
     set_user_name,
     stream_response,
 )
+from app.logic.rootwise_agentic import stream_agentic_response
 
 router = APIRouter()
 
@@ -202,14 +205,49 @@ def sse(event: str, data: dict) -> str:
 async def chat_stream(payload: dict):
     message = payload.get("message", "")
     history = payload.get("history", [])
+    mode = str(payload.get("mode", "classic")).strip().lower()
+    debug = bool(payload.get("debug", False))
 
     async def gen():
         try:
-            for updated_history in stream_response(message, history):
-                yield sse("message", {"history": normalize_history(updated_history)})
-                await asyncio.sleep(0)
+            if mode == "agentic":
+                async for event in stream_agentic_response(message, history, debug=debug):
+                    if event["event"] == "trace":
+                        yield sse("trace", event["data"])
+                    elif event["event"] == "message":
+                        yield sse(
+                            "message",
+                            {"history": normalize_history(event["history"])},
+                        )
+                    await asyncio.sleep(0)
+            else:
+                for updated_history in stream_response(message, history):
+                    yield sse("message", {"history": normalize_history(updated_history)})
+                    await asyncio.sleep(0)
             yield sse("done", {"ok": True})
         except Exception as e:
             yield sse("error", {"error": str(e)})
 
     return StreamingResponse(gen(), media_type="text/event-stream")
+
+
+@router.post("/internal/constraints")
+def internal_constraints():
+    return {"ok": True, "constraints": get_user_constraints_snapshot()}
+
+
+@router.post("/internal/retrieve")
+def internal_retrieve(payload: dict):
+    query = str(payload.get("query", "")).strip()
+    top_k = int(payload.get("top_k", 5))
+
+    if not query:
+        raise HTTPException(status_code=400, detail="Query is required.")
+
+    try:
+        rag_root.ensure_ready()
+        hits = rag_root.retrieve(query, top_k=top_k)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    return {"ok": True, "query": query, "hits": hits}

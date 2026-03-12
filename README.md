@@ -100,5 +100,75 @@ cd frontend
 npm ci
 npm run dev
 ```
+
+### 5. Optional: Run the Agentic Service (Terminal 3)
+
+RootWise now supports an experimental `agentic mode` for capstone testing. This runs in a **separate Python service** so the main backend can keep its current FastAPI/Starlette/Uvicorn versions while Google ADK uses its own dependency set.
+
+If you only want the classic RootWise experience, you can skip this step.
+
+```bash
+cd agentic_service
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip setuptools wheel
+pip install -r requirements.txt
+uvicorn app.main:app --host 127.0.0.1 --port 8100 --reload
+```
+
+### 6. Additional Environment Variables
+
+The main backend and the agentic service both load the repo root `.env`.
+
+Optional variables for agentic mode:
+
+```bash
+# Main backend -> where to find the separate ADK service
+AGENTIC_SERVICE_URL="http://127.0.0.1:8100"
+
+# Agentic service -> optional override for model selection
+ROOTWISE_AGENTIC_MODEL="gpt-4.1-mini"
+```
+
+### 7. Local Development Summary
+
+For classic mode only:
+
+- Terminal 1: main backend on `127.0.0.1:8000`
+- Terminal 2: frontend on `127.0.0.1:5173`
+
+For classic + agentic comparison:
+
+- Terminal 1: main backend on `127.0.0.1:8000`
+- Terminal 2: frontend on `127.0.0.1:5173`
+- Terminal 3: agentic service on `127.0.0.1:8100`
+
+### 8. Daily Startup Commands
+
+Once setup is complete, use these commands to launch the full app locally.
+
+Terminal 1: main backend
+
+```bash
+cd /Users/jman/Desktop/rootwise/RootWise-2.0/backend
+source ../.venv/bin/activate
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+Terminal 2: frontend
+
+```bash
+cd /Users/jman/Desktop/rootwise/RootWise-2.0/frontend
+npm run dev
+```
+
+Terminal 3: agentic service
+
+```bash
+cd /Users/jman/Desktop/rootwise/RootWise-2.0/agentic_service
+source .venv/bin/activate
+uvicorn app.main:app --host 127.0.0.1 --port 8100
+```
+
 ## Open this server
 http://localhost:5173
