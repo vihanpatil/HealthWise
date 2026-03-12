@@ -3,3 +3,4 @@ venv
 __pycache__/
 .vscode/
 frontend/node_modules/
+agentic_service/.venv/
