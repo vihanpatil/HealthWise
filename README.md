@@ -53,7 +53,7 @@ ROOTWISE_BACKEND_URL=http://127.0.0.1:8000
 ### 2. Creating Virtual Environment
 Before starting, ensure the following are installed:
 
-- **Python ≥ 3.9.6** (⚠️ Recommended: Python 3.11+)
+- **⚠️ Recommended: Python 3.11+**
 - **Node.js + npm**
 
 There are two ways to install backend dependencies:
