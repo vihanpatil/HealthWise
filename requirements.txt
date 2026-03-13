@@ -1,11 +1,14 @@
-fastapi==0.115.6
-uvicorn[standard]==0.27.1
+fastapi>=0.124.1,<1.0.0
+uvicorn[standard]>=0.34.0,<1.0.0
 python-multipart==0.0.9
 python-dotenv==1.0.0
 
 requests==2.32.5
 httpx>=0.27,<1
 openai>=2.15.0,<3
+
+google-adk>=1.26.0,<2
+litellm>=1.74.0
 
 SQLAlchemy>=2.0.36
 psycopg[binary]==3.2.13
