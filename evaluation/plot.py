@@ -120,4 +120,4 @@ fig.suptitle(
 # plt.show()
 
 
-summary_stats, correlation_matrix, verifiability_count
+_ = summary_stats, correlation_matrix, verifiability_count

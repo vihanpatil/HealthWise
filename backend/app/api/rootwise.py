@@ -74,12 +74,12 @@ def veg_add(payload: dict):
     if "," in ingredients:
         items = ingredients.split(",")
         for veg in items:
-            clean = veg.strip(" [']\n\t ")
+            clean = veg.strip(" [']").strip()
             if clean:
                 add_to_rag(season, clean, restrictions)
                 added += 1
     else:
-        clean = ingredients.strip(" [']\n\t ")
+        clean = ingredients.strip(" [']").strip()
         if clean:
             add_to_rag(season, clean, restrictions)
             added += 1

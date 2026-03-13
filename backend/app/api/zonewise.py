@@ -2,7 +2,7 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
 import json
-from typing import Any, Dict
+from typing import Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query
@@ -27,7 +27,7 @@ def compute_heart_zones(
     user_id: UUID,
     minutes: int,
     metric_type: str = "heart_rate",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     user_uuid = user_id
 
     u = db.query(User.age).filter(User.id == user_uuid).first()
@@ -171,7 +171,7 @@ def _window_label(minutes: int) -> str:
 
 def format_hr_context_block(
     active_minutes: int,
-    windows: Dict[str, Dict[str, Any]],
+    windows: dict[str, dict[str, Any]],
 ) -> str:
     """
     windows[label] = { "hr": hr_summary, "zones": zones_payload }
@@ -224,7 +224,7 @@ async def chat_stream(
     user_uuid = UUID(user_id)
 
     window_minutes = [30, 60, 90, 0]
-    windows: Dict[str, Dict[str, Any]] = {}
+    windows: dict[str, dict[str, Any]] = {}
 
     for m in window_minutes:
         label = _window_label(m)

@@ -1,6 +1,6 @@
 # backend/app/config.py
-from pathlib import Path
 import os
+from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 ROOTWISE_DATA = BASE_DIR / "rootwise_data"

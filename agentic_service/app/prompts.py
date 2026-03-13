@@ -1,5 +1,5 @@
+from collections.abc import Sequence
 import json
-from typing import Sequence
 
 
 def build_planner_instruction() -> str:

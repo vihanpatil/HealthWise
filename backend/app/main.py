@@ -28,7 +28,7 @@ app.add_middleware(
 def startup():
     print("Initializing RAG...")
     print("RootWise:", initialize_rootwise_rag())
-    print("ZoneWise:", initialize_zonewise_rag())
+    # print("ZoneWise:", initialize_zonewise_rag())
     print("Startup complete.")
 
 app.include_router(rootwise_router, prefix="/api/rootwise", tags=["rootwise"])

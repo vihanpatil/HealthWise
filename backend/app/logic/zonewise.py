@@ -1,5 +1,5 @@
 # backend/app/logic/zonewise_chat.py
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from app.config import ZONEWISE_DATA
 from app.logic.rag_instance import get_rag
@@ -12,12 +12,12 @@ def initialize_zonewise_rag() -> str:
     return rag_zone.build()
 
 
-def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
+def _safe_has_good_hits(hits: list[dict[str, Any]]) -> bool:
     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
     return len(good) >= 2
 
 
-def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
+def _format_evidence(hits: list[dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
     blocks = []
     for i, h in enumerate(hits):
         txt = (h.get("text") or "").strip()

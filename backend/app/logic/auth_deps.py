@@ -17,5 +17,5 @@ def get_current_user_id(
         if not user_id:
             raise ValueError("Token missing sub")
         return str(user_id)
-    except (JWTError, ValueError):
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    except (JWTError, ValueError) as err:
+        raise HTTPException(status_code=401, detail="Invalid or expired token") from err

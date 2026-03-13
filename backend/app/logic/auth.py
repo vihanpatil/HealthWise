@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 import os
-from typing import Any, Dict
+from typing import Any
 
 from jose import jwt
 from passlib.context import CryptContext
@@ -21,7 +21,7 @@ def verify_password(password: str, password_hash: str) -> bool:
 
 def create_access_token(*, user_id: str) -> str:
     now = datetime.now(timezone.utc)
-    payload: Dict[str, Any] = {
+    payload: dict[str, Any] = {
         "sub": user_id,
         "iat": int(now.timestamp()),
         "exp": int((now + timedelta(hours=JWT_EXPIRE_HOURS)).timestamp()),
@@ -29,5 +29,5 @@ def create_access_token(*, user_id: str) -> str:
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
 
 
-def decode_token(token: str) -> Dict[str, Any]:
+def decode_token(token: str) -> dict[str, Any]:
     return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])

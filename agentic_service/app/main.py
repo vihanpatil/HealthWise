@@ -3,8 +3,8 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-import uuid
 from pathlib import Path
+import uuid
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -44,7 +44,7 @@ def get_openai_client() -> OpenAI:
 
 
 def adk_model_name() -> str:
-    model_name = os.getenv("ROOTWISE_AGENTIC_MODEL") or os.getenv(
+    model_name = os.getenv("OPENAI_CHAT_MODEL") or os.getenv(
         "OPENAI_CHAT_MODEL", "gpt-4.1-mini"
     )
     return f"openai/{model_name}"
