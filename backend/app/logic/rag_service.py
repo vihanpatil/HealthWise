@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 import threading
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from dotenv import load_dotenv
 import faiss
@@ -54,7 +54,7 @@ class RagService:
         os.makedirs(self.store_path, exist_ok=True)
         return self.store_path
 
-    def list_rag_files(self) -> List[str]:
+    def list_rag_files(self) -> list[str]:
         self.ensure_store_exists()
         return [
             f
@@ -111,7 +111,7 @@ class RagService:
             return "OK"
 
     # --- retrieval ---
-    def retrieve(self, text: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def retrieve(self, text: str, top_k: int = 5) -> list[dict[str, Any]]:
         with self._lock:
             if self._index is None or self._dirty:
                 self.build_index()
@@ -146,7 +146,7 @@ class RagService:
             self._openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         return self._openai_client
 
-    def call_chat(self, messages: List[Dict[str, str]], model: str = None) -> str:
+    def call_chat(self, messages: list[dict[str, str]], model: str = None) -> str:
         """
         messages: [{"role": "system"|"user"|"assistant", "content": "..."}]
         """

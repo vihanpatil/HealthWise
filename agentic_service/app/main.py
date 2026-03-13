@@ -3,8 +3,8 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-import uuid
 from pathlib import Path
+import uuid
 
 from dotenv import load_dotenv
 from fastapi import FastAPI

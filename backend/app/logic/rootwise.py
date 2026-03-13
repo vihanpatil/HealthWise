@@ -4,7 +4,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Optional
 import uuid
 
 from pdf2image import convert_from_path
@@ -203,7 +203,7 @@ def _read_text_if_exists(path: Path) -> str:
     return path.read_text().strip() if path.exists() else ""
 
 
-def get_user_constraints_snapshot() -> Dict[str, str]:
+def get_user_constraints_snapshot() -> dict[str, str]:
     return {
         "season": _read_text_if_exists(USER_STATE_DIR / "given_season.txt"),
         "ingredients": _read_text_if_exists(USER_STATE_DIR / "given_ingredients.txt"),
@@ -212,12 +212,12 @@ def get_user_constraints_snapshot() -> Dict[str, str]:
     }
 
 
-def _safe_has_good_hits(hits: List[Dict[str, Any]]) -> bool:
+def _safe_has_good_hits(hits: list[dict[str, Any]]) -> bool:
     good = [h for h in hits if h.get("text") and len(h["text"].strip()) > 80]
     return len(good) >= 2
 
 
-def _format_evidence(hits: List[Dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
+def _format_evidence(hits: list[dict[str, Any]], max_chars_per_chunk: int = 900) -> str:
     blocks = []
     for i, h in enumerate(hits):
         txt = (h.get("text") or "").strip()
@@ -342,14 +342,14 @@ def stream_response(message: str, history):
 # ----------------------------
 # Debug / UI helpers (kept)
 # ----------------------------
-def list_system_data_files() -> List[str]:
+def list_system_data_files() -> list[str]:
     try:
         return rag_root.list_files()
     except Exception as e:
         return [f"Error: {e}"]
 
 
-def read_selected_file(filename: str) -> Tuple[str, Optional[str]]:
+def read_selected_file(filename: str) -> tuple[str, Optional[str]]:
     """
     Returns:
       (text: str, preview_image_path: str|None)
@@ -387,8 +387,8 @@ def read_selected_file(filename: str) -> Tuple[str, Optional[str]]:
 def retrieve_relevant_context(prompt: str, max_chars: int = 2000) -> str:
     try:
         rag_root.ensure_ready()
-    except Exception:
-        raise Exception("RAG not initialized. Call initialize_rootwise_rag() first.")
+    except Exception as err:
+        raise Exception("RAG not initialized. Call initialize_rootwise_rag() first.") from err
 
     hits = rag_root.retrieve(prompt, top_k=4)
     if not hits:

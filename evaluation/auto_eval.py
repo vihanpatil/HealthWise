@@ -16,7 +16,7 @@ try:
     from sklearn.metrics.pairwise import cosine_similarity
     from transformers import pipeline
 except ImportError as e:
-    raise ImportError(f"missing dependency: {e.name}")
+    raise ImportError(f"missing dependency: {e.name}") from e
 
 
 smooth_fn = SmoothingFunction().method1

@@ -38,8 +38,6 @@ DATABASE_URL="{CONTACT MAHYAR VAHABI FOR THIS INFO}"
 
 # Chat model (must match an actual OpenAI model ID your account can use)
 OPENAI_CHAT_MODEL="gpt-4.1-mini"
-ROOTWISE_AGENTIC_MODEL=gpt-4.1-mini
-
 
 # Auth
 JWT_SECRET="something_extremely_secret_and_long"
@@ -113,7 +111,13 @@ RootWise now supports an experimental `agentic mode` for capstone testing. This 
 If you only want the classic RootWise experience, you can skip this step.
 
 ```bash
-cd agentic_service
+# if installations via Option A: 
+source .venv/bin/activate
+
+# if installations via Option B: 
+source venv/bin/activate 
+
+cd backend
 uvicorn app.main:app --host 127.0.0.1 --port 8100 --reload
 ```
 
@@ -130,34 +134,5 @@ For classic + agentic comparison:
 - Terminal 2: frontend on `127.0.0.1:5173`
 - Terminal 3: agentic service on `127.0.0.1:8100`
 
-### 7. Daily Startup Commands
-
-Once setup is complete, use these commands to launch the full app locally.
-
-```bash
-source venv/bin/activate
-```
-
-Terminal 1: main backend
-
-```bash
-cd backend
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-```
-
-Terminal 2: frontend
-
-```bash
-cd frontend
-npm run dev
-```
-
-Terminal 3: agentic service
-
-```bash
-cd agentic_service
-uvicorn app.main:app --host 127.0.0.1 --port 8100
-```
-
-## Open this server
+### 7. Open this server
 http://localhost:5173
